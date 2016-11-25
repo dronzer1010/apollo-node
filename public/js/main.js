@@ -13,4 +13,25 @@ $(function(){
 		$('#documentModal').modal();
 	});
 
+	$('#selectHandler').val('others')
+	$('#handlerName').val(' ');
+	$('#handlerLocation').val(' ');
+	$('#handlerContact').val(' ');
+	$('#handlerEmail').show();
+	
+	$('#selectHandler').change(function(){
+		var value = $(this).val();
+
+		if(value=='userA'){
+			$('#handlerName').val('Ravi Kumar');
+			$('#handlerLocation').val('Flat-34/12 , New Delhi');
+			$('#handlerContact').val('7878787878');
+			$('#handlerEmail').hide();
+		}else{
+			$('#handlerName').val(' ');
+			$('#handlerLocation').val(' ');
+			$('#handlerContact').val(' ');
+			$('#handlerEmail').show();
+		}
+	});
 }());

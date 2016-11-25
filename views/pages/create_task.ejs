@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <% include ../partials/head %>
+  <body>
+   <div class="container">
+     <div class="site_wrapper">
+       <div class="col-md-10 col-md-offset-1">
+         <div class="form-wrapper">
+           
+           <div class="row">
+             <div class="col-md-6 col-md-offset-3" id="form_heading">
+               <h2> Create Task </h2>
+             </div>
+           </div>
+
+           <div class="row">
+             <div class="col-md-10 col-md-offset-1" id="form_page">
+               <div>
+                 <form class="ticket_form">
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Task Name</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Task Type</label>
+                        <select class="form-control">
+                          
+                          <option>Document</option>
+                          <option>Opinion</option>
+                          <option>Data Request</option>
+                        </select>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Completion Date</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                       <label for="email">Handling Location</label>
+                        <select class="form-control">
+                          
+                          <option>Local</option>
+                          <option>Corporate</option>
+                          
+                        </select>
+                      </div>
+                     </div>
+
+                   </div>
+
+
+      
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Task Handler</label>
+                        <select class="form-control" id="selectHandler">
+                          <option value="userA" >User A</option>
+                          <option value="others" selected>Others</option>
+                        </select>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                         <label for="email">Task Privacy</label>
+                         <select class="form-control">
+                           <option>Open</option>
+                           <option>Closed</option>
+                         </select>
+                       </div>
+                     </div>
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Handler Name</label>
+                        <input type="text" class="form-control" id="handlerName"/>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                       <label for="email">Handler Location</label>
+                       <textarea class="form-control" id="handlerLocation"></textarea>
+                      </div>
+                     </div>
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Handler Contact</label>
+                        <input type="text" class="form-control" id="handlerContact">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group" id="handlerEmail">
+                       <label for="email">Handler Email</label>
+                       <input type="text" class="form-control"  />
+                      </div>
+                     </div>
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <input type="reset" class="btn btn-default pull-right" value="Reset">
+                      </div>
+                     </div>
+                   </div>
+
+                 </form>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+       <script src="/js/main.js"></script>
+  </body>
+</html>
