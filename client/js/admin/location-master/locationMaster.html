@@ -1,0 +1,64 @@
+<div ng-controller="LocationMasterController as ctrl">
+<div class="col-md-12">
+	<h2>Location Master</h2>
+	<hr>
+</div>
+
+<div class="col-md-8" >
+	<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw"></i> Locations List
+
+                            
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                           <div class="row">
+                           	<div class="col-sm-4" ng-repeat="location  in ctrl.locations">
+                           		<div class="card card-block">
+              								  <h4 class="card-title" ng-bind="location.name"></h4>
+              								  <p class="card-text" ng-bind="location.division"></p>
+              								  <button class="btn btn-sm btn-default" ng-click="ctrl.edit(location._id)"><i class="fa fa-pencil"></i></button>
+              								  <button class="btn btn-sm btn-default" ng-click="ctrl.remove(location._id)"><i class="fa fa-trash-o"></i></button>
+              								</div>
+                           	</div>
+                           	                           	
+                         
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+</div>
+</div>
+<!---Side Panel-->
+           		  <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-plus"></i> Add Location
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                    		
+                    		<form class="form" name="locationForm" ng-submit="ctrl.submit()">
+                          <input type="hidden" ng-model="ctrl.location._id">
+                    			<div class="form-group">
+                    				<label>Location Name</label>
+                    				<input type="text" name="name" class="form-control" ng-model="ctrl.location.name" required>
+                    			</div>
+
+                    			<div class="form-group">
+                    				<label>Division</label>
+                    				<input type="text" name="division" class="form-control" ng-model="ctrl.location.division" required>
+                    			</div>
+                    			<hr>
+                    			<input class="btn btn-block btn-primary" type="submit" ng-disabled="locationForm.$invalid" value="{{!ctrl.location._id ? 'Add Location' : 'Update Location'}}"/>
+
+                    		</form>	        
+                    	
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+
+           </div>
+
+</div>

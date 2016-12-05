@@ -1,0 +1,64 @@
+<div ng-controller="DesignationMasterController as ctrl2">
+<div class="col-md-12">
+	<h2>Designation Master</h2>
+	<hr>
+</div>
+
+<div class="col-md-8" >
+	<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw"></i> Designation List
+
+                            
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                           <div class="row">
+                           	<div class="col-sm-4" ng-repeat="designation  in ctrl2.designations">
+                           		<div class="card card-block">
+              								  <h4 class="card-title" ng-bind="designation.short_name"></h4>
+              								  <p class="card-text" ng-bind="designation.designation"></p>
+              								  <button class="btn btn-sm btn-default" ng-click="ctrl2.edit(designation._id)"><i class="fa fa-pencil"></i></button>
+              								  <button class="btn btn-sm btn-default" ng-click="ctrl2.remove(designation._id)"><i class="fa fa-trash-o"></i></button>
+              								</div>
+                           	</div>
+                           	                           	
+                         
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+</div>
+</div>
+<!---Side Panel-->
+           		  <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-plus"></i> Add Designation
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                    		
+                    		<form class="form" name="designationForm" ng-submit="ctrl2.submit()">
+                          <input type="hidden" ng-model="ctrl2.designation._id">
+                    			<div class="form-group">
+                    				<label>Designation</label>
+                    				<input type="text" name="designation" class="form-control" ng-model="ctrl2.designation.designation" required>
+                    			</div>
+
+                    			<div class="form-group">
+                    				<label>Short Name</label>
+                    				<input type="text" name="short-name" class="form-control" ng-model="ctrl2.designation.short_name" required>
+                    			</div>
+                    			<hr>
+                    			<input class="btn btn-block btn-primary" type="submit" ng-disabled="designationForm.$invalid" value="{{!ctrl2.designation._id ? 'Add Designation' : 'Update Designation'}}"/>
+
+                    		</form>	        
+                    	
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+
+           </div>
+
+</div>
