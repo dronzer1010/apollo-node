@@ -2,11 +2,11 @@ $(function(){
 	'use strict';
 	angular.module('apolloApp')
 			.service('userMasterService',['$http', '$q',function($http , $q){
-
+				var url= 'https://apollo-node.herokuapp.com';
 				return {
 
 					fetchAllUsers: function() {
-			            return $http.get('http://localhost:3000/api/users/')
+			            return $http.get(url+'/api/users/')
 			            .then(
 			                    function(response){
 			                        return response.data;
@@ -19,7 +19,7 @@ $(function(){
 			        },
 
 			        createUser: function(user){
-			            return $http.post('http://localhost:3000/api/users/', user)
+			            return $http.post(url+'/api/users/', user)
 			            .then(
 			                    function(response){
 			                        return response.data;
@@ -32,7 +32,7 @@ $(function(){
 			        },
 
 			        activateUser : function(data){
-			        	 return $http.post('http://localhost:3000/api/users/activate', data)
+			        	 return $http.post(url+'/api/users/activate', data)
 			            .then(
 			                    function(response){
 			                        return response.data;
@@ -44,7 +44,7 @@ $(function(){
 			            );
 			        },
 			        markUser : function(data){
-			        	 return $http.post('http://localhost:3000/api/users/direct', data)
+			        	 return $http.post(url+'/api/users/direct', data)
 			            .then(
 			                    function(response){
 			                        return response.data;
@@ -57,7 +57,7 @@ $(function(){
 			        },
 
 			        updateUser: function(user, id){
-			            return $http.put('http://localhost:3000/api/users/'+id, user)
+			            return $http.put(url+'/api/users/'+id, user)
 			            .then(
 			                    function(response){
 			                        return response.data;
@@ -69,7 +69,7 @@ $(function(){
 			            );
 			        },
 			        deleteUser: function(id){
-			            return $http.delete('http://localhost:3000/api/users/'+id)
+			            return $http.delete(url+'/api/users/'+id)
 			            .then(
 			                    function(response){
 			                        return response.data;

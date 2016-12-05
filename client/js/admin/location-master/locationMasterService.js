@@ -3,11 +3,11 @@ $(function(){
 	'use strict';
  	var appService = angular.module('apolloApp');
 	appService.factory('locationMasterService', ['$http', '$q', function($http, $q){
-	 
+	 	var url= 'https://apollo-node.herokuapp.com';
 	    return {
 	         
 	    fetchAllLocations: function() {
-	            return $http.get('http://localhost:3000/api/locations/')
+	            return $http.get(url+'/api/locations/')
 	            .then(
 	                    function(response){
 	                        return response.data;
@@ -20,7 +20,7 @@ $(function(){
 	        },
 	     
 	    createLocation: function(location){
-	            return $http.post('http://localhost:3000/api/locations/', location)
+	            return $http.post(url+'/api/locations/', location)
 	            .then(
 	                    function(response){
 	                        return response.data;
@@ -33,7 +33,7 @@ $(function(){
 	        },
 	     
 	    updateLocation: function(location, id){
-	            return $http.put('http://localhost:3000/api/locations/'+id, location)
+	            return $http.put(url+'/api/locations/'+id, location)
 	            .then(
 	                    function(response){
 	                        return response.data;
@@ -46,7 +46,7 @@ $(function(){
 	        },
 	     
 	   deleteLocation: function(id){
-	            return $http.delete('http://localhost:3000/api/locations/'+id)
+	            return $http.delete(url+'/api/locations/'+id)
 	            .then(
 	                    function(response){
 	                        return response.data;

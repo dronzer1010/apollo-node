@@ -3,11 +3,11 @@ $(function(){
 	'use strict';
  	var appService = angular.module('apolloApp');
 	appService.factory('designationMasterService', ['$http', '$q', function($http, $q){
-	 
+	 	var url= 'https://apollo-node.herokuapp.com';
 	    return {
 	         
 	    fetchAllDesignations: function() {
-	            return $http.get('http://localhost:3000/api/designations/')
+	            return $http.get(url+'/api/designations/')
 	            .then(
 	                    function(response){
 	                        return response.data;
@@ -20,7 +20,7 @@ $(function(){
 	        },
 	     
 	    createDesignation: function(designation){
-	            return $http.post('http://localhost:3000/api/designations/', designation)
+	            return $http.post(url+'/api/designations/', designation)
 	            .then(
 	                    function(response){
 	                        return response.data;
@@ -33,7 +33,7 @@ $(function(){
 	        },
 	     
 	    updateDesignation: function(designation, id){
-	            return $http.put('http://localhost:3000/api/designations/'+id, designation)
+	            return $http.put(url+'/api/designations/'+id, designation)
 	            .then(
 	                    function(response){
 	                        return response.data;
@@ -46,7 +46,7 @@ $(function(){
 	        },
 	     
 	   deleteDesignation: function(id){
-	            return $http.delete('http://localhost:3000/api/designations/'+id)
+	            return $http.delete(url+'/api/designations/'+id)
 	            .then(
 	                    function(response){
 	                        return response.data;
