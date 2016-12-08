@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Ticket</title>
+    <link rel="stylesheet" type="text/css" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link href="/lib/components-font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/css/metisMenu.css">
+    <link rel="stylesheet" href="/css/sb-admin-2.css">
+    <link rel='stylesheet' href='/css/style.css' />
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/js/metisMenu.js"></script>
+  </head>
+  <body>
+   <div class="container">
+     <div class="site_wrapper">
+       <div class="col-md-10 col-md-offset-1">
+         <div class="form-wrapper">
+           
+           <div class="row">
+             <div class="col-md-6 col-md-offset-3" id="form_heading">
+               <h2> Create Ticket </h2>
+             </div>
+           </div>
+
+           <div class="row">
+             <div class="col-md-10 col-md-offset-1" id="form_page">
+               <div>
+                 <form class="ticket_form">
+                   
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">First Name </label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Last Name </label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Email </label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Location</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Designation</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Ticket Priority </label>
+                        
+                         <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="optradio">High
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="optradio">Medium
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="optradio">Low
+                        </label>
+                         </div>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-12">
+                       <div class="form-group">
+                        <label for="email">Notes For Ticket </label>
+                        <textarea class="form-control"></textarea>
+                      </div>
+                     </div>
+                   </div>
+                   
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <input type="checkbox"> Mark to Maimoona Badsha
+                      </div>
+                     </div>
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Ticket Type </label>
+                        
+                         <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="ticket_type" checked="checked" value="transactionalType">Transactional
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="ticket_type" value="litigationalType">Litigational
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="ticket_type" value="othersType">Others
+                        </label>
+                         </div>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Reply By Date</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                   </div>
+                   <!-- Start litigation-->
+                   <div id="litigationalType" class="type_module">
+
+                     <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                         <label for="email">Notice Received</label>
+                        
+                         <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="optradio">Yes
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="optradio">No
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+                     
+
+                   </div> 
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Notice from</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Notice against</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Opposing Lawyer</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Contact Address</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Contact email</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Court / Forum</label>
+                        <select class="form-control">
+                          <option>Option A</option>
+                          <option>Option B</option>
+                          <option>Option C</option>
+                        </select>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Counsel appointed </label>
+                        <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="optradio">Yes
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="optradio">No
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Counsel Address </label>
+                        <textarea class="form-control"></textarea>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Counsel phone number</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Counsel email</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Location of court</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Amount under litigation</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   </div>
+                   <!-- end litigation-->
+
+
+                   <!-- Start Transactional-->
+
+                   <div id="transactionalType" class="type_module">
+
+                    <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Transaction type</label>
+                        <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="optradio">Opinion
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="optradio">Renegotiation
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="optradio">Template
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+                     
+
+                   </div>
+
+                   <div class="row">
+                    
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Final Date </label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">New / Existing</label>
+                        <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="optradio">New
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="optradio">Existing
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+
+                   </div>
+
+                   <div class="row">
+
+                   <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Document type</label>
+                        <select class="form-control" id="document_fill">
+                        <option selected="selected">Medico Legal</option>
+                        <option>Non Medico</option>
+                        <option>Lease Aggreements</option>
+                        <option>Property Agreements</option>
+                        <option>Share Purchase</option>
+                        <option>JV</option>
+                        <option>Contracts</option>
+                        <option>Loans</option>
+                        <option>Taxation</option>
+                        </select>
+                      </div>
+                     </div>
+
+                     
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Notes</label>
+                        <textarea class="form-control"></textarea>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   </div>
+
+                   <!--end Transactional-->
+
+                   <!-- Start others-->
+
+                   <div id="othersType" class="type_module">
+                     <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Notes</label>
+                        <input type="text" class="form-control">
+                      </div>
+                     </div>
+
+                     
+
+                   </div>
+                   </div>
+
+                   <!--End Others-->
+                   <div class="jumbotron" style="border:1px dashed #ddd;text-align:center;">
+                     <p>Drop files here</p>
+                     <p>OR</p>
+                     <div class="row">
+                       <div class="col-md-4 col-md-offset-4">
+                         <input type="file" >
+                       </div>
+                     </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <input type="reset" class="btn btn-default pull-right" value="Reset">
+                      </div>
+                     </div>
+                   </div>
+                 </form>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+
+
+   <!----- Bootstrap Modal-->
+
+   <div id="documentModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Document Template</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form">
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Date of Notice/Summon/Letter</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Date of Receipt of Notice/Summon</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Notice received from -Advocate</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Name of the Advocate/Forum/Court</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Address of the Advocate</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Name of the Complainant</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Case No.</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Number of defendant</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+           <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Name of the defendants</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Name of the patient</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Date of Admission</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Date of discharge</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Cost of treatment </label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Doctors  involved in the case</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Legal case Claim Amount </label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="email">Due date for response, if any</label>
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="col-md-3 pull-right">
+              <button type="reset" class="btn btn-default">Reset</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+
+    <script src="/js/main.js"></script>
+  </body>
+</html>
