@@ -2,7 +2,7 @@ $(function(){
 	'use strict';
 	angular.module('apolloApp')
 			.service('userMasterService',['$http', '$q',function($http , $q){
-				var url= 'http://localhost:3000';
+				var url= 'https//apollo-node.herokuapp.com';
 				return {
 
 					fetchAllUsers: function() {
