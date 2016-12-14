@@ -2,7 +2,7 @@ $(function(){
 	'use strict';
 	angular.module('apolloApp')
 			.service('userMasterService',['$http', '$q',function($http , $q){
-				var url= 'https://apollo-node.herokuapp.com';
+				var url= 'http://localhost:3000';
 				return {
 
 					fetchAllUsers: function() {
@@ -56,6 +56,19 @@ $(function(){
 			            );
 			        },
 
+					getMarkedUsers : function(data){
+			        	 return $http.get(url+'/api/users/markedusers', data)
+			            .then(
+			                    function(response){
+			                        return response.data;
+			                    }, 
+			                    function(errResponse){
+			                        console.error('Error while marking user');
+			                        return $q.reject(errResponse);
+			                    }
+			            );
+			        },
+
 			        updateUser: function(user, id){
 			            return $http.put(url+'/api/users/'+id, user)
 			            .then(
@@ -80,6 +93,19 @@ $(function(){
 			                    }
 			            );
 			        },
+
+					loginUser : function(user){
+						return $http.post(url+'/api/users/login' , user)
+								.then(
+									 function(response){
+			                        return response.data;
+			                    }, 
+			                    function(errResponse){
+			                        console.error('Error while login User');
+			                        return $q.reject(errResponse);
+			                    }
+								);
+					},
 
 				};
 

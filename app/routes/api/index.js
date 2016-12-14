@@ -8,6 +8,10 @@ router.use('/locations' , require('./locations'));
 
 router.use('/users' , require('./users'));
 
+router.use('/upload' , require('./uploads'));
+
+router.use('/tickets' , require('./tickets'));
+
 router.get('/' , function(req,res){
 	res.send('api routes here');
 });

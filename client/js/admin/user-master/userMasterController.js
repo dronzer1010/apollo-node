@@ -1,10 +1,10 @@
 $(function(){
 	'use strict' ;
 	var app = angular.module('apolloApp')
-					.controller('UserMasterController' , ['$scope','userMasterService' , function($scope , userMasterService){
+					.controller('UserMasterController' , ['$scope','$rootScope','userMasterService' , function($scope ,$rootScope, userMasterService){
 						
 						var self = this;
-
+						$scope.currentUser = $rootScope.user.email;
 						self.user = {
 							_id : null ,
 							firstName : '',

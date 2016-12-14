@@ -1,0 +1,92 @@
+<div ng-controller="TicketUserController as ctrl">
+     <div class="col-md-8">
+        	<div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-user fa-fw"></i> Ticket Detail    
+                </div>
+                        <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-10">
+                            <div class="card card-block">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h4>{{firstName +' '+lastName}}</h4>
+                                        <p>{{designation.designation }} , {{location.name }} {{location.division}} 
+                                            <br>
+                                            Email : {{ email}}
+                                            <br>
+                                            Type : <span ng-if="ticketType=='transactionalType'">Transactional</span>
+                                                      <span ng-if="ticketType=='litigationalType'">Litigational</span>
+                                                      <span ng-if="ticketType=='othersType'">Other</span>
+                                            
+                                            
+                                        </p>
+
+                                    </div>
+                                    <div class="col-md-4"></div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div ng-if="ticketType=='transactionalType'">
+                                            <h5>Transactional Details </h5>
+                                            <p>
+                                                New or Existing : {{transactionalDetails.newOrExisting}}
+                                                <br>
+                                                Type : {{transactionalDetails.type}}
+                                                <br>
+                                                Document Type : {{transactionalDetails.documentType}}
+                                                <br>
+                                                Final Date : {{transactionalDetails.finalDate }}
+                                                <br>
+                                                Notes : {{transactionalDetails.notes}}
+
+                                            </p>
+                                        </div>
+
+                                        <div ng-if="ticketType=='litigationalType'">
+                                            <h5>Litigational Details </h5>
+                                            <p>
+                                               Notice Received (Y/N ) : {{litigationalDetails.noticedReceived}}
+                                               <br>
+                                               Notice From : {{litigationalDetails.noticeFrom}}
+                                               <br>
+                                               Notice Against : {{litigationalDetails.noticeAgainst}}
+                                               <br>
+                                               Opposing Lawyer : {{litigationalDetails.opposingLawyer}}
+                                               <br>
+                                               Counsel Appointed (Y/N) : {{litigationalDetails.counselAppointed}}
+                                               <br>
+                                               Amount : INR {{litigationalDetails.amount}}
+                                            </p>
+                                        </div>
+                                        <div ng-if="ticketType=='othersType'">
+                                            <h5>Others Details </h5>
+                                            <p>
+                                                Notes : {{othersDetails.notes}}
+                                            </p>
+                                        </div>
+                                        <hr>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5>Attachments</h5>
+                                    </div>
+                                    <a ng-repeat="document in attachedDocuments" href="{{document}}">
+                                        <div class="col-md-4">
+                                            <i class="fa fa-file"></i>{{document.split('/')[2]}}
+                                        </div>
+                                    <a>
+                                </div>
+                                
+                            </div>
+                        </div> 
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+            </div>
+    </div>
+</div>

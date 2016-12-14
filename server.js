@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client')));
 
+
 //CORS Headers
 
 app.use(function(req, res, next) {
@@ -31,6 +32,7 @@ app.use(function(req, res, next) {
 /**
  *	Register all routes in routes/index.js 
  */
+app.use('/docs' , express.static(path.join(__dirname, 'app/uploads')) );
 app.use(require('./app/routes'));
 /**
  * Get port from environment and store in Express.

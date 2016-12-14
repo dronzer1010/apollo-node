@@ -1,10 +1,12 @@
 var express  = require('express');
 var mongoose = require('mongoose');
 var router   = express.Router();
-
+var jwt      = require('jwt-simple');
 //Get Required Model
 
 var User = require(__base + 'app/models/userMaster');
+var config = require(__base + 'app/config/database');
+
 
 router.get('/' , function(req,res){
 	var populateQuery = [{path:'designation'},{path:'location'}];
@@ -15,14 +17,30 @@ router.get('/' , function(req,res){
 			if(!err){
 				res.status(200).json({success : true , data : data});
 			}else{
-				res.status(500).json({success : false , msg : err});
+				res.status(400).json({success : false , msg : err});
 			}
 		});
 });
 
+router.get('/markedusers' , function(req,res){
+	var populateQuery = [{path:'designation'},{path:'location'}];
+
+	User.find({markAsDeleted : false , markDirect : true})
+		.populate(populateQuery)
+		.exec(function(err,data){
+			if(!err){
+				res.status(200).json({success : true , data : data});
+			}else{
+				res.status(400).json({success : false , msg : err});
+			}
+		});
+});
+
+
+
 router.post('/' , function(req,res){
 	if(!req.body.firstName || !req.body.email || !req.body.password || !req.body.designation || !req.body.location || !req.body.userType){
-		res.status(200).json({success : false , msg : "Invalid parameters"});
+		res.status(400).json({success : false , msg : "Invalid parameters"});
 	}else{
 		var newUser = new User({
 			firstName : req.body.firstName,
@@ -40,7 +58,7 @@ router.post('/' , function(req,res){
 			if(!err){
 				res.status(200).json({success : true , data : data});
 			}else{
-				res.status(500).json({success : false , msg : err});
+				res.status(400).json({success : false , msg : err});
 			}
 		});	
 	}
@@ -51,7 +69,7 @@ console.log(req.body.firstName+' '+req.body.email+' '+req.body.password+' '+req.
 
 	if(!req.body.firstName || !req.body.email || !req.body.password || !req.body.designation || !req.body.location || !req.body.userType){
 		console.log('nahi chla');
-		res.status(200).json({success : false , msg : "Invalid parameters"});
+		res.status(400).json({success : false , msg : "Invalid parameters"});
 	}else{
 		User.update({_id : req.params.id},{$set:{
 			firstName : req.body.firstName,
@@ -67,21 +85,21 @@ console.log(req.body.firstName+' '+req.body.email+' '+req.body.password+' '+req.
 			if(!err){
 				res.status(200).json({success : true , data : data});
 			}else{
-				res.status(500).json({success : false , msg : err});
+				res.status(400).json({success : false , msg : err});
 			}
 		});
 	}
 });
 router.post('/activate' , function(req,res){
 	if(!req.body.id ){
-		res.status(200).json({success : false , msg : "Invalid parameters"});
+		res.status(400).json({success : false , msg : "Invalid parameters"});
 	}else{
 		console.log('status '+req.body.status);
 		User.update({_id:req.body.id},{$set:{active : req.body.status}},function(err,data){
 			if(!err){
 				res.status(200).json({success : true , data : data});
 			}else{
-				res.status(500).json({success : false , msg : err});
+				res.status(400).json({success : false , msg : err});
 			}
 		});
 	}
@@ -90,14 +108,14 @@ router.post('/activate' , function(req,res){
 
 router.post('/direct' , function(req,res){
 	if(!req.body.id ){
-		res.status(200).json({success : false , msg : "Invalid parameters"});
+		res.status(400).json({success : false , msg : "Invalid parameters"});
 	}else{
 		console.log('status '+req.body.status);
 		User.update({_id:req.body.id},{$set:{markDirect : req.body.status}},function(err,data){
 			if(!err){
 				res.status(200).json({success : true , data : data});
 			}else{
-				res.status(500).json({success : false , msg : err});
+				res.status(400).json({success : false , msg : err});
 			}
 		});
 	}
@@ -108,8 +126,45 @@ router.delete('/:id' , function(req,res){
 		if(!err){
 				res.status(200).json({success : true , data : data});
 			}else{
-				res.status(500).json({success : false , msg : err});
+				res.status(400).json({success : false , msg : err});
 			}
 		});
+});
+
+router.post('/login' , function(req,res){
+	if(!req.body.email || !req.body.password){
+		res.status(400).json({
+			success : false ,
+			msg : "Invalid parameters"
+		});
+	}else{	
+		User.findOne({email : req.body.email},function(err , user){
+			if (err) throw err;
+         
+            if (!user) {
+              res.status(400).send({success: false, msg: 'Authentication failed. User not found.'});
+            }else{
+            	user.comparePassword(req.body.password , function(err , isMatch){
+            		if(!err && isMatch){
+            			var tokenData ={};
+	                      tokenData._id = user._id;
+	                      tokenData.username = user.email;
+	                      tokenData.password = user.password;
+	                      tokenData.userType = user.userType;
+	                    var token = jwt.encode(tokenData, config.secret);
+            			res.status(200).json({success : true , data :{
+            				id : user._id ,
+							email : user.email,
+            				userType : user.userType,
+            				name : user.firstName+' '+user.lastName ,
+            				auth_token : 'JWT '+token
+            			}});
+            		}else{
+            			res.status(400).send({success: false, msg: 'Authentication failed.Password do not match'});
+            		}
+            	});
+            }
+		});
+	}
 });
 module.exports = router;

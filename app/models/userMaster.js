@@ -20,7 +20,8 @@ var UserMaster = new Schema({
   },
   email:{
     type:String,
-    required:true
+    required:true,
+    unique : true
   },
   location :{
   	type: Schema.Types.ObjectId, 

@@ -1,0 +1,39 @@
+<div ng-controller="TicketUserController as ctrl">
+    <div class="col-md-8">
+        	<div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-user fa-fw"></i> Tickets List    
+                </div>
+                        <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6" ng-repeat="ticket  in ctrl.tickets" ng-animate="'animate'">
+                            <a class="ticketLink" ui-sref="dashboard.ticketDetails({id : ticket._id})">
+                           	<div class="ticket">
+                                  
+                                   <div>
+                                     <h4>{{ticket.firstName +' '+ticket.lastName}}</h4>
+                                     <p>
+                                        {{ticket.designation.short_name}} , {{ticket.location.name}} {{ticket.location.division}}
+                                        <br>
+                                        Ticket Type : <span ng-if="ticket.ticketType=='transactionalType'">Transactionl</span>
+                                                      <span ng-if="ticket.ticketType=='litigationalType'">Litigational</span>
+                                                      <span ng-if="ticket.ticketType=='othersType'">Other</span>
+                                        <br>
+                                        Reply By  : {{ticket.replyByDate | amDateFormat:'DD/MM/YYYY'}}
+                                        <br>
+                                        Priority : {{ticket.ticketPriority}}
+
+            
+                                    
+                                     </p>  
+                                   </div>
+                            </div>
+                            </a>
+                        </div>   
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+            </div>
+    </div>
+</div>
