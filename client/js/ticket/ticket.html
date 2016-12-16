@@ -63,13 +63,13 @@
                          <div style="margin-top:5px;">
 
                            <label class="radio-inline">
-                          <input type="radio" name="ticketPriority" value="high" ng-model="ctrl.ticket.ticketPriority" required>High
+                          <input type="radio" name="ticketPriority" value="2" ng-model="ctrl.ticket.ticketPriority" required>High
                         </label>
                         <label class="radio-inline">
-                          <input type="radio" name="ticketPriority" value="medium" ng-model="ctrl.ticket.ticketPriority" required>Medium
+                          <input type="radio" name="ticketPriority" value="1" ng-model="ctrl.ticket.ticketPriority" required>Medium
                         </label>
                         <label class="radio-inline">
-                          <input type="radio" name="ticketPriority" value="low" ng-model="ctrl.ticket.ticketPriority" required>Low
+                          <input type="radio" name="ticketPriority" value="0" ng-model="ctrl.ticket.ticketPriority" required>Low
                         </label>
                          </div>
                       </div>
@@ -338,7 +338,7 @@
 
                    <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">Document type</label>
+                        <label for="email">Additional details</label>
                         <select class="form-control" id="document_fill" name="documentType" ng-model="ctrl.ticket.transactionDocumentType">
                         <option selected="selected" value="medico_legal">Medico Legal</option>
                         <option value="non_medico">Non Medico</option>

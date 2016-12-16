@@ -1,0 +1,101 @@
+<div ng-controller="DocumentTemplateFieldController as ctrl">
+<div class="col-md-12">
+	<h2>Document Template Master</h2>
+	<hr>
+</div>
+
+<div class="col-md-8" >
+	<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw"></i> Document TemplateField 
+
+                            
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                           <div class="row">
+                               
+                                <div class="col-md-12">
+                                    <table class="table table-striped ">
+                                        <tr>
+                                            <th>Document Type</th>
+                                            <th>Description</th>
+                                            <th>Mandatory</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                            <th>Details</th>
+                                        </tr>
+                                        <tr ng-repeat="document in ctrl.documents">
+                                            <td>{{document.legalType}}</td>
+                                            <td>{{document.description}}</td>
+                                            <td><span ng-if="document.mandatory == 'Y'">Yes</span><span ng-if="document.mandatory == 'N'">No</span></td>
+                                            <td><button class="btn btn-sm btn-primary" ng-click="ctrl.edit(document._id)">Edit</button></td>
+                                            <td><button class="btn btn-sm btn-danger" ng-click="ctrl.remove(document._id)">Delete</button></td>
+                                            <td><button class="btn btn-sm btn-success">Details</button></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                           	                           	
+                         
+                            </div>
+                        <!-- /.panel-body -->
+                    </div>
+</div>
+</div>
+<!---Side Panel-->
+           		  <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-plus"></i> Add Document Template
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                    		
+                    		<form class="form" name="documentForm" ng-submit="ctrl.submit()">
+                          <input type="hidden" ng-model="ctrl.document._id">
+                    			<div class="form-group">
+                    				<label>Document Description</label>
+                    				<input type="text" name="description" class="form-control" ng-model="ctrl.document.description" >
+                    			</div>
+
+                    			<div class="form-group">
+                    				<label>Document Legal Type</label>
+                    				<input type="text" name="type" class="form-control" ng-model="ctrl.document.legalType" required>
+                    			</div>
+                                <div class="form-group">
+                    				<label>Mandatory to fill</label>
+                    				<select ng-model="ctrl.document.mandatory" class="form-control">
+                                        <option value="Y">Yes</option>
+                                        <option value="N">No</option>
+                                    </select>
+                    			</div>
+
+                                <div ng-repeat="field in ctrl.document.fields" class="templateFieldWrapper">
+                                    <button class="btn btn-sm btn-default remove-templateField" type="button" ng-click="ctrl.removeField($index)">X</button>
+                                    <div class="form-group">
+                                        <label>Field Name ({{$index +1}})</label>
+                                        <input type="text" class="form-control" ng-model="field.fieldName" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Field Type ({{$index +1}})</label>
+                                        <select class="form-control" ng-model="field.fieldType">
+                                            <option value="text">Text</option>
+                                            <option value="number">Number</option>
+                                            <option value="date">Date</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <button ng-click="ctrl.addFieldTemplate()" type="button" class="btn btn-default btn-block">Add Fields</button>
+                    			<hr>
+                    			<input class="btn btn-block btn-primary" type="submit" ng-disabled="documentForm.$invalid" value="{{!ctrl.document._id ? 'Add Document Template' : 'Update Document Template'}}"/>
+
+                    		</form>	        
+                    	
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+
+           </div>
+
+</div>

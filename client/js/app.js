@@ -50,7 +50,7 @@
 
 		$stateProvider
 			.state('home' , {
-				url : '/',
+				url : '/login',
 				templateUrl :'js/login/login.html'
 			})
 			.state('create-ticket',{
@@ -65,18 +65,18 @@
 				controller : 'DashboardController'
 			})
 			.state('dashboard.location' ,{
-				url : '/locationMaster' ,
+				url : '/admin/locationMaster' ,
 				templateUrl : 'js/admin/location-master/locationMaster.html',
 				controller : 'LocationMasterController'
 
 			})
 			.state('dashboard.designation' ,{
-				url : '/designationMaster',
+				url : '/admin/designationMaster',
 				templateUrl : 'js/admin/designation-master/designationMaster.html',
 				controller : 'DesignationMasterController'
 			})
 			.state('dashboard.user' ,{
-				url : '/userMaster',
+				url : '/admin/userMaster',
 				templateUrl : 'js/admin/user-master/userMaster.html',
 				controller : 'UserMasterController'
 			})
@@ -85,31 +85,43 @@
 				templateUrl : 'js/user/ticket/ticket.html',
 				controller : 'TicketUserController'
 			})
+			.state('dashboard.document' ,{
+				url : '/admin/documentMaster',
+				templateUrl : 'js/admin/documentTemplateField/documentTemplateField.html',
+				
+			})
 			.state('dashboard.ticketDetails' ,{
 				url : '/user/ticket/:id',
 				templateUrl : 'js/user/ticket/ticketDetail.html',
-				controller : 'TicketUserController'
+				controller : 'TicketUserController',
+				resolve :{
+					tickets : function(ticketService){
+						return ticketService.getAllTickets();
+					}
+				}
 			});
 	})
 	.run(['$rootScope','$cookieStore','$state','$location',function($rootScope,$cookieStore,$state,$location){
 		if($cookieStore.get('apolloUser')){
 			$rootScope.user=$cookieStore.get('apolloUser');
 			$rootScope.isLoggedIn = true;
+			console.log('User Logged in');
 		}else{
 			$rootScope.user=null;
 			$rootScope.isLoggedIn = false;
+			console.log('User not Logged in');
 		}
 
 		// enumerate routes that don't need authentication
-  		var routesThatDontRequireAuth = ['' ,'ticket'];
+  		var routesThatDontRequireAuth = ['/login' ,'/ticket'];
 
   		// check if current location matches route  
   		var routeClean = function (route) {
-			  route = route.split('/');
+			  
     	return _.find(routesThatDontRequireAuth,
       			function (noAuthRoute) {
-					  
-        			return route[1].startsWith(noAuthRoute);
+					
+        			return route.startsWith(noAuthRoute);
      		 });
   		};
 
@@ -117,9 +129,12 @@
     // if route requires auth and user is not logged in
     if (!routeClean($location.url()) && !$rootScope.isLoggedIn) {
       // redirect back to login
-
-      $location.path('/');
-    }
+	  console.log('url '+$location.url()+' to '+to);
+	  console.log(to);
+      $location.path('/login');
+    }else{
+		console.log('url '+$location.url());
+	}
   });
 	}]);
 

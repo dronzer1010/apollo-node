@@ -1,7 +1,17 @@
 $(function(){
     angular.module('apolloApp')
+        .filter('offset', function() {
+                return function(input, start) {
+                    return input.slice(start);
+                };
+            })
             .controller('TicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
                 var self =  this;
+
+                   $scope.filteredTickets = []
+                    ,$scope.currentPage = 1
+                    ,$scope.itemsPerPage = 2
+                    ,$scope.maxSize = 5;
 
                 self.tickets = [];
 
@@ -9,6 +19,7 @@ $(function(){
                     ticketService.getAllTickets()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
+                                       // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
 									},function(errResponse){
 										console.log('error fetching designations');
 									});
@@ -16,6 +27,9 @@ $(function(){
 
                 self.fetchAllTickets();
 
+                
+
+                
                  function findTicket(id){
                     var targetTicket = null;
                     console.log(self.tickets);

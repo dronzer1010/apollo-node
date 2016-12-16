@@ -12,6 +12,8 @@ router.use('/upload' , require('./uploads'));
 
 router.use('/tickets' , require('./tickets'));
 
+router.use('/documents',require('./documentTemplate'));
+
 router.get('/' , function(req,res){
 	res.send('api routes here');
 });

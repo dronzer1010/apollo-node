@@ -24,7 +24,7 @@ $(function(){
 		};
 
 		//method to create designation
-
+	
 		self.createLocation = function(location){
 			locationMasterService.createLocation(location)
 									.then(self.fetchAllLocations, function(errResponse){
@@ -66,6 +66,7 @@ $(function(){
 
         self.edit = function(id){
               console.log('id to be edited', id);
+			  
               for(var i = 0; i < self.locations.length; i++){
                   if(self.locations[i]._id === id) {
                      self.location = angular.copy(self.locations[i]);

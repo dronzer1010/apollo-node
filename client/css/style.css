@@ -198,3 +198,26 @@ i{
     color : #333;
     text-decoration: none;   
 }
+.top-bar{
+    margin-bottom:20px; 
+}
+.top-bar-wrapper{
+    background: #fafafa;
+    border: 1px solid #eee;
+    padding: 8px;
+}
+
+.templateFieldWrapper{
+    background: #fafafa;
+    border :1px solid #ddd;
+    padding: 10px;
+    margin-top: 5px;
+    position: relative;
+}
+.remove-templateField{
+    padding:2px 7px;
+    font-size: 10px;
+    top: 0.5rem;
+    right:1rem; 
+    position: absolute;
+}
