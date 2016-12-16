@@ -45,11 +45,15 @@
 	apolloApp.config(function($stateProvider , $urlRouterProvider,$qProvider){
 
 		//$qProvider.errorOnUnhandledRejections(false);
-
+		//$locationProvider.html5Mode(true);
 		$urlRouterProvider.otherwise('/');
 
 		$stateProvider
 			.state('home' , {
+				url : '/',
+				redirectTo : 'login'
+			})
+			.state('login' , {
 				url : '/login',
 				templateUrl :'js/login/login.html'
 			})
@@ -135,6 +139,11 @@
     }else{
 		console.log('url '+$location.url());
 	}
+
+	if (to.redirectTo) {
+        evt.preventDefault();
+        $state.go(to.redirectTo, params, {location: 'replace'})
+      }
   });
 	}]);
 

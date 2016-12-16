@@ -13,7 +13,7 @@ $(function(){
                                             body: 'Logged out successfully !',
                                             timeout: 2000
                                         });
-                        $state.go('home');
+                        $state.go('login');
                     }
                 };
             }]);
