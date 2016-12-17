@@ -12,20 +12,35 @@
                             
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div class="panel-body data-holder">
                            <div class="row">
-                           	<div class="col-sm-4" ng-repeat="designation  in ctrl2.designations">
-                           		<div class="card card-block">
-              								  <h4 class="card-title" ng-bind="designation.short_name"></h4>
-              								  <p class="card-text" ng-bind="designation.designation"></p>
-              								  <button class="btn btn-sm btn-default" ng-click="ctrl2.edit(designation._id)"><i class="fa fa-pencil"></i></button>
-              								  <button class="btn btn-sm btn-default" ng-click="ctrl2.remove(designation._id)"><i class="fa fa-trash-o"></i></button>
-              								</div>
-                           	</div>
-                           	                           	
-                         
-                           
-                        </div>
+							    <div class="col-md-12">
+								   <table class="table table-striped">
+									   <tr>
+										   <th>No.</th>
+										   <th>Designation</th>
+										   <th>Short Name</th>
+										
+										   <th>Edit</th>
+										   <th>Delete</th>
+									   </tr>
+									   <tr ng-repeat ="designation in ctrl2.designations | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
+										   <td>{{ctrl2.designations.indexOf(designation) + 1}}</td>
+										   <td>{{designation.designation}}</td>
+										   <td>{{designation.short_name}}</td>
+										
+										   <td><button class="btn btn-sm btn-primary" ng-click="ctrl2.edit(designation._id)">Edit</button></td>
+										   <td><button class="btn btn-sm btn-danger" ng-click="ctrl2.remove(designation._id)">Delete</button></td>
+									   </tr>
+								   </table>
+							   </div>
+                        	</div>
+
+							<div class="row">
+								<div class="col-md-8 pagination-holder">
+									<ul uib-pagination  total-items="ctrl2.designations.length" items-per-page="itemsPerPage" ng-model="currentPage"></ul>
+								</div>
+							</div>
                         <!-- /.panel-body -->
                     </div>
 </div>

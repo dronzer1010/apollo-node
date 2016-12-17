@@ -1,8 +1,5 @@
 <div ng-controller="DocumentTemplateFieldController as ctrl">
-<div class="col-md-12">
-	<h2>Document Template Master</h2>
-	<hr>
-</div>
+
 
 <div class="col-md-8" >
 	<div class="panel panel-default">
@@ -31,7 +28,7 @@
                                             <td><span ng-if="document.mandatory == 'Y'">Yes</span><span ng-if="document.mandatory == 'N'">No</span></td>
                                             <td><button class="btn btn-sm btn-primary" ng-click="ctrl.edit(document._id)">Edit</button></td>
                                             <td><button class="btn btn-sm btn-danger" ng-click="ctrl.remove(document._id)">Delete</button></td>
-                                            <td><button class="btn btn-sm btn-success">Details</button></td>
+                                            <td><a ui-sref="dashboard.documentDetails({id :document._id})" class="btn btn-sm btn-success">Details</a></td>
                                         </tr>
                                     </table>
                                 </div>

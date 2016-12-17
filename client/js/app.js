@@ -92,6 +92,11 @@
 			.state('dashboard.document' ,{
 				url : '/admin/documentMaster',
 				templateUrl : 'js/admin/documentTemplateField/documentTemplateField.html',
+				controller : 'DocumentTemplateFieldController'
+			})
+			.state('dashboard.documentDetails' ,{
+				url : '/admin/documentMaster/:id',
+				templateUrl : 'js/admin/documentTemplateField/documentTemplateFieldDetail.html',
 				
 			})
 			.state('dashboard.ticketDetails' ,{

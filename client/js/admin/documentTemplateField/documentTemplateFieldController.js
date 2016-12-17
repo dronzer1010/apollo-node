@@ -1,6 +1,6 @@
 $(function(){
     angular.module('apolloApp')
-            .controller('DocumentTemplateFieldController',['$scope','$rootScope','$state','$cookieStore','documentTemplateFieldService',function($scope , $rootScope,$state,$cookieStore,documentTemplateFieldService){
+            .controller('DocumentTemplateFieldController',['$scope','$stateParams','$rootScope','$state','$cookieStore','documentTemplateFieldService',function($scope ,$stateParams, $rootScope,$state,$cookieStore,documentTemplateFieldService){
                 var self =  this;
                 self.documents =[];
                 self.document = {
@@ -35,7 +35,7 @@ $(function(){
                                             });
                 };
 
-                self.deleteLocation = function(id){
+                self.deleteDocument = function(id){
                     documentTemplateFieldService.deleteDocument(id)
                                             .then(self.fetchAllDocuments, function(errResponse){
                                                 console.log('error deleting');
@@ -114,6 +114,46 @@ $(function(){
                             }
                         ]
                     }; 
+                };
+
+
+                //extend
+
+                function findDocument(id){
+                    var targetDocument = null;
+                    console.log(self.documents);
+                    self.documents.forEach(function(document){
+                   
+
+                    });
+                    
+                    return targetDocument;
+                };
+
+                // You never actually call this function
+                function list($scope, $stateParams) {
+                    documentTemplateFieldService.fetchAllDocumentTemplates()
+                                .then(function(tickets){
+										self.documents = tickets.data;
+                                        var targetDocument = null;
+                                         self.documents.forEach(function(document){
+                                             if(document._id==$stateParams.id){
+                                                 targetDocument = document;
+                                             }
+
+                                        });
+                                        angular.extend($scope, targetDocument);
+									},function(errResponse){
+										console.log('error fetching Documents');
+									});
+                   
                 }
+                
+                if ($stateParams.id) {
+                    list($scope, $stateParams);
+                    //console.log($scope);
+                }
+
+
             }]);
 }());

@@ -1,7 +1,7 @@
 $(function(){
 
     angular.module('apolloApp')
-            .controller('TicketController',['$scope','toaster','Upload','$timeout','ticketService',function($scope,toaster,Upload,$timeout ,ticketService){
+            .controller('TicketController',['$scope','$uibModal','$document','toaster','Upload','$timeout','ticketService',function($scope,$uibModal,$document,toaster,Upload,$timeout ,ticketService){
 
                 var self = this ;
 
@@ -20,6 +20,7 @@ $(function(){
                     transactionFinalDate : new Date(),
                     transactionNewOrExisting : "new",
                     transactionDocumentType : "medico_legal",
+                    transactionAdditionalDetails:[],
                     transactionNotes : "" ,
                     litigationNoticeReceived : "N",
                     litigationNoticeFrom : "",
@@ -49,7 +50,7 @@ $(function(){
                 };
 
                 $scope.popup1_open = function(){
-                    alert('opened');
+                    //alert('opened');
                     $scope.replyByDate_popup.opened = true;
                 };
 
@@ -167,6 +168,46 @@ $(function(){
                     $scope.errFiles = "";
                 };
 
+
+
+                /**
+                 * Modal service
+                 */
+                self.open = function(parent , data ){
+
+                    self.ticket.transactionAdditionalDetails=[];
+
+                    data.fields.forEach(function(item){
+                        var temp_data ={
+                            fieldName : item.fieldName ,
+                            fieldValue : ""
+                        }
+
+                        self.ticket.transactionAdditionalDetails.push(temp_data);
+                    });
+                    
+                    self.modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'myModalContent.html',
+                        controller : function($uibModalInstance , $scope){
+                            this.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            }
+                        },
+                        controllerAs :'ctrl2',
+                        scope : $scope,
+                        size: 'md',
+                        appendTo: angular.element($document[0].querySelector(parent)),
+                        resolve: {
+                            
+                        }
+                    });
+
+
+                };
+                
                 
 
             }]);

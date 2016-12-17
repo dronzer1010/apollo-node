@@ -10,7 +10,7 @@ $(function(){
 
                    $scope.filteredTickets = []
                     ,$scope.currentPage = 1
-                    ,$scope.itemsPerPage = 2
+                    ,$scope.itemsPerPage = 5
                     ,$scope.maxSize = 5;
 
                 self.tickets = [];
@@ -62,7 +62,7 @@ $(function(){
                 
                 if ($stateParams.id) {
                     list($scope, $stateParams);
-                    console.log($scope);
+                    //console.log($scope);
                 }
                 
             }]);

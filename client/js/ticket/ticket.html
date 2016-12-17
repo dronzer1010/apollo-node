@@ -339,6 +339,8 @@
                    <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Additional details</label>
+                        <documents ng-model="ctrl.ticket.transactionDocumentType" ng-change="ctrl.open('body' ,ctrl.ticket.transactionDocumentType)"></documents>
+                        <!--
                         <select class="form-control" id="document_fill" name="documentType" ng-model="ctrl.ticket.transactionDocumentType">
                         <option selected="selected" value="medico_legal">Medico Legal</option>
                         <option value="non_medico">Non Medico</option>
@@ -350,9 +352,10 @@
                         <option value="loans">Loans</option>
                         <option value="taxation">Taxation</option>
                         </select>
+                        -->
                       </div>
                      </div>
-
+                     
                      
                      <div class="col-md-6">
                        <div class="form-group">
@@ -404,7 +407,8 @@
                       ngf-pattern="'image/*,application/pdf'"
 
                    >
-                     <p>Drop files here</p>
+                     <p>Drop files here
+                     </p>
                      <p>OR</p>
                      <div class="row">
                        <div class="col-md-4 col-md-offset-4">
@@ -432,7 +436,43 @@
          </div>
        </div>
      </div>
+
+     <script type="text/ng-template" id="myModalContent.html">
+
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Document Template</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <form class="form">
+              <div class="row">
+                <div class="col-md-6" ng-repeat="field in ctrl.ticket.transactionDocumentType.fields">
+                  <div class="form-group">
+                    <label >{{field.fieldName}}</label>
+                    <input type="field.fieldType" class="form-control" ng-model="ctrl.ticket.transactionAdditionalDetails[$index].fieldValue">
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-primary" type="button" ng-click="ctrl2.cancel()">Submit</button>
+            
+              </div>
+              <div class="col-md-3 pull-right">
+                <button class="btn btn-warning" type="button" ng-click="ctrl2.cancel()">Cancel</button>
+              </div>
+            </div>
+        </div>
+
+</script>
    </div>
+
+
+
+
+
 
 
    <!----- Bootstrap Modal-->

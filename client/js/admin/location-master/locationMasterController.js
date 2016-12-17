@@ -11,7 +11,10 @@ $(function(){
 			division : '',
 		};
 
-		self.locations = [];
+		self.locations = []
+        ,$scope.currentPage = 1
+    	,$scope.itemsPerPage = 5
+        ,$scope.maxSize = 5;
 
 		//method to fetch all services 
 		self.fetchAllLocations = function(){

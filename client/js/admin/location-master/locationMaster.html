@@ -1,8 +1,5 @@
 <div ng-controller="LocationMasterController as ctrl">
-<div class="col-md-12">
-	<h2>Location Master</h2>
-	<hr>
-</div>
+
 
 <div class="col-md-8" >
 	<div class="panel panel-default">
@@ -12,20 +9,38 @@
                             
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div class="panel-body data-holder">
                            <div class="row">
-                           	<div class="col-sm-4" ng-repeat="location  in ctrl.locations" ng-animate="'animate'">
-                           		<div class="card card-block">
-              								  <h4 class="card-title" ng-bind="location.name"></h4>
-              								  <p class="card-text" ng-bind="location.division"></p>
-              								  <button class="btn btn-sm btn-default" ng-click="ctrl.edit(location._id)"><i class="fa fa-pencil"></i></button>
-              								  <button class="btn btn-sm btn-default" ng-click="ctrl.remove(location._id)"><i class="fa fa-trash-o"></i></button>
-              								</div>
-                           	</div>
+                           	
+							   <div class="col-md-12">
+								   <table class="table table-striped">
+									   <tr>
+										   <th>No.</th>
+										   <th>Location Name</th>
+										   <th>Division</th>
+										   <th>Entity</th>
+										   <th>Edit</th>
+										   <th>Delete</th>
+									   </tr>
+									   <tr ng-repeat ="location in ctrl.locations | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
+										   <td>{{ctrl.locations.indexOf(location) + 1}}</td>
+										   <td>{{location.name}}</td>
+										   <td>{{location.division}}</td>
+										   <td>{{location.entity}}</td>
+										   <td><button class="btn btn-sm btn-primary" ng-click="ctrl.edit(location._id)">Edit</button></td>
+										   <td><button class="btn btn-sm btn-danger" ng-click="ctrl.remove(location._id)">Delete</button></td>
+									   </tr>
+								   </table>
+							   </div>
                            	                           	
                          
                            
                         </div>
+						<div class="row">
+							<div class="col-md-8 pagination-holder">
+								<ul uib-pagination  total-items="ctrl.locations.length" items-per-page="itemsPerPage" ng-model="currentPage"></ul>
+							</div>
+                    	</div>
                         <!-- /.panel-body -->
                     </div>
 </div>

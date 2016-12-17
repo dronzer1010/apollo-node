@@ -10,7 +10,10 @@ $(function(){
 			designation : '',
 		};
 
-		self.designations = [];
+		self.designations = []
+        ,$scope.currentPage = 1
+    	,$scope.itemsPerPage = 5
+        ,$scope.maxSize = 5;
 
 		//method to fetch all services 
 		self.fetchAllDesignations = function(){

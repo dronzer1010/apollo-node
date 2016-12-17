@@ -221,3 +221,10 @@ i{
     right:1rem; 
     position: absolute;
 }
+.data-holder{
+    height:50rem;
+}
+.pagination-holder{
+    position: absolute;
+    bottom: 5rem;
+}
