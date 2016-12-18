@@ -146,7 +146,7 @@
 	}
 
 	if (to.redirectTo) {
-        event.preventDefault();
+        ev.preventDefault();
         $state.go(to.redirectTo, params, {location: 'replace'})
       }
   });
