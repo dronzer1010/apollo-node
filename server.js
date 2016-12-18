@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 });
 
 /**
- *	Register all routes in routes/index.js 
+ *	Register all routes in routes/index.js here
  */
 app.use('/docs' , express.static(path.join(__dirname, 'app/uploads')) );
 app.use(require('./app/routes'));
