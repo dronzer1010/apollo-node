@@ -147,7 +147,7 @@
 
 	if (to.redirectTo) {
         ev.preventDefault();
-        $state.go(to.redirectTo, params, {location: 'replace'})
+        $state.go(to.redirectTo, toParams, {location: 'replace'})
       }
   });
 	}]);
