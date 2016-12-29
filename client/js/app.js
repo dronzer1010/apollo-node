@@ -129,7 +129,7 @@
 			  
     	return _.find(routesThatDontRequireAuth,
       			function (noAuthRoute) {
-					
+					//console.log(route.startsWith(noAuthRoute));
         			return route.startsWith(noAuthRoute);
      		 });
   		};
@@ -142,6 +142,8 @@
 	  console.log(to);
       $location.path('/login');
     }else{
+		console.log($rootScope.isLoggedIn);
+		console.log(routeClean($location.url()));
 		console.log('url '+$location.url());
 	}
 
