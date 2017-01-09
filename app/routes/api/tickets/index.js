@@ -19,6 +19,7 @@ router.post('/' , function(req,res){
             ticketPriority : req.body.ticketPriority,
             ticketNotes : (req.body.ticketNotes)?req.body.ticketNotes : '',
             markDirectTo : (req.body.markDirectTo)?req.body.markDirectTo : null ,
+            isPicked : (req.body.markDirectTo)?"some" :"false",
             ticketType : req.body.ticketType,
             replyByDate : req.body.replyByDate ,
             transactionalDetails : {
@@ -64,6 +65,9 @@ router.post('/' , function(req,res){
 });
 
 
+
+
+//route to get all tickets
 router.get('/',function(req,res){
     var token = getToken(req.headers);
 

@@ -5,6 +5,10 @@ var Schema = mongoose.Schema;
 // set up a mongoose model
 var TicketMaster = new Schema({
   
+  isPicked : {
+      type : String ,
+      required : true
+  },
   
   firstName : {
       type : String
@@ -43,6 +47,7 @@ var TicketMaster = new Schema({
   replyByDate :{
       type : Date
   },
+  
   transactionalDetails : {
 
       type : {

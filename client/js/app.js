@@ -136,6 +136,7 @@
 
   $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
     // if route requires auth and user is not logged in
+    /*
     if (!routeClean($location.url()) && !$rootScope.isLoggedIn) {
       // redirect back to login
 	  console.log('url '+$location.url()+' to '+to);
@@ -151,6 +152,46 @@
         ev.preventDefault();
         $state.go(to.redirectTo, toParams, {location: 'replace'})
       }
+
+		
+
+    */
+
+     if(in_array($location.path(),routesThatDontRequireAuth) && !$rootScope.isLoggedIn){
+            $location.path("/");
+        }
+        
+        if(!$rootScope.isLoggedIn){
+           $state.go('login');
+        }
+
+        if(($location.path() === "/") && $rootScope.isLoggedIn){
+            $location.path("/get-bands");
+        }
+				if (to.redirectTo){
+        ev.preventDefault();
+        $state.go(to.redirectTo, toParams, {location: 'replace'});
+      }
   });
 	}]);
 
+
+function in_array(needle, haystack, argStrict){
+  var key = "",
+  strict = !! argStrict;
+ 
+  if(strict){
+    for(key in haystack){
+      if(haystack[key] === needle){
+        return true;
+      }
+    }
+  }else{
+    for(key in haystack){
+      if(haystack[key] == needle){
+        return true;
+      }
+    }
+  }
+  return false;
+}
