@@ -122,7 +122,7 @@
 		}
 
 		// enumerate routes that don't need authentication
-  		var routesThatDontRequireAuth = ['/login' ,'/ticket','/dashboard'];
+  		var routesThatDontRequireAuth = ['/login' ,'/ticket'];
 
   		// check if current location matches route  
   		var routeClean = function (route) {
