@@ -157,7 +157,7 @@
 
     */
 
-     if(!in_array($location.path(),routesThatDontRequireAuth) && !$rootScope.isLoggedIn){
+     if(in_array($location.path(),routesThatDontRequireAuth) && !$rootScope.isLoggedIn){
             $location.path("/");
         }
         
