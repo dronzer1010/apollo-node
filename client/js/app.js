@@ -85,9 +85,19 @@
 				controller : 'UserMasterController'
 			})
 			.state('dashboard.ticket' ,{
-				url : '/user/ticket',
+				url : '/user/open-tickets',
 				templateUrl : 'js/user/ticket/ticket.html',
 				controller : 'TicketUserController'
+			})
+			.state('dashboard.my-tickets' ,{
+				url : '/user/my-tickets',
+				templateUrl : 'js/user/ticket/myticket.html',
+				controller : 'MyTicketUserController'
+			})
+			.state('dashboard.marked-me' ,{
+				url : '/user/marked-me',
+				templateUrl : 'js/user/ticket/markedticket.html',
+				controller : 'MarkedTicketUserController'
 			})
 			.state('dashboard.document' ,{
 				url : '/admin/documentMaster',
@@ -106,6 +116,26 @@
 				resolve :{
 					tickets : function(ticketService){
 						return ticketService.getAllTickets();
+					}
+				}
+			})
+			.state('dashboard.markedTicketDetails' ,{
+				url : '/user/marked-ticket/:id',
+				templateUrl : 'js/user/ticket/markedTicketDetail.html',
+				controller : 'MarkedTicketUserController',
+				resolve :{
+					tickets : function(ticketService){
+						return ticketService.getMarkedTickets();
+					}
+				}
+			})
+			.state('dashboard.myTicketDetails' ,{
+				url : '/user/my-ticket/:id',
+				templateUrl : 'js/user/ticket/ticketDetail.html',
+				controller : 'MyTicketUserController',
+				resolve :{
+					tickets : function(ticketService){
+						return ticketService.getMyTickets();
 					}
 				}
 			});

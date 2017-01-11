@@ -86,7 +86,7 @@ $(function(){
 
 		self.reset = function(){
               self.designation = {
-				id : null ,
+				_id : null ,
 				short_name : '',
 				designation : '',
 			};

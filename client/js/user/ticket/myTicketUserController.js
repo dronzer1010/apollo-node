@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('TicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
+            .controller('MyTicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -18,7 +18,7 @@ $(function(){
                 self.tickets = [];
 
                 self.fetchAllTickets = function(){
-                    ticketService.getAllTickets()
+                    ticketService.getMyTickets()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
                                        // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
@@ -28,11 +28,7 @@ $(function(){
                 };
 
 
-                self.pickTicket = function(id){
-                    ticketService.pickTicket(id).then(self.fetchAllTickets, function(errResponse){
-										console.log('error picking ticket');
-									});
-                };
+                
 
                 self.fetchAllTickets();
 
@@ -52,13 +48,15 @@ $(function(){
 
                 // You never actually call this function
                 function list($scope, $stateParams) {
-                    ticketService.getAllTickets()
+                    ticketService.getMyTickets()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
+                                        console.log(self.tickets);
                                         var targetTicket = null;
                                          self.tickets.forEach(function(ticket){
-                                             if(ticket._id==$stateParams.id){
-                                                 targetTicket = ticket;
+                                             console.log(ticket.ticketId._id);
+                                             if(ticket.ticketId._id==$stateParams.id){
+                                                 targetTicket = ticket.ticketId;
                                              }
 
                                         });

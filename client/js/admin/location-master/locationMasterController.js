@@ -13,7 +13,7 @@ $(function(){
 
 		self.locations = []
         ,$scope.currentPage = 1
-    	,$scope.itemsPerPage = 5
+    	,$scope.itemsPerPage = 7
         ,$scope.maxSize = 5;
 
 		//method to fetch all services 
@@ -89,7 +89,7 @@ $(function(){
 
 		self.reset = function(){
               self.location = {
-				id : null ,
+				_id : null ,
 				name : '',
 				division : '',
 			};

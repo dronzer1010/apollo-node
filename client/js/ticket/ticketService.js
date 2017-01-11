@@ -41,6 +41,70 @@ $(function(){
 							}
 					);
 			},
+			getMyTickets : function(){
+				var config =	{
+						method: 'GET',
+						url: url+'/api/tickets/mytickets',
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+				return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while fetching ticket');
+								return $q.reject(errResponse);
+							}
+					);
+			},
+
+			getMarkedTickets : function(){
+				var config =	{
+						method: 'GET',
+						url: url+'/api/tickets/marked',
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+				return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while fetching ticket');
+								return $q.reject(errResponse);
+							}
+					);
+			},
+
+
+
+			pickTicket: function(id){
+					var config =	{
+						method: 'PUT',
+						url: url+'/api/tickets/pick/'+id,
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+					return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while creating ticket');
+								return $q.reject(errResponse);
+							}
+					);
+				},
 
 		
         }

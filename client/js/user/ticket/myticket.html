@@ -1,4 +1,4 @@
-<div ng-controller="TicketUserController as ctrl">
+<div ng-controller="MyTicketUserController as ctrl">
     <div class="col-md-9">
         	<div class="panel panel-default">
                 <div class="panel-heading">
@@ -16,7 +16,7 @@
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-3 col-md-offset-4 ">
+                                    <div class="col-md-3 col-md-offset-4">
                                         
                                         <select style="" ng-model="orderList" ng-init="orderList='createdAt'" class="form-control">
                                             <option value="-ticketPriority">Priority</option>
@@ -43,8 +43,8 @@
                                 <th>Details</th>
                                 <th>Status</th>
                             </tr>
-                            <tr ng-repeat="ticket  in ctrl.tickets | filter:searchText||orderBy:orderList| offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
-                                <td>{{ctrl.tickets.indexOf(ticket) + 1}}</td>
+                            <tr ng-repeat="tempTicket  in ctrl.tickets | filter:searchText||orderBy:orderList| offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage" ng-init="ticket=tempTicket.ticketId">
+                                <td>{{ctrl.tickets.indexOf(tempTicket) + 1}}</td>
                                 <td>{{ticket.firstName +' '+ticket.lastName}}</td>
                                 <td>{{ticket.designation.short_name}}</td>
                                 <td>{{ticket.location.name}}</td>
@@ -62,7 +62,7 @@
                                     <span ng-if="ticket.ticketPriority=='2'">High</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-sm btn-primary" ui-sref="dashboard.ticketDetails({id : ticket._id})">Details</a>
+                                    <a class="btn btn-sm btn-primary" ui-sref="dashboard.myTicketDetails({id : ticket._id})">Details</a>
                                 </td>
                                 <td>
                                     <button ng-if="ticket.isPicked==false"class="btn btn-warning btn-sm" ng-click="ctrl.pickTicket(ticket._id)">Pick</button>

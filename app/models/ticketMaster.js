@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var TicketMaster = new Schema({
   
   isPicked : {
-      type : String ,
+      type : Boolean ,
       required : true
   },
   
@@ -39,6 +39,7 @@ var TicketMaster = new Schema({
      type: Schema.Types.ObjectId, 
      ref: 'Users', 
   },
+
   ticketType : {
     type:String ,
 

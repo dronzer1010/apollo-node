@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var router   = express.Router();
 var jwt      = require('jwt-simple');
 var Ticket = require(__base + 'app/models/ticketMaster');
+var OwnerData = require(__base + 'app/models/ownerData');
 var config = require(__base + 'app/config/database');
 
 router.post('/' , function(req,res){
@@ -19,7 +20,8 @@ router.post('/' , function(req,res){
             ticketPriority : req.body.ticketPriority,
             ticketNotes : (req.body.ticketNotes)?req.body.ticketNotes : '',
             markDirectTo : (req.body.markDirectTo)?req.body.markDirectTo : null ,
-            isPicked : (req.body.markDirectTo)?"some" :"false",
+            isPicked : false,
+            ticketOwner : null,
             ticketType : req.body.ticketType,
             replyByDate : req.body.replyByDate ,
             transactionalDetails : {
@@ -74,7 +76,7 @@ router.get('/',function(req,res){
     if(token){
         var decoded = jwt.decode(token, config.secret);
         var populateQuery = [{path:'designation'},{path:'location'}];
-        Ticket.find( { $or:[ {markDirectTo : decoded._id}, {markDirectTo : null}]})
+        Ticket.find( {isPicked:false,markDirectTo:null})
                 .populate(populateQuery)
                 .exec( function(err,docs){
                 if(!err){
@@ -87,6 +89,80 @@ router.get('/',function(req,res){
         res.status(403).send({success : false , msg : "Token not provided"});
     }
 });
+
+
+router.get('/marked',function(req,res){
+    var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        var populateQuery = [{path:'designation'},{path:'location'}];
+        Ticket.find( {isPicked:false,markDirectTo:decoded._id})
+                .populate(populateQuery)
+                .exec( function(err,docs){
+                if(!err){
+                    res.status(200).send({success : true , data : docs});
+                }else{
+                    res.status(400).send({success : false , msg : err});
+                }
+            });
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    }
+});
+
+
+
+
+router.put('/pick/:id' , function(req,res){
+   var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        var newOwner = new OwnerData({
+            userId : decoded._id,
+            ticketId : req.params.id
+        });
+
+        newOwner.save(function(err,data){
+            if(!err){
+                Ticket.update({_id : req.params.id},{$set:{isPicked:true}},function(err,data){
+                    if(!err){
+                        res.status(200).send({success : true ,msg : "Ticked Picked"});
+                    }else{
+                        res.status(400).send({success : false , msg : err});
+                    }
+                });
+            }else{
+                res.status(400).send({success : false , msg : err});
+            }
+        });
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    } 
+});
+
+router.get('/mytickets' , function(req,res){
+   var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        var populateQuery = [{path:'ticketId',populate:[{path:'designation'},{path:'location'}]}];
+        OwnerData.find( {userId:decoded._id})
+                .populate(populateQuery)
+                .exec( function(err,docs){
+                if(!err){
+                    res.status(200).send({success : true , data : docs});
+                }else{
+                    res.status(400).send({success : false , msg : err});
+                }
+            });
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    } 
+});
+
+
 
 /**
  *  Generic token parsing function

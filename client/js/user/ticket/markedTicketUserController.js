@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('TicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
+            .controller('MarkedTicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -18,7 +18,7 @@ $(function(){
                 self.tickets = [];
 
                 self.fetchAllTickets = function(){
-                    ticketService.getAllTickets()
+                    ticketService.getMarkedTickets()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
                                        // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
@@ -52,7 +52,7 @@ $(function(){
 
                 // You never actually call this function
                 function list($scope, $stateParams) {
-                    ticketService.getAllTickets()
+                    ticketService.getMarkedTickets()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
                                         var targetTicket = null;
