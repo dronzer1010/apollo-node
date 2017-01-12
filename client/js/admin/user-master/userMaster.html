@@ -11,7 +11,37 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                            <div class="row">
-                           	
+                            <!-- Table satarts -->
+                            <div class="col-md-12">
+                              <table class="table table-striped">
+                                <tr>
+                                  <th>No.</th>
+                                  <th>Name</th>
+                                  <th>Mark Direct</th>
+                                
+                                  <th>Edit</th>
+                                  <th>Delete</th>
+                                </tr>
+                                <tr ng-repeat ="user in ctrl.users | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
+                                  <td>{{ctrl.users.indexOf(user) + 1}}</td>
+                                  <td ng-bind="user.firstName"></td>
+                                  <td><button ng-class="(user.markDirect)?'btn btn-sm btn-warning' :'btn btn-sm btn-primary'" ng-click="ctrl.markDirect(user._id ,user.markDirect)">{{(user.markDirect)?'Marked Direct':'Mark Direct'}}</button></td>
+                                  <td><button class="btn btn-sm btn-default" ng-click="ctrl.edit(user._id)"><i class="fa fa-pencil"></i></button></td>
+                                  <td><button class="btn btn-sm btn-default" ng-click="ctrl.remove(user._id)"><i class="fa fa-trash-o"></i></button></td>
+                                </tr>
+                              </table>
+                            </div>
+                           </div>
+                           <div class="row">
+                            <div class="col-md-8 ">
+                              <ul uib-pagination  total-items="ctrl.users.length" items-per-page="itemsPerPage" ng-model="currentPage"></ul>
+                            </div>
+                          </div>
+
+
+
+                            <!-- End of Table -->
+                            <!--
                            	<div class="col-md-6" ng-repeat ="user in ctrl.users">
                               <div class="user-card">
                                 <div class="row">
@@ -59,7 +89,7 @@
 
                               </div>
                             </div>                           	
-                         
+                         -->
                            
                         </div>
                         <!-- /.panel-body -->
@@ -72,7 +102,7 @@
                         <div class="panel-heading">
                             <i class="fa fa-plus"></i> Add User
                         </div>
-                        <!-- /.panel-heading -->
+                        <!-- /.panel-heading1 -->
                         <div class="panel-body">
                     		
                     		<form class="form" name="userForm" ng-submit="ctrl.submit()">

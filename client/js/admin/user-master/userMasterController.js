@@ -18,7 +18,10 @@ $(function(){
 							markDirect : false
 						};
 
-						self.users = [];
+						self.users = [],
+						$scope.currentPage = 1
+						,$scope.itemsPerPage = 5
+						,$scope.maxSize = 5;
 
 						//method to fetch all users 
 						self.fetchAllUsers = function(){
