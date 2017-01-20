@@ -124,7 +124,15 @@ var TicketMaster = new Schema({
   },
   attachedDocuments : {
       type : [String]
-  }
+  },
+  ticketOwner:{
+    type: Schema.Types.ObjectId, 
+    ref: 'Users', 
+  },
+  ticketCo_Owners:[{
+      type: Schema.Types.ObjectId, 
+        ref: 'Users',
+  }]
 
 },{
     timestamps: true

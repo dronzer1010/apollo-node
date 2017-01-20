@@ -24,7 +24,9 @@
                                         </p>
 
                                     </div>
-                                    
+                                    <div class="col-md-4">
+                                        <button class="btn btn-sm" ng-click="ctrl.open('body',_id)">Add Co-Manager</button>
+                                    </div>
                                 </div>
                                 <hr>
                                 <div class="row">
@@ -89,4 +91,37 @@
                 </div>
             </div>
     </div>
+
+
+     <script type="text/ng-template" id="coManagerTemplate.html">
+
+        <div class="modal-header">
+            <h3 class="modal-title" id="CM-modal-title">Document Template</h3>
+        </div>
+        <div class="modal-body" id="CM-modal-body">
+          <form class="form">
+              <div class="row">
+                <div class="col-md-6" >
+                  <div class="form-group">
+                    <label >Co-Manager</label>
+                    <comanagers ng-model="ctrl2.data.comanager"  name="comanager" ticket-id="{{_id}}"></comanagers>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-primary" type="button" ng-click="ctrl2.submit()" >Submit</button>
+
+              </div>
+              <div class="col-md-3 pull-right">
+                <button class="btn btn-warning" type="button" ng-click="ctrl2.cancel()" >Cancel</button>
+              </div>
+            </div>
+        </div>
+
+</script>
+
 </div>

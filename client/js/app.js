@@ -131,7 +131,7 @@
 			})
 			.state('dashboard.myTicketDetails' ,{
 				url : '/user/my-ticket/:id',
-				templateUrl : 'js/user/ticket/ticketDetail.html',
+				templateUrl : 'js/user/ticket/myTicketDetail.html',
 				controller : 'MyTicketUserController',
 				resolve :{
 					tickets : function(ticketService){

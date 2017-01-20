@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('MyTicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
+            .controller('MyTicketUserController',['$scope','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope ,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -54,9 +54,9 @@ $(function(){
                                         console.log(self.tickets);
                                         var targetTicket = null;
                                          self.tickets.forEach(function(ticket){
-                                             console.log(ticket.ticketId._id);
-                                             if(ticket.ticketId._id==$stateParams.id){
-                                                 targetTicket = ticket.ticketId;
+                                             //console.log(ticket.ticketId._id);
+                                             if(ticket._id==$stateParams.id){
+                                                 targetTicket = ticket;
                                              }
 
                                         });
@@ -71,6 +71,45 @@ $(function(){
                     list($scope, $stateParams);
                     //console.log($scope);
                 }
+
+
+
+                self.open = function(parent , data ){
+
+                    
+                    self.modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'coManagerTemplate.html',
+                        controller : function($uibModalInstance,ticketService , $scope){
+                            var self2=this;
+                           self2.submit=function(){
+                               
+                                ticketService.createComanager(data ,self2.data).then(self.fetchAllTickets, function(errResponse){
+                                                    console.log('error creating comanager');
+                                                });
+                                $uibModalInstance.dismiss('cancel');
+                            };
+                           
+                            self2.data={
+                                comanager:""
+                        };
+                            self2.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            }
+                        },
+                        controllerAs :'ctrl2',
+                        scope : $scope,
+                        size: 'md',
+                        appendTo: angular.element($document[0].querySelector(parent)),
+                        resolve: {
+                            
+                        }
+                    });
+                    //add
+
+                };
                 
             }]);
 }());

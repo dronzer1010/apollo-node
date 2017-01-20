@@ -3,8 +3,12 @@ var mongoose = require('mongoose');
 var router   = express.Router();
 var jwt      = require('jwt-simple');
 var Ticket = require(__base + 'app/models/ticketMaster');
-var OwnerData = require(__base + 'app/models/ownerData');
+var User = require(__base + 'app/models/userMaster');
+var mailer   = require('nodemailer');
+var mg       = require('nodemailer-mailgun-transport');
 var config = require(__base + 'app/config/database');
+var helper = require('sendgrid').mail;
+
 
 router.post('/' , function(req,res){
 
@@ -119,24 +123,16 @@ router.put('/pick/:id' , function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var newOwner = new OwnerData({
-            userId : decoded._id,
-            ticketId : req.params.id
-        });
+        
 
-        newOwner.save(function(err,data){
-            if(!err){
-                Ticket.update({_id : req.params.id},{$set:{isPicked:true}},function(err,data){
+        Ticket.update({_id : req.params.id},{$set:{isPicked:true , ticketOwner:decoded._id}},function(err,data){
                     if(!err){
                         res.status(200).send({success : true ,msg : "Ticked Picked"});
                     }else{
                         res.status(400).send({success : false , msg : err});
                     }
                 });
-            }else{
-                res.status(400).send({success : false , msg : err});
-            }
-        });
+
     }else{
         res.status(403).send({success : false , msg : "Token not provided"});
     } 
@@ -147,8 +143,8 @@ router.get('/mytickets' , function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'ticketId',populate:[{path:'designation'},{path:'location'}]}];
-        OwnerData.find( {userId:decoded._id})
+        var populateQuery = [{path:'designation'},{path:'location'}];
+        Ticket.find({$or:[ {ticketOwner:decoded._id},{ticketCo_Owners :decoded._id} ]})
                 .populate(populateQuery)
                 .exec( function(err,docs){
                 if(!err){
@@ -163,6 +159,69 @@ router.get('/mytickets' , function(req,res){
 });
 
 
+
+
+
+router.post('/mail' , function(req,res){
+    sg.API(request, function(error, response) {
+        
+            res.status(response.statusCode).send({msg:response});   
+    });
+});
+
+
+
+router.get('/comanagers/:id' , function(req,res){
+    Ticket.findOne({_id :req.params.id},function(err,data){
+        if(!err){
+            var temp_arr =data.ticketCo_Owners.slice();
+            temp_arr.push(data.ticketOwner);
+
+            User.find({_id : {$nin : temp_arr}},function(err ,users){
+                if(!err){
+                    res.status(200).send({success : true , data : users});
+                }else{
+                    res.status(400).send({success : false , msg : err}); 
+                }
+            });
+        
+        }else{
+           res.status(400).send({success : false , msg : err}); 
+        }
+    });
+});
+router.post('/comanagers/:id' , function(req,res){
+    console.log("Value of comanager id is "+req.body.comanager);
+    if(!req.body.comanager){
+        res.status(200).send({success : false , msg : "Invalid parameters"});
+    }else{
+        Ticket.update({_id:req.params.id},{$push :{ticketCo_Owners:req.body.comanager._id}},function(err,data){
+            if(!err){
+                var user=req.body.comanager;
+                var from_email = new helper.Email('sravik1010@gmail.com');
+                var to_email = new helper.Email(user.email);
+                var subject = 'Added as Co-Manager';
+                var content = new helper.Content('text/plain', 'Hello '+user.firstName+" "+user.lastName+' , You have been made Co-manager to a ticket . Please Login and check ticket in "My Tickets Section" .');
+                var mail = new helper.Mail(from_email, subject, to_email, content);
+
+
+                var sg = require('sendgrid')(config.mail_key);
+                var request = sg.emptyRequest({
+                method: 'POST',
+                path: '/v3/mail/send',
+                body: mail.toJSON(),
+                });
+                sg.API(request, function(error, response) {
+        
+                    res.status(200).send({success : true , msg : "Co Manager Created"});   
+            });
+                
+            }else{
+                res.status(400).send({success : false , msg : err});
+            }
+        });
+    }
+});
 
 /**
  *  Generic token parsing function

@@ -58,6 +58,7 @@ $(function(){
                     $scope.transactionFinalDate_popup.opened = true;
                 };
 
+                
                  $scope.dateOptions = {
                     dateDisabled: false,
                     formatYear: 'yy',
@@ -204,7 +205,7 @@ $(function(){
                             
                         }
                     });
-
+                    //add
 
                 };
                 

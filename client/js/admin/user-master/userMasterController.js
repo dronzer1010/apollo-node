@@ -55,6 +55,7 @@ $(function(){
 													});
 						};
 						self.submit = function() {
+							//console.log('Im called');
 			              if(self.user._id===null){
 			                  console.log('Saving New User', self.user);    
 			                  self.createUser(self.user);
@@ -94,6 +95,7 @@ $(function(){
 
 			          self.edit = function(id){
 			              console.log('id to be edited', id);
+						  console.log(self.user);
 			              for(var i = 0; i < self.users.length; i++){
 			                  if(self.users[i]._id === id) {
 			                     self.user = angular.copy(self.users[i]);
@@ -102,6 +104,7 @@ $(function(){
 			                     break;
 			                  }
 			              }
+						  console.log(self.user);
 			          };
 
 			          self.remove = function(id){
