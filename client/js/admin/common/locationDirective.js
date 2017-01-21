@@ -3,7 +3,7 @@ $(function(){
 
 	angular.module('apolloApp')
 			.directive('locations' ,['locationMasterService' ,function(locationMasterService){
-
+				var space=" ";
 				return {
 			      restrict: 'E',
 			      replace:true,

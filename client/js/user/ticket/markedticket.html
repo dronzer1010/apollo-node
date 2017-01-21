@@ -47,7 +47,7 @@
                                 <td>{{ctrl.tickets.indexOf(ticket) + 1}}</td>
                                 <td>{{ticket.firstName +' '+ticket.lastName}}</td>
                                 <td>{{ticket.designation.short_name}}</td>
-                                <td>{{ticket.location.name}}</td>
+                                <td>{{ticket.location.name+' , '+ticket.location.division}}</td>
                                 <td>
                                     <span ng-if="ticket.ticketType=='transactionalType'">Transactional</span>
                                     <span ng-if="ticket.ticketType=='litigationalType'">Litigational</span>
