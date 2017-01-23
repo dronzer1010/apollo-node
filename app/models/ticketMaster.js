@@ -65,7 +65,8 @@ var TicketMaster = new Schema({
           default : 'new'
       },
       documentType : {
-          type : String
+          type: Schema.Types.ObjectId, 
+          ref: 'DocumentTemplateField',
       },
       notes : {
           type : String

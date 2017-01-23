@@ -19,7 +19,7 @@ $(function(){
                     transactionType : "opinion",
                     transactionFinalDate : new Date(),
                     transactionNewOrExisting : "new",
-                    transactionDocumentType : "medico_legal",
+                    transactionDocumentType : "",
                     transactionAdditionalDetails:[],
                     transactionNotes : "" ,
                     litigationNoticeReceived : "N",
