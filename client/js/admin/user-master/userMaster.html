@@ -25,7 +25,7 @@
                                 <tr ng-repeat ="user in ctrl.users | offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
                                   <td>{{ctrl.users.indexOf(user) + 1}}</td>
                                   <td ng-bind="user.firstName"></td>
-                                  <td><button ng-class="(user.markDirect)?'btn btn-sm btn-warning' :'btn btn-sm btn-primary'" ng-click="ctrl.markDirect(user._id ,user.markDirect)">{{(user.markDirect)?'Marked Direct':'Mark Direct'}}</button></td>
+                                  <td><button ng-class="(user.userType=='legalteam_member' || user.userType=='senior_counsel')?((user.markDirect)?'btn btn-sm btn-warning' :'btn btn-sm btn-primary') :'btn btn-sm btn-primary disabled' " ng-click="(user.userType=='legalteam_member' || user.userType=='senior_counsel')?ctrl.markDirect(user._id ,user.markDirect):'' ">{{(user.markDirect)?'Marked Direct':'Mark Direct'}}</button></td>
                                   <td><button class="btn btn-sm btn-default" ng-click="ctrl.edit(user._id)"><i class="fa fa-pencil"></i></button></td>
                                   <td><button class="btn btn-sm btn-default" ng-click="ctrl.remove(user._id)"><i class="fa fa-trash-o"></i></button></td>
                                 </tr>
