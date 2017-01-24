@@ -57,6 +57,10 @@ var TicketMaster = new Schema({
           default : 'opinion'
 
       },
+      transactionType : {
+          type: Schema.Types.ObjectId, 
+          ref: 'DocumentTemplateField',
+      },
       finalDate : {
           type : Date
       },

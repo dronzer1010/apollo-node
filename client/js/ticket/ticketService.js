@@ -24,7 +24,27 @@ $(function(){
 			getAllTickets : function(){
 				var config =	{
 						method: 'GET',
-						url: url+'/api/tickets',
+						url: url+'/api/tickets/open',
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+				return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while fetching ticket');
+								return $q.reject(errResponse);
+							}
+					);
+			},
+			getAllTickets_r : function(){
+				var config =	{
+						method: 'GET',
+						url: url+'/api/tickets/',
 						headers: {
 							authorization : $rootScope.user.token
 						},

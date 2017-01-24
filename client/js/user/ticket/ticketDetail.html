@@ -36,7 +36,7 @@
                                                 <br>
                                                 Type : {{transactionalDetails.type}}
                                                 <br>
-                                                Document Type : {{transactionalDetails.documentType.legalType}}
+                                                Document Type : {{(transactionalDetails.documentType)?transactionalDetails.documentType.legalType:'None'}}
                                                 <br>
                                                 Final Date : {{transactionalDetails.finalDate }}
                                                 <br>

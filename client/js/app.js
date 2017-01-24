@@ -84,10 +84,20 @@
 				templateUrl : 'js/admin/user-master/userMaster.html',
 				controller : 'UserMasterController'
 			})
+			.state('dashboard.admin-ticket' ,{
+				url : '/admin/tickets',
+				templateUrl : 'js/admin/tickets/adminTickets.html',
+				controller : 'AdminTicketsController'
+			})
 			.state('dashboard.ticket' ,{
 				url : '/user/open-tickets',
 				templateUrl : 'js/user/ticket/ticket.html',
 				controller : 'TicketUserController'
+			})
+			.state('dashboard.all-tickets' ,{
+				url : '/user/all-tickets',
+				templateUrl : 'js/user/ticket/alltickets.html',
+				controller : 'AllTicketController'
 			})
 			.state('dashboard.my-tickets' ,{
 				url : '/user/my-tickets',
@@ -126,6 +136,26 @@
 				resolve :{
 					tickets : function(ticketService){
 						return ticketService.getMarkedTickets();
+					}
+				}
+			})
+			.state('dashboard.allTicketDetail' ,{
+				url : '/user/detail-ticket/:id',
+				templateUrl : 'js/user/ticket/allTicketsDetail.html',
+				controller : 'AllTicketController',
+				resolve :{
+					tickets : function(ticketService){
+							return ticketService.getAllTickets_r();
+					}
+				}
+			})
+			.state('dashboard.adminTicketDetail' ,{
+				url : '/admin/tickets/:id',
+				templateUrl : 'js/admin/tickets/adminTicketDetail.html',
+				controller : 'AdminTicketsController',
+				resolve :{
+					tickets : function(ticketService){
+							return ticketService.getAllTickets_r();
 					}
 				}
 			})

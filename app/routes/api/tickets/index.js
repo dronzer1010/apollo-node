@@ -32,6 +32,7 @@ router.post('/' , function(req,res){
                 type : (req.body.ticketType == 'transactionalType')?req.body.transactionType : null ,
                 finalDate : (req.body.ticketType == 'transactionalType')?req.body.transactionFinalDate : null,
                 newOrExisting : (req.body.ticketType == 'transactionalType')?req.body.transactionNewOrExisting : null,
+                transactionType : (req.body.ticketType == 'transactionalType')?req.body.transactionType2 : null,
                 documentType : (req.body.ticketType == 'transactionalType')?req.body.transactionDocumentType : null,
                 notes : (req.body.ticketType == 'transactionalType')?req.body.transactionNotes : null,
             },
@@ -74,12 +75,33 @@ router.post('/' , function(req,res){
 
 
 //route to get all tickets
+
 router.get('/',function(req,res){
     var token = getToken(req.headers);
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        Ticket.find( {})
+                .populate(populateQuery)
+                .exec( function(err,docs){
+                if(!err){
+                    res.status(200).send({success : true , data : docs});
+                }else{
+                    res.status(400).send({success : false , msg : err});
+                }
+            });
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    }
+});
+
+router.get('/open',function(req,res){
+    var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:null})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -100,7 +122,7 @@ router.get('/marked',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:decoded._id})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -143,7 +165,7 @@ router.get('/mytickets' , function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find({$or:[ {ticketOwner:decoded._id},{ticketCo_Owners :decoded._id} ]})
                 .populate(populateQuery)
                 .exec( function(err,docs){

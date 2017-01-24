@@ -255,6 +255,9 @@
                             <a ui-sref=".document" ui-sref-active="active"><i class="fa fa-sticky-note"></i>Document Template Master</a>
                             </li>
                             <li>
+                            <a ui-sref=".admin-ticket" ui-sref-active="active"><i class="fa fa-sticky-note"></i>All Tickets</a>
+                            </li>
+                            <li>
                             <a ui-sref="#" ui-sref-active="active"><i class="fa fa-file-text"></i>Documents</a>
                             </li>
 
@@ -288,14 +291,17 @@
                             <li>
                                 <a ui-sref="dashboard" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Home</a>
                             </li>
-                            <li>
+                            <li ng-if="$root.user.userType =='legalteam_member'|| $root.user.userType =='senior_counsel'">
                                 <a ui-sref=".ticket" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Open Tickets</a>
                             </li>
-                            <li>
+                            <li ng-if="$root.user.userType =='legalteam_member'|| $root.user.userType =='senior_counsel'">
                                 <a ui-sref=".my-tickets" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>My Tickets</a>
                             </li>
-                            <li>
+                            <li ng-if="$root.user.userType =='legalteam_member'|| $root.user.userType =='senior_counsel'">
                                 <a ui-sref=".marked-me" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Marked to me</a>
+                            </li>
+                            <li ng-if="$root.user.userType =='executive'">
+                                <a ui-sref=".all-tickets" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>All Tickets</a>
                             </li>
                            
                     </ul>
