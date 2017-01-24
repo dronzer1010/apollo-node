@@ -77,11 +77,20 @@
                                     <div class="col-md-12">
                                         <h5>Attachments</h5>
                                     </div>
-                                    <a ng-repeat="document in attachedDocuments" href="{{document}}">
-                                        <div class="col-md-4">
-                                            <i class="fa fa-file"></i>{{document.split('/')[2]}}
-                                        </div>
-                                    <a>
+                                    <div class="col-md-12">
+                                        <table class="table table-striped ">
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Document</th>
+                                                <th>Approve</th>
+                                            </tr>
+                                            <tr ng-repeat="document in attachedDocuments">
+                                                <td>{{attachedDocuments.indexOf(document) + 1}}</td>
+                                                <td><a href="{{document}}">{{document.split('/')[2]}}</a></td>
+                                                <td><button class="btn btn-sm btn-primary">Approve</button></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                                 
                             </div>
