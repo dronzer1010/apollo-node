@@ -4,6 +4,9 @@ var router   = express.Router();
 var jwt      = require('jwt-simple');
 var Ticket = require(__base + 'app/models/ticketMaster');
 var User = require(__base + 'app/models/userMaster');
+var MessageThread = require(__base + 'app/models/messageThreadMaster');
+
+
 var mailer   = require('nodemailer');
 var mg       = require('nodemailer-mailgun-transport');
 var config = require(__base + 'app/config/database');
@@ -61,7 +64,26 @@ router.post('/' , function(req,res){
 
         newTicket.save(function(err , data){
             if(!err){
-                res.status(200).send({success :true , data : data});
+
+                var tempThread = new MessageThread({
+                    ticketId : data._id
+                });
+
+                tempThread.save(function(err , thread){
+                    if(!err){
+                        Ticket.update({_id:data._id},{$set : {messageThread :thread._id}},function(err,tickt){
+                            if(!err){
+                                res.status(200).send({success :true , data : data});
+                            }else{
+                               res.status(400).send({success:false , msg : err}); 
+                            }
+                        });
+                    }else{
+                        res.status(400).send({success:false , msg : err});
+                    }
+                });
+
+                //res.status(200).send({success :true , data : data});
             }else{
 
                 res.status(400).send({success:false , msg : err});
@@ -81,7 +103,7 @@ router.get('/',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -101,7 +123,7 @@ router.get('/open',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:null})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -122,7 +144,7 @@ router.get('/marked',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:decoded._id})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -165,7 +187,7 @@ router.get('/mytickets' , function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find({$or:[ {ticketOwner:decoded._id},{ticketCo_Owners :decoded._id} ]})
                 .populate(populateQuery)
                 .exec( function(err,docs){

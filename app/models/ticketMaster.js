@@ -137,8 +137,15 @@ var TicketMaster = new Schema({
   ticketCo_Owners:[{
       type: Schema.Types.ObjectId, 
         ref: 'Users',
-  }]
-
+  }],
+task_list:[{
+    type:Schema.Types.ObjectId,
+    ref:'Tasks'
+}],
+messageThread : {
+        type: Schema.Types.ObjectId, 
+        ref: 'MessageThreads',
+}
 },{
     timestamps: true
 });

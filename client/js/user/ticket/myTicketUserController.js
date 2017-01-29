@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('MyTicketUserController',['$scope','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope ,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
+            .controller('MyTicketUserController',['$scope','$interval','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope ,$interval,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -14,7 +14,7 @@ $(function(){
                     ,$scope.maxSize = 5;
 
                     
-
+                $scope.messages=[];
                 self.tickets = [];
 
                 self.fetchAllTickets = function(){
@@ -66,13 +66,38 @@ $(function(){
 									});
                    
                 }
+                self.getMessages = function(){
+                    messageService.getMessage($stateParams.id).then(function(data){
+                        $scope.messages=data.data;
+                        
+                    }, function(err){
+                        console.log(err);
+                    });
+                };
                 
                 if ($stateParams.id) {
                     list($scope, $stateParams);
                     //console.log($scope);
+                    self.getMessages();
+                    $interval(self.getMessages, 5000);
+                    
                 }
 
 
+                
+
+
+                self.sendMessage = function(t_id){
+                    var temp={};
+                    temp.threadId=t_id;
+                    temp.senderId = $rootScope.user.sessionId;
+                    temp.message = self.message;
+                    console.log(temp);
+                    messageService.sendMessage(temp).then(self.getMessages(), function(errResponse){
+										console.log('error picking ticket');
+									});
+                    self.message="";
+                };
 
                 self.open = function(parent , data ){
 
@@ -111,5 +136,64 @@ $(function(){
 
                 };
                 
+
+
+
+
+                /****************Task Functions */
+                self.task = {
+                    _id : null ,
+                    name : '',
+                    type : 'Document',
+                    handlerName : "",
+                    handlerEmail : "",
+                    handlerNo : "",
+                    handlerLocation : null,
+                    taskPrivacy : "Closed",
+                    completionDate:"",
+                    handlingLocation:"",
+                    master :  $rootScope.user.sessionId,
+                    ticketId : $stateParams.id
+
+                };
+                $scope.completionDate_popup={
+                    opened : false
+                };
+                $scope.minDate=new Date();
+
+                self.createTask2 = function(data){
+                    ticketService.createTask(data).then(function(data){
+                        console.log(data);
+                    },function(err){
+                        console.log(err);
+                    });
+                }
+                self.reset = function(){
+                    self.task = {
+                        _id : null ,
+                        name : '',
+                        type : 'Document',
+                        handlerName : "",
+                        handlerEmail : "",
+                        handlerNo : "",
+                        handlerLocation : null,
+                        taskPrivacy : "Closed",
+                        completionDate:"",
+                        handlingLocation:"",
+                        master :  $rootScope.user.sessionId,
+                        ticketId : $stateParams.id
+
+                    };
+                }
+                self.createTask = function(){
+                    if(self.task._id===null){
+                        console.log('Saving New task', self.task);    
+                        self.createTask2(self.task);
+                    }
+                    
+                    self.reset();
+                }
+
+
             }]);
 }());

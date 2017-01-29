@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('MarkedTicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
+            .controller('MarkedTicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -14,7 +14,7 @@ $(function(){
                     ,$scope.maxSize = 5;
 
                     
-
+                self.message = "";
                 self.tickets = [];
 
                 self.fetchAllTickets = function(){
@@ -33,6 +33,8 @@ $(function(){
 										console.log('error picking ticket');
 									});
                 };
+
+                
 
                 self.fetchAllTickets();
 

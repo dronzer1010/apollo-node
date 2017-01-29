@@ -1,11 +1,12 @@
 <div ng-controller="MyTicketUserController as ctrl">
      <div class="col-md-8">
-        	<div class="panel panel-default">
+        	
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user fa-fw"></i> Ticket Detail    
                 </div>
                         <!-- /.panel-heading -->
-                <div class="panel-body">
+                <div class="panel-body ticket-detail-panel">
                     <div class="row">
                         <div class="col-md-offset-1 col-md-10">
                             <div class="card card-block">
@@ -84,22 +85,183 @@
                                                 <th>Document</th>
                                                 <th>Approve</th>
                                             </tr>
-                                            <tr ng-repeat="document in attachedDocuments">
+                                            <tr ng-if="attachedDocuments.length!=0" ng-repeat="document in attachedDocuments">
                                                 <td>{{attachedDocuments.indexOf(document) + 1}}</td>
                                                 <td><a href="{{document}}">{{document.split('/')[2]}}</a></td>
                                                 <td><button class="btn btn-sm btn-primary">Approve</button></td>
                                             </tr>
+                                            <tr ng-if="attachedDocuments.length==0">
+                                                <td colspan="3" style="text-align:center">No Documents Attached</td>
+                                            </tr>
                                         </table>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5>Tasks</h5>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <table class="table table-striped ">
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>Task Name</th>
+                                                <th>Handler Email</th>
+                                                <th>Details</th>
+                                            </tr>
+                                            <tr ng-if="task_list.length!=0" ng-repeat="tsk in task_list">
+                                                <td>{{task_list.indexOf(tsk) + 1}}</td>
+                                                <td>{{tsk.taskName}}</td>
+                                                <td>{{tsk.taskHandlerEmail}}</td>
+                                                <td><button class="btn btn-sm btn-primary">Detail</button></td>
+                                            </tr>
+                                            <tr ng-if="task_list.length==0">
+                                                <td colspan="4" style="text-align:center">No Task Created</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                
                                 
                             </div>
                         </div> 
                     </div>
                     <!-- /.panel-body -->
                 </div>
+
+
+
+
             </div>
+
+            <div class="panel panel-success">
+                <div class="panel-heading" id="accordion">
+                    <span class="glyphicon glyphicon-comment"></span> Messages
+                    <div class="btn-group pull-right">
+                        
+                    </div>
+                </div>
+            <div class="panel-collapse " id="collapseOne">
+                <div class="panel-body chat-panel">
+                    <ul class="chat">
+                       
+                        <li ng-class="$root.user.sessionId ==msg.senderId._id?'right clearfix' : 'left clearfix'" ng-repeat="msg in messages">
+                            <span ng-class="$root.user.sessionId ==msg.senderId._id?'chat-img pull-right':'chat-img pull-left'" >
+                                <img ng-if="$root.user.sessionId ==msg.senderId._id" src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                                <img ng-if="$root.user.sessionId !=msg.senderId._id" src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                            </span>
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <span ng-if="$root.user.sessionId ==msg.senderId._id">
+
+                                    </span>
+                                    <span ng-if"$root.user.sessionId !=msg.senderId._id">
+                                        
+                                    </span>
+                                    <small ng-class="$root.user.sessionId ==msg.senderId._id?'text-muted' : 'pull-right text-muted'" ><span class="glyphicon glyphicon-time"></span>{{msg.createdAt | amTimeAgo}}</small>
+                                    <strong ng-class="$root.user.sessionId ==msg.senderId._id? 'pull-right primary-font':'pull-left primary-font'" ng-bind="msg.senderId.firstName"></strong>
+                                </div>
+                                <p ng-bind="msg.message">
+                                   
+                                </p>
+                            </div>
+                        </li>
+                        
+                        
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" ng-model="ctrl.message" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat" ng-click="ctrl.sendMessage(messageThread)">
+                                Send
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+
     </div>
+
+    <!--Task Creation Form-->
+    <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-plus"></i> Create Task
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                    		
+                    		<form class="form" name="taskForm" ng-submit="ctrl.createTask()">
+                                <input type="hidden" ng-model="ctrl.task._id">
+                    			<div class="form-group">
+                    				<label>Task Name</label>
+                    				<input type="text" name="name" class="form-control" ng-model="ctrl.task.name" required>
+                    			</div>
+
+                    			<div class="form-group">
+                    				<label>Task Type</label>
+                    				<select name="type" class="form-control" ng-model="ctrl.task.type" required>
+                                        <option value="Document">Document</option>
+                                        <option value="Opinion">Opinion</option>
+                                        <option value="Data request">Data Request</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                    			</div>
+                                <div class="form-group">
+                    				<label>Task Completion Date</label>
+                    				<input type="text" class="form-control" 
+                                        name="completionDate" uib-datepicker-popup="dd/MM/yyyy"  min-date="minDate" max-date="Date(replyByDate)"
+                                        ng-model="ctrl.task.completionDate" is-open="completionDate_popup.opened"  close-text="Close"  />
+                    			</div>
+                                <div class="form-group">
+                    				<label>Task Handling Location</label>
+                    				<select name="handlingLocation" class="form-control" ng-model="ctrl.task.handlingLocation" required>
+                                        <option value="Local">Local</option>
+                                        <option value="Corporate">Corporate</option>
+                                    </select>
+                    			</div>
+                                <div class="form-group">
+                    				<label>Task Handler Name</label>
+                    				<input type="text" name="handlerName" class="form-control" ng-model="ctrl.task.handlerName" required>
+                    			</div>
+                                <div class="form-group">
+                    				<label>Task Handler Email</label>
+                    				<input type="text" name="handlerEmail" class="form-control" ng-model="ctrl.task.handlerEmail" required>
+                    			</div>
+                                <div class="form-group">
+                    				<label>Task Handler Location</label>
+                    				<locations name="handlerLocation" class="form-control" ng-model="ctrl.task.handlerLocation"></locations>
+                    			</div>
+                                <div class="form-group">
+                    				<label>Handler Contact Number</label>
+                    				<input type="text" name="contactNumber" class="form-control" ng-model="ctrl.task.handlerNo" required>
+                    			</div>
+                                <div class="form-group">
+                    				<label>Task Privacy</label>
+                    				<select type="text" name="privacy" class="form-control" ng-model="ctrl.task.taskPrivacy" required>
+                                        <option value="Closed">Closed</option>
+                                        <option value="Open">Open</option>
+                                    </select>
+                    			</div>
+
+                    			<hr>
+                    			<input class="btn btn-block btn-primary" type="submit" ng-disabled="taskForm.$invalid" value="Create Task"/>
+
+                    		</form>	        
+                    	
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+
+           </div>
+
+
 
 
      <script type="text/ng-template" id="coManagerTemplate.html">

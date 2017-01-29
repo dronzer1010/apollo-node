@@ -14,6 +14,9 @@ router.use('/tickets' , require('./tickets'));
 
 router.use('/documents',require('./documentTemplate'));
 
+router.use('/messages',require('./messages'));
+router.use('/tasks',require('./tasks'));
+
 router.get('/' , function(req,res){
 	res.send('api routes here');
 });
