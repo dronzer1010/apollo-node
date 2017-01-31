@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('AllTicketController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService){
+            .controller('AllTicketController',['$scope','$interval','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope ,$interval, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -16,12 +16,12 @@ $(function(){
                     
 
                 self.tickets = [];
-
+                $scope.messages=[];
                 self.fetchAllTickets = function(){
                     ticketService.getAllTickets_r()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
-                                       // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
+                                       //// $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
 									},function(errResponse){
 										console.log('error fetching designations');
 									});
@@ -64,11 +64,32 @@ $(function(){
 									});
                    
                 }
+
+                self.getMessages = function(){
+                    messageService.getMessage($stateParams.id).then(function(data){
+                        $scope.messages=data.data;
+                        
+                    }, function(err){
+                        console.log(err);
+                    });
+                };
                 
                 if ($stateParams.id) {
                     list($scope, $stateParams);
                     //console.log($scope);
+                     self.getMessages();
+                    $interval(self.getMessages, 5000);
                 }
-                
+                self.sendMessage = function(t_id){
+                    var temp={};
+                    temp.threadId=t_id;
+                    temp.senderId = $rootScope.user.sessionId;
+                    temp.message = self.message;
+                    console.log(temp);
+                    messageService.sendMessage(temp).then(self.getMessages(), function(errResponse){
+										console.log('error picking ticket');
+									});
+                    self.message="";
+                };
             }]);
 }());
