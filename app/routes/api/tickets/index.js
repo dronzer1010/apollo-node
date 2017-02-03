@@ -18,6 +18,8 @@ router.post('/' , function(req,res){
     if(!req.body.firstName || !req.body.email || !req.body.location || !req.body.designation ||!req.body.replyByDate || !req.body.ticketType){
         res.status(200).send({success : false , msg : "Invalid parameters"});
     }else{
+        var transactionType2 = (req.body.transactionType2)?req.body.transactionType2:null;
+        var transactionDocumentType = (req.body.transactionDocumentType)?req.body.transactionDocumentType:null;
         var newTicket = new Ticket({
             firstName : req.body.firstName ,
             lastName : (req.body.lastName)?req.body.lastName :'',
@@ -35,8 +37,8 @@ router.post('/' , function(req,res){
                 type : (req.body.ticketType == 'transactionalType')?req.body.transactionType : null ,
                 finalDate : (req.body.ticketType == 'transactionalType')?req.body.transactionFinalDate : null,
                 newOrExisting : (req.body.ticketType == 'transactionalType')?req.body.transactionNewOrExisting : null,
-                transactionType : (req.body.ticketType == 'transactionalType')?req.body.transactionType2 : null,
-                documentType : (req.body.ticketType == 'transactionalType')?req.body.transactionDocumentType : null,
+                transactionType : (req.body.ticketType == 'transactionalType')?transactionType2 : null,
+                documentType : (req.body.ticketType == 'transactionalType')?transactionDocumentType : null,
                 notes : (req.body.ticketType == 'transactionalType')?req.body.transactionNotes : null,
             },
             litigationalDetails : {

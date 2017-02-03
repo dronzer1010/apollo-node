@@ -7,7 +7,7 @@ $(function(){
 				return {
 			      restrict: 'E',
 			      replace:true,
-			      template: "<select class='form-control' data-ng-options='document as document.legalType for document in documents track by document._id'><option value=''>None</option></select>",
+			      template: "<select class='form-control' data-ng-options='document as document.legalType for document in documents track by document._id'><option value='null'>None</option></select>",
 			      require: 'ngModel',
 			      link: function(scope, element, attrs, ngModelCtrl) {
 			        
