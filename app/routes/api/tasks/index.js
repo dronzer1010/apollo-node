@@ -30,7 +30,8 @@ router.post('/' , function(req, res){
             taskHandlerContactNo : req.body.handlerNo,
             taskPrivacy : req.body.taskPrivacy,
             status : 'open',
-            taskMaster : req.body.master
+            taskMaster : req.body.master,
+            ticketId:req.body.ticketId
 		});
 
 		newTask.save(function(err ,task){
@@ -51,7 +52,7 @@ router.post('/' , function(req, res){
                                         var from_email = new helper.Email('sravik1010@gmail.com');
                                         var to_email = new helper.Email(req.body.handlerEmail);
                                         var subject = 'Task Assigned';
-                                        var content = new helper.Content('text/plain', 'Hello '+req.body.handlerName+' , You have been assigned a task named "'+req.body.name+'" . You can access task through this link : http://www.apollo-node.herokuapp.com/api/tasks/'+task._id);
+                                        var content = new helper.Content('text/plain', 'Hello '+req.body.handlerName+' , You have been assigned a task named "'+req.body.name+'" . You can access task through this link : http://apollo-node.herokuapp.com/api/tasks/'+task._id);
                                         var mail = new helper.Mail(from_email, subject, to_email, content);
 
 

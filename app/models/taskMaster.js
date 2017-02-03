@@ -52,6 +52,10 @@ var TaskMaster = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'NotesThread', 
     },
+    ticketId:{
+        type: Schema.Types.ObjectId, 
+        ref: 'Tickets',
+    }
     
 
 
