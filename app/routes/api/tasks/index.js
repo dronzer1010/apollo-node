@@ -52,7 +52,7 @@ router.post('/' , function(req, res){
                                         var from_email = new helper.Email('sravik1010@gmail.com');
                                         var to_email = new helper.Email(req.body.handlerEmail);
                                         var subject = 'Task Assigned';
-                                        var content = new helper.Content('text/plain', 'Hello '+req.body.handlerName+' , You have been assigned a task named "'+req.body.name+'" . You can access task through this link : http://apollo-node.herokuapp.com/api/tasks/'+task._id);
+                                        var content = new helper.Content('text/plain', 'Hello '+req.body.handlerName+' , You have been assigned a task named "'+req.body.name+'" . You can access task through this link : http://apollo-node.herokuapp.com/#/task-detail/'+task._id);
                                         var mail = new helper.Mail(from_email, subject, to_email, content);
 
 
@@ -91,5 +91,19 @@ router.post('/' , function(req, res){
 	}
 });
 
+
+
+router.get('/:id',function(req,res){
+    var populateQuery = [{path:'taskMaster'},{path:'taskHandlerLocation'}];
+    Task.findOne({_id:req.params.id})
+    .populate(populateQuery)
+    .exec(function(err,data){
+        if(!err){
+            res.status(200).json({success : true , msg : data});
+        }else{
+            res.status(400).json({success : false , msg : err});
+        }
+    });
+});
 
 module.exports = router;

@@ -113,7 +113,7 @@
                                                 <td>{{task_list.indexOf(tsk) + 1}}</td>
                                                 <td>{{tsk.taskName}}</td>
                                                 <td>{{tsk.taskHandlerEmail}}</td>
-                                                <td><button class="btn btn-sm btn-primary">Detail</button></td>
+                                                <td><a class="btn btn-sm btn-primary" ui-sref="task-detail({id : tsk._id})">Detail</a></td>
                                             </tr>
                                             <tr ng-if="task_list.length==0">
                                                 <td colspan="4" style="text-align:center">No Task Created</td>

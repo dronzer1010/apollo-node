@@ -63,6 +63,12 @@
 				controller : 'TicketController'
 
 			})
+			.state('task-detail',{
+				url :'/task-detail/:id',
+				templateUrl : 'js/user/tasks/taskDetails.html',
+				controller : 'TaskController'
+
+			})
 			.state('dashboard',{
 				url : '/dashboard',
 				templateUrl : 'js/admin/dashboard/dashboard.html',
@@ -182,7 +188,7 @@
 		}
 
 		// enumerate routes that don't need authentication
-  		var routesThatDontRequireAuth = ['/login' ,'/ticket'];
+  		var routesThatDontRequireAuth = ['/login' ,'/ticket','/task-detail'];
 
   		// check if current location matches route  
   		var routeClean = function (route) {
@@ -216,7 +222,7 @@
 		
 
     */
-
+/*
      if(in_array($location.path(),routesThatDontRequireAuth) && !$rootScope.isLoggedIn){
             $location.path("/");
         }
@@ -227,7 +233,7 @@
 
         if(($location.path() === "/") && $rootScope.isLoggedIn){
             $location.path("/get-bands");
-        }
+        }*/
 				if (to.redirectTo){
         ev.preventDefault();
         $state.go(to.redirectTo, toParams, {location: 'replace'});

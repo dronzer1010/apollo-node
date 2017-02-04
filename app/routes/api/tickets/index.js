@@ -288,6 +288,23 @@ router.post('/comanagers/:id' , function(req,res){
     }
 });
 
+router.get('/tasks/:id' , function(req,res){
+    if(!req.params.id){
+        res.status(400).send({success : false , msg : "No Ticket Id provided"});
+    }else{
+        Ticket.findOne({_id:req.params.id})
+              .populate('task_list')
+              .select('task_list')
+              .exec(function(err,data){
+                  if(!err){
+                      res.status(200).send({success : true , data : data});
+                  }else{
+                     res.status(400).send({success : false , msg : err}); 
+                  }
+              });
+    }
+});
+
 /**
  *  Generic token parsing function
  */

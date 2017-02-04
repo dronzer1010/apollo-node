@@ -20,6 +20,20 @@ $(function(){
 							}
 					);
 				},
+
+			sendNote: function(data){
+					return $http.post(url+'/api/notes/', data)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error sending message');
+								return $q.reject(errResponse);
+							}
+					);
+				},
+
 			getMessage: function(data){
 					return $http.get(url+'/api/messages/'+data)
 					.then(
@@ -27,7 +41,20 @@ $(function(){
 								return response.data;
 							}, 
 							function(errResponse){
-								console.error('Error sending message');
+								console.error('Error getting message');
+								return $q.reject(errResponse);
+							}
+					);
+				},
+
+				getNote: function(data){
+					return $http.get(url+'/api/notes/'+data)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error getting message');
 								return $q.reject(errResponse);
 							}
 					);

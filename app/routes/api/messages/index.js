@@ -15,9 +15,13 @@ var config      = require(__base + 'app/config/database');
 //Route to get messages by ticketId
 
 router.get('/:tid' , function(req,res){
-    Ticket.findOne({_id:req.params.tid},function(err,data){
+    if(!req.params.tid){
+        res.status(400).json({success : false , msg : "No ticket id"});
+    }else{
+        Ticket.findOne({_id:req.params.tid},function(err,data){
         if(!err){
-            var populateQuery = [{path:'senderId'}];
+            if(data){
+                var populateQuery = [{path:'senderId'}];
             Message.find({threadId:data.messageThread}).
             populate(populateQuery)
             .exec(function(err,messages){
@@ -27,10 +31,14 @@ router.get('/:tid' , function(req,res){
                     res.status(500).json({success : false , msg : err});
                 }
             });
+            }else{
+                res.status(400).json({success : false , msg : "No Data Found"});
+            }
         }else{
             res.status(500).json({success : false , msg : err});
         }
     });
+    }
 });
 
 

@@ -2,7 +2,9 @@ $(function(){
     angular.module('apolloApp')
             .controller('DashboardController',['$scope','$rootScope','$state','$cookieStore','toaster',function($scope , $rootScope,$state,$cookieStore,toaster){
                 var self =  this;
-
+                if(!$cookieStore.get('apolloUser')){
+                    $state.go('login');
+                }
                 self.logout = function(){
                     if($cookieStore.get('apolloUser')){
                         $rootScope.user = null;

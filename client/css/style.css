@@ -295,3 +295,16 @@ i{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
 }
+
+
+.task_page_wrap{
+    padding-top:5em;
+}
+
+.other_task_template{
+    display:block;
+     color:#333;
+     padding:1em;
+     border:1px solid #ddd; 
+     background:rgb(242, 242, 242) none repeat scroll 0% 0%;
+}
