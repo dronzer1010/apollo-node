@@ -138,7 +138,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                     		
-                            <a ng-repeat="tsk in ctrl.tasks" class="other_task_template">{{tsk.taskName}}</a>
+                            <a ng-if="tsk._id!=ctrl.task._id && ctrl.task.taskPrivacy=='Open'" ng-repeat="tsk in ctrl.tasks" class="other_task_template" ui-sref="task-detail({id : tsk._id})">{{tsk.taskName}}</a>
                     	
                         </div>
                         <!-- /.panel-body -->
