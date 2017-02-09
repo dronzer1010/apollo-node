@@ -21,7 +21,7 @@
                    <div class="row">
                      <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">First Name </label>
+                        <label for="email">First Name <span class="mand_field">*</span> </label>
                         <input type="text" name="firstName" class="form-control" ng-model="ctrl.ticket.firstName" required>
                       </div>
                      </div>
@@ -38,14 +38,14 @@
                    <div class="row">
                      <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">Email </label>
+                        <label for="email">Email <span class="mand_field">*</span></label>
                         <input type="text" name="email" class="form-control" ng-model="ctrl.ticket.email" required> 
                       </div>
                      </div>
 
                      <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">Location</label>
+                        <label for="email">Location <span class="mand_field">*</span></label>
                         <locations ng-model="ctrl.ticket.location" name="location" required></locations>
                       </div>
                      </div>
@@ -55,14 +55,14 @@
                    <div class="row">
                      <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">Designation</label>
+                        <label for="email">Designation <span class="mand_field">*</span></label>
                         <designations ng-model="ctrl.ticket.designation"  name="designation" required></designations>
                       </div>
                      </div>
 
                      <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">Ticket Priority </label>
+                        <label for="email">Ticket Priority <span class="mand_field">*</span></label>
                         
                          <div style="margin-top:5px;">
 
@@ -102,7 +102,7 @@
                    <div class="row">
                      <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">Ticket Type </label>
+                        <label for="email">Ticket Type <span class="mand_field">*</span></label>
                         
                          <div style="margin-top:5px;">
 
@@ -404,7 +404,7 @@
                         <ul>
                           <li ng-repeat="f in files" style="font:smaller">{{f.name}} {{f.$errorParam}}
                             
-                            <uib-progressbar class="progress-striped active" value="f.progress" type="success" ng-hide="f.progress == 100">{{f.progress}}+%</uib-progressbar>
+                            <uib-progressbar class="progress-striped active" value="f.progress" type="success" ng-hide="f.progress == 100">{{(!f.progress)?'':f.progress+'%'}}</uib-progressbar>
                           </li>
                           <li ng-repeat="f in errFiles" style="font:smaller">{{f.name}} {{f.$error}} {{f.$errorParam}}
                           </li> 
@@ -424,7 +424,7 @@
                      <p>OR</p>
                      <div class="row">
                        <div class="col-md-4 col-md-offset-4">
-                         <input type="file" >
+                         <input type="file" ngf-select="uploadFiles($files)" multiple="multiple" >
                        </div>
                      </div>
                    </div>

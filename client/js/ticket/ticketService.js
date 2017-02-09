@@ -126,6 +126,28 @@ $(function(){
 					);
 				},
 
+
+			closeTicket: function(id){
+					var config =	{
+						method: 'PUT',
+						url: url+'/api/tickets/close/'+id,
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+					return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while closing ticket');
+								return $q.reject(errResponse);
+							}
+					);
+				},
+
 				getCoManagerUsers: function(id){
 					var config =	{
 						method: 'GET',
@@ -178,6 +200,27 @@ $(function(){
 							}, 
 							function(errResponse){
 								console.error('Error while creating ticket');
+								return $q.reject(errResponse);
+							}
+					);
+				},
+
+				closeTask: function(id){
+					var config =	{
+						method: 'PUT',
+						url: url+'/api/tasks/close/'+id,
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+					return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while closing task');
 								return $q.reject(errResponse);
 							}
 					);

@@ -26,7 +26,9 @@
 
                                     </div>
                                     <div class="col-md-4">
-                                        <button class="btn btn-sm" ng-click="ctrl.open('body',_id)">Add Co-Manager</button>
+                                        <button class="btn btn-sm btn-block" ng-click="ctrl.open('body',_id)">Add Co-Manager</button>
+                                        <br>
+                                        <button class="btn btn-sm btn-danger btn-block" ng-click="ctrl.closeTicket(_id)" ng-disabled="ticketStatus=='closed'">{{(ticketStatus=='closed')?'Ticket Closed':'Close Ticket'}}</button>
                                     </div>
                                 </div>
                                 <hr>
@@ -176,7 +178,7 @@
                     <div class="input-group">
                         <input id="btn-input" type="text" ng-model="ctrl.message" class="form-control input-sm" placeholder="Type your message here..." />
                         <span class="input-group-btn">
-                            <button class="btn btn-warning btn-sm" id="btn-chat" ng-click="ctrl.sendMessage(messageThread)">
+                            <button class="btn btn-warning btn-sm" id="btn-chat" ng-disabled="ticketStatus=='closed'"   ng-click="ctrl.sendMessage(messageThread)">
                                 Send
                             </button>
                         </span>
@@ -251,7 +253,7 @@
                     			</div>
 
                     			<hr>
-                    			<input class="btn btn-block btn-primary" type="submit" ng-disabled="taskForm.$invalid" value="Create Task"/>
+                    			<input class="btn btn-block btn-primary" type="submit" ng-disabled="taskForm.$invalid || ticketStatus=='closed'" value="Create Task"/>
 
                     		</form>	        
                     	

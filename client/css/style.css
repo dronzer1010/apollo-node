@@ -309,3 +309,6 @@ i{
      background:rgb(242, 242, 242) none repeat scroll 0% 0%;
      margin-bottom:5px;
 }
+.mand_field{
+    color:red;
+}

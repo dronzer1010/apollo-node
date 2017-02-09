@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var router   = express.Router();
 
 //Get Required Model
-
+var jwt      = require('jwt-simple');
 var Task    = require(__base + 'app/models/taskMaster');
 var Ticket   = require(__base + 'app/models/ticketMaster');
 var NotesThread = require(__base + 'app/models/notesThreadMaster');
@@ -31,7 +31,8 @@ router.post('/' , function(req, res){
             taskPrivacy : req.body.taskPrivacy,
             status : 'open',
             taskMaster : req.body.master,
-            ticketId:req.body.ticketId
+            ticketId:req.body.ticketId,
+            attachedDocuments :[]
 		});
 
 		newTask.save(function(err ,task){
@@ -106,4 +107,44 @@ router.get('/:id',function(req,res){
     });
 });
 
+
+
+
+router.put('/close/:id' , function(req,res){
+   var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        
+
+        Task.update({_id : req.params.id},{$set:{status:'closed'}},function(err,data){
+                    if(!err){
+                        res.status(200).send({success : true ,msg : "Task Closed"});
+                    }else{
+                        res.status(400).send({success : false , msg : err});
+                    }
+                });
+
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    } 
+});
+
+
+
+/**
+ *  Generic token parsing function
+ */
+var getToken = function (headers) {
+  if (headers && headers.authorization) {
+    var parted = headers.authorization.split(' ');
+    if (parted.length === 2) {
+      return parted[1];
+    } else {
+      return null;
+    }
+  } else {
+    return null;
+  }
+};
 module.exports = router;

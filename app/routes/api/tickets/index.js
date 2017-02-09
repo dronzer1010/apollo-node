@@ -203,6 +203,29 @@ router.put('/pick/:id' , function(req,res){
     } 
 });
 
+router.put('/close/:id' , function(req,res){
+   var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        
+
+        Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed'}},function(err,data){
+                    if(!err){
+                        res.status(200).send({success : true ,msg : "Ticked Closed"});
+                    }else{
+                        res.status(400).send({success : false , msg : err});
+                    }
+                });
+
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    } 
+});
+
+
+
+
 router.get('/mytickets' , function(req,res){
    var token = getToken(req.headers);
 

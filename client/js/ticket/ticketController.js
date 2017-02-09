@@ -1,10 +1,10 @@
 $(function(){
 
     angular.module('apolloApp')
-            .controller('TicketController',['$scope','$uibModal','$document','toaster','Upload','$timeout','ticketService',function($scope,$uibModal,$document,toaster,Upload,$timeout ,ticketService){
+            .controller('TicketController',['$scope','$uibModal','$document','toaster','Upload','$timeout','ticketService','ngProgressFactory',function($scope,$uibModal,$document,toaster,Upload,$timeout ,ticketService,ngProgressFactory){
 
                 var self = this ;
-
+                $scope.progressbar = ngProgressFactory.createInstance();
                 self.ticket = {
                     firstName : "",
                     lastName : "",
@@ -77,6 +77,7 @@ $(function(){
                  $scope.uploadFiles = function(files, errFiles) {
                     $scope.files = files;
                     $scope.errFiles = errFiles;
+                    //$scope.progressbar.start();
                     angular.forEach(files, function(file) {
                         file.upload = Upload.upload({
                             url: 'https://apollo-node.herokuapp.com/api/upload',
@@ -87,6 +88,7 @@ $(function(){
                             $timeout(function () {
                                 file.result = response.data;
                                 self.ticket.documents.push(response.data.path);
+                                //$scope.progressbar.complete();
                                 
                             });
                         }, function (response) {

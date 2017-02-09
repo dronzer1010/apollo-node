@@ -32,6 +32,14 @@
                                         </p>
 
                                     </div>
+
+
+                                    <div class="col-md-4">
+
+                                        <button class="btn btn-sm btn-block" ngf-select="upload($file)" type="file">Upload File</button>
+                                        <button class="btn btn-block btn-sm btn-danger" ng-disabled="ctrl.task.status=='closed'" ng-show="($root.user!=null)?(($root.user.sessionId==ctrl.task.taskMaster)?false:true):false" ng-click="ctrl.closeTask()">{{(ctrl.task.status=='closed')?'Task Closed':'Close Task'}}</button>
+                                    
+                                    </div>
                                     
                                 </div>
                                 <hr>

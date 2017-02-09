@@ -83,7 +83,11 @@ $(function(){
                     
                 }
 
-
+                self.closeTicket = function(id){
+                    ticketService.closeTicket(id).then(list($scope, $stateParams), function(errResponse){
+										console.log('error picking ticket');
+									});
+                };
                 
 
 

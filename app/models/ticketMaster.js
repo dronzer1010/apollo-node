@@ -145,6 +145,11 @@ task_list:[{
 messageThread : {
         type: Schema.Types.ObjectId, 
         ref: 'MessageThreads',
+},
+ticketStatus : {
+    type:String,
+    enum:['open','inprogress' ,'closed'],
+    default : 'open'
 }
 },{
     timestamps: true
