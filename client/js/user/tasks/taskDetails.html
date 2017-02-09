@@ -36,7 +36,7 @@
 
                                     <div class="col-md-4">
 
-                                        <button class="btn btn-sm btn-block" ngf-select="upload($file)" type="file">Upload File</button>
+                                        <button class="btn btn-sm btn-block" ngf-select="upload($file)"  type="file">Upload File</button>
                                         <button class="btn btn-block btn-sm btn-danger" ng-disabled="ctrl.task.status=='closed'" ng-show="($root.user!=null)?(($root.user.sessionId==ctrl.task.taskMaster)?false:true):false" ng-click="ctrl.closeTask()">{{(ctrl.task.status=='closed')?'Task Closed':'Close Task'}}</button>
                                     
                                     </div>
@@ -75,8 +75,9 @@
                                                 <th>Document</th>
                                                 <th>Approve</th>
                                             </tr>
-                                            <tr ng-if="attachedDocuments.length!=0" ng-repeat="document in attachedDocuments">
-                                                <td>{{attachedDocuments.indexOf(document) + 1}}</td>
+                                            
+                                            <tr ng-if="ctrl.task.attachedDocuments.length!=0" ng-repeat="document in ctrl.task.attachedDocuments">
+                                                <td>{{ctrl.task.attachedDocuments.indexOf(document) + 1}}</td>
                                                 <td><a href="{{document}}">{{document.split('/')[2]}}</a></td>
                                                 <td><button class="btn btn-sm btn-primary">Approve</button></td>
                                             </tr>
