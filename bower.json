@@ -9,7 +9,7 @@
   "homepage": "index.html",
   "private": true,
   "dependencies": {
-    "jquery": "^3.1.1",
+    "jquery": "^2.2.4",
     "bootstrap": "^3.3.7",
     "angular": "^1.5.9",
     "angular-ui-router": "^0.3.2",
@@ -22,6 +22,7 @@
     "ng-file-upload-shim": "^12.2.13",
     "AngularJS-Toaster": "angularjs-toaster#^2.1.0",
     "angular-animate": "1.5.9",
-    "angular-moment": "^1.0.1"
+    "angular-moment": "^1.0.1",
+    "angular-ui-calendar": "^1.0.2"
   }
 }

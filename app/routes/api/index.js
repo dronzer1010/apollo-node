@@ -17,6 +17,7 @@ router.use('/documents',require('./documentTemplate'));
 router.use('/messages',require('./messages'));
 router.use('/notes',require('./notes'));
 router.use('/tasks',require('./tasks'));
+router.use('/events',require('./events'));
 
 router.get('/' , function(req,res){
 	res.send('api routes here');

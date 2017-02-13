@@ -24,7 +24,7 @@ $(function(){
                                         });
 
 
-                                 $state.go('dashboard');
+                                 $state.go('dashboard.home');
                              } , function(errResponse){
                                  toaster.pop({
                                                 type: 'error',

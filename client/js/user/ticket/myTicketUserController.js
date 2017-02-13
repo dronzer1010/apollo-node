@@ -55,6 +55,7 @@ $(function(){
                                         var targetTicket = null;
                                          self.tickets.forEach(function(ticket){
                                              //console.log(ticket.ticketId._id);
+                                             //console.log("State parameter is"+$stateParams.id);
                                              if(ticket._id==$stateParams.id){
                                                  targetTicket = ticket;
                                              }

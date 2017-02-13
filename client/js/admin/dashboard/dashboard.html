@@ -240,7 +240,7 @@
                         </li>
 
                             <li>
-                                <a ui-sref="dashboard" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Home</a>
+                                <a ui-sref=".home" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Home</a>
                             </li>
                             <li>
                             <a ui-sref=".location" ui-sref-active="active"><i class="fa fa-calendar"></i>Location Master</a>
@@ -289,7 +289,7 @@
                         </li>
 
                             <li>
-                                <a ui-sref="dashboard" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Home</a>
+                                <a ui-sref=".home" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Home</a>
                             </li>
                             <li ng-if="$root.user.userType =='legalteam_member'|| $root.user.userType =='senior_counsel'">
                                 <a ui-sref=".ticket" ui-sref-active="active"><i class="fa fa-dashboard fa-fw"></i>Open Tickets</a>

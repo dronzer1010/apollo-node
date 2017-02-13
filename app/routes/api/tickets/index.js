@@ -5,7 +5,7 @@ var jwt      = require('jwt-simple');
 var Ticket = require(__base + 'app/models/ticketMaster');
 var User = require(__base + 'app/models/userMaster');
 var MessageThread = require(__base + 'app/models/messageThreadMaster');
-
+var Event = require(__base + 'app/models/events');
 
 var mailer   = require('nodemailer');
 var mg       = require('nodemailer-mailgun-transport');
@@ -70,39 +70,54 @@ router.post('/' , function(req,res){
                 var tempThread = new MessageThread({
                     ticketId : data._id
                 });
-
-                tempThread.save(function(err , thread){
+                var tempEvent = new Event({
+                    type:'ticket',
+                    start : req.body.replyByDate,
+                    title : "Ticket : "+data._id,
+                    ticketRef : data._id,
+                    additionalData: data._id,
+                    
+                });
+                tempEvent.save(function(err,event){
                     if(!err){
-                        Ticket.update({_id:data._id},{$set : {messageThread :thread._id}},function(err,tickt){
+                        tempThread.save(function(err , thread){
                             if(!err){
-                                var from_email = new helper.Email('sravik1010@gmail.com');
-                                    var to_email = new helper.Email(req.body.email);
-                                    var subject = 'Ticket Submission Successful';
-                                    var content = new helper.Content('text/plain', 'Hello '+req.body.firstName+' , Your ticket has been successfuly submitted . Your Ticket id is '+data._id);
-                                    var mail = new helper.Mail(from_email, subject, to_email, content);
+                                Ticket.update({_id:data._id},{$set : {messageThread :thread._id}},function(err,tickt){
+                                    if(!err){
+                                        var from_email = new helper.Email('sravik1010@gmail.com');
+                                            var to_email = new helper.Email(req.body.email);
+                                            var subject = 'Ticket Submission Successful';
+                                            var content = new helper.Content('text/plain', 'Hello '+req.body.firstName+' , Your ticket has been successfuly submitted . Your Ticket id is '+data._id);
+                                            var mail = new helper.Mail(from_email, subject, to_email, content);
 
 
-                                    var sg = require('sendgrid')(config.mail_key);
-                                    var request = sg.emptyRequest({
-                                    method: 'POST',
-                                    path: '/v3/mail/send',
-                                    body: mail.toJSON(),
-                                    });
-                                    sg.API(request, function(error, response) {
-                                        res.status(200).send({success :true , data : data});
-                                        //res.status(200).send({success : true , msg : "Co Manager Created"});   
+                                            var sg = require('sendgrid')(config.mail_key);
+                                            var request = sg.emptyRequest({
+                                            method: 'POST',
+                                            path: '/v3/mail/send',
+                                            body: mail.toJSON(),
+                                            });
+                                            sg.API(request, function(error, response) {
+                                                res.status(200).send({success :true , data : data});
+                                                //res.status(200).send({success : true , msg : "Co Manager Created"});   
+                                        });
+                                    
+
+                                        
+                                    }else{
+                                    res.status(400).send({success:false , msg : err}); 
+                                    }
                                 });
-                               
-
-                                
                             }else{
-                               res.status(400).send({success:false , msg : err}); 
+                                res.status(400).send({success:false , msg : err});
                             }
                         });
                     }else{
-                        res.status(400).send({success:false , msg : err});
+                       res.status(400).send({success:false , msg : err}); 
                     }
                 });
+                
+                
 
                 //res.status(200).send({success :true , data : data});
             }else{
@@ -192,7 +207,13 @@ router.put('/pick/:id' , function(req,res){
 
         Ticket.update({_id : req.params.id},{$set:{isPicked:true , ticketOwner:decoded._id}},function(err,data){
                     if(!err){
-                        res.status(200).send({success : true ,msg : "Ticked Picked"});
+                            Event.update({ticketRef:req.params.id},{$set:{eventOwner:decoded._id}},function(err,event){
+                                if(!err){
+                                    res.status(200).send({success : true ,msg : "Ticked Picked"});
+                                }else{
+                                    res.status(400).send({success : false , msg : err});
+                                }
+                            });
                     }else{
                         res.status(400).send({success : false , msg : err});
                     }
@@ -209,7 +230,11 @@ router.put('/close/:id' , function(req,res){
     if(token){
         var decoded = jwt.decode(token, config.secret);
         
-
+        Ticket.findOne({_id : req.params.id},function(err,ticket){
+            if(!err){
+                
+            }
+        });
         Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed'}},function(err,data){
                     if(!err){
                         res.status(200).send({success : true ,msg : "Ticked Closed"});

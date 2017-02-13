@@ -237,6 +237,26 @@ $(function(){
 							}
 					);
 				},
+				getAllEvents : function(){
+				var config =	{
+						method: 'GET',
+						url: url+'/api/events',
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+				return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while fetching events');
+								return $q.reject(errResponse);
+							}
+					);
+			},
 
 		
         }

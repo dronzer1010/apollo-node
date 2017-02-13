@@ -40,7 +40,7 @@
 
 
     /** End Authentication Module */
-	var apolloApp = angular.module('apolloApp' , ['ui.router','angularMoment','ui.bootstrap','underscore','ngFileUpload','ngAnimate','toaster','apolloApp.authentication','ngProgress']);
+	var apolloApp = angular.module('apolloApp' , ['ui.router','angularMoment','ui.bootstrap','underscore','ngFileUpload','ngAnimate','toaster','apolloApp.authentication','ngProgress','ui.calendar']);
 
 	apolloApp.config(function($stateProvider , $urlRouterProvider,$qProvider){
 
@@ -73,6 +73,11 @@
 				url : '/dashboard',
 				templateUrl : 'js/admin/dashboard/dashboard.html',
 				controller : 'DashboardController'
+			})
+			.state('dashboard.home',{
+				url : '/dashboard/home',
+				templateUrl : 'js/user/calendar/calendar.html',
+				controller : 'CalendarController'
 			})
 			.state('dashboard.location' ,{
 				url : '/admin/locationMaster' ,
