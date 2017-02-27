@@ -232,7 +232,9 @@ router.put('/close/:id' , function(req,res){
         
         Ticket.findOne({_id : req.params.id},function(err,ticket){
             if(!err){
-                
+                ticket.taskList.forEach(function(item){
+                    console.log(item);
+                });
             }
         });
         Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed'}},function(err,data){
