@@ -232,7 +232,7 @@ router.put('/close/:id' , function(req,res){
         
         Ticket.findOne({_id : req.params.id},function(err,ticket){
             if(!err){
-                ticket.taskList.forEach(function(item){
+                ticket.task_list.forEach(function(item){
                     console.log(item);
                 });
             }
