@@ -202,12 +202,12 @@
                     		<form class="form" name="taskForm" ng-submit="ctrl.createTask()">
                                 <input type="hidden" ng-model="ctrl.task._id">
                     			<div class="form-group">
-                    				<label>Task Name</label>
+                    				<label>Task Name <span class="mand_field">*</span></label>
                     				<input type="text" name="name" class="form-control" ng-model="ctrl.task.name" required>
                     			</div>
 
                     			<div class="form-group">
-                    				<label>Task Type</label>
+                    				<label>Task Type <span class="mand_field">*</span></label>
                     				<select name="type" class="form-control" ng-model="ctrl.task.type" required>
                                         <option value="Document">Document</option>
                                         <option value="Opinion">Opinion</option>
@@ -216,28 +216,28 @@
                                     </select>
                     			</div>
                                 <div class="form-group">
-                    				<label>Task Completion Date</label>
+                    				<label>Task Completion Date <span class="mand_field">*</span></label>
                     				<input type="text" class="form-control" 
                                         name="completionDate" uib-datepicker-popup="dd/MM/yyyy"  min-date="minDate" max-date="Date(replyByDate)"
                                         ng-model="ctrl.task.completionDate" is-open="completionDate_popup.opened"  close-text="Close"  />
                     			</div>
                                 <div class="form-group">
-                    				<label>Task Handling Location</label>
+                    				<label>Task Handling Location <span class="mand_field">*</span></label>
                     				<select name="handlingLocation" class="form-control" ng-model="ctrl.task.handlingLocation" required>
                                         <option value="Local">Local</option>
                                         <option value="Corporate">Corporate</option>
                                     </select>
                     			</div>
                                 <div class="form-group">
-                    				<label>Task Handler Name</label>
+                    				<label>Task Handler Name <span class="mand_field">*</span></label>
                     				<input type="text" name="handlerName" class="form-control" ng-model="ctrl.task.handlerName" required>
                     			</div>
                                 <div class="form-group">
-                    				<label>Task Handler Email</label>
+                    				<label>Task Handler Email <span class="mand_field">*</span></label>
                     				<input type="text" name="handlerEmail" class="form-control" ng-model="ctrl.task.handlerEmail" required>
                     			</div>
                                 <div class="form-group">
-                    				<label>Task Handler Location</label>
+                    				<label>Task Handler Location <span class="mand_field">*</span></label>
                     				<locations name="handlerLocation" class="form-control" ng-model="ctrl.task.handlerLocation"></locations>
                     			</div>
                                 <div class="form-group">
