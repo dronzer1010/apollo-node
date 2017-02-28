@@ -159,7 +159,7 @@ router.get('/open',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:null})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -180,7 +180,7 @@ router.get('/marked',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:decoded._id})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -264,7 +264,7 @@ router.get('/mytickets' , function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find({$or:[ {ticketOwner:decoded._id},{ticketCo_Owners :decoded._id} ]})
                 .populate(populateQuery)
                 .exec( function(err,docs){
