@@ -6,7 +6,7 @@ var Ticket = require(__base + 'app/models/ticketMaster');
 var User = require(__base + 'app/models/userMaster');
 var MessageThread = require(__base + 'app/models/messageThreadMaster');
 var Event = require(__base + 'app/models/events');
-
+var Task    = require(__base + 'app/models/taskMaster');
 var mailer   = require('nodemailer');
 var mg       = require('nodemailer-mailgun-transport');
 var config = require(__base + 'app/config/database');
@@ -233,7 +233,13 @@ router.put('/close/:id' , function(req,res){
         Ticket.findOne({_id : req.params.id},function(err,ticket){
             if(!err){
                 ticket.task_list.forEach(function(item){
-                    console.log(item);
+                        Task.update({_id : item},{$set:{status:'closed'}},function(err,data){
+                        if(!err){
+                            console.log("Task closed");
+                        }else{
+                            console.log("Task Not closed");
+                        }
+                    });
                 });
             }
         });
