@@ -139,7 +139,7 @@ router.get('/',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {})
                 .populate(populateQuery)
                 .exec( function(err,docs){
