@@ -169,6 +169,7 @@ $(function(){
                 self.createTask2 = function(data){
                     ticketService.createTask(data).then(function(data){
                         console.log(data);
+                        list($scope, $stateParams);
                     },function(err){
                         console.log(err);
                     });

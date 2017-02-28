@@ -90,7 +90,7 @@
                                             </tr>
                                             <tr ng-if="ticketCo_Owners.length!=0" ng-repeat="co in ticketCo_Owners">
                                                 <td>{{ticketCo_Owners.indexOf(co) + 1}}</td>
-                                                <td>{{co}}</td>
+                                                <td>{{co.firstName+' '+co.lastName}}</td>
                                                 <td>{{co.email}}</td>
                                                 
                                             </tr>
