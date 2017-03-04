@@ -5,6 +5,7 @@ var jwt      = require('jwt-simple');
 var Ticket = require(__base + 'app/models/ticketMaster');
 var User = require(__base + 'app/models/userMaster');
 var MessageThread = require(__base + 'app/models/messageThreadMaster');
+var Document = require(__base + 'app/models/documentMaster');
 var Event = require(__base + 'app/models/events');
 var Task    = require(__base + 'app/models/taskMaster');
 var mailer   = require('nodemailer');
@@ -78,13 +79,45 @@ router.post('/' , function(req,res){
                     additionalData: data._id,
                     
                 });
+
+                req.body.documents.forEach(function(item){
+                    var tempDoc = new Document({
+                        ticketId : data._id,
+                        taskId : null,
+                        nameOfUser : data.firstName+' '+data.lastName,
+                        emailOfUser : data.email,
+                        notes : null,
+                        documentType : null,
+                        documentFileType : null,
+                        renewalDate : null,
+                        parentDocument: null,
+                        relationType : 'parent',
+                        documentDescription : null,
+                        documentLocation : req.body.location,
+                        documentOrigin : 'internal',
+                        documentLegalTypeId: null,
+                        documentUrl : item,
+                        notes:null
+                        
+                    });
+
+                    tempDoc.save(function(err ,data){
+                        if(!err){
+                            console.log("Document Saved");
+                        }else{
+                            console.log("Error in document creation");
+                            console.log(err);
+                        }
+                    });
+                });
+
                 tempEvent.save(function(err,event){
                     if(!err){
                         tempThread.save(function(err , thread){
                             if(!err){
                                 Ticket.update({_id:data._id},{$set : {messageThread :thread._id}},function(err,tickt){
                                     if(!err){
-                                        var from_email = new helper.Email('sravik1010@gmail.com');
+                                            var from_email = new helper.Email('sravik1010@gmail.com');
                                             var to_email = new helper.Email(req.body.email);
                                             var subject = 'Ticket Submission Successful';
                                             var content = new helper.Content('text/plain', 'Hello '+req.body.firstName+' , Your ticket has been successfuly submitted . Your Ticket id is '+data._id);

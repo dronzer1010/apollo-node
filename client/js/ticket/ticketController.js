@@ -18,7 +18,7 @@ $(function(){
                     replyByDate : new Date(),
                     transactionType : "opinion",
                     transactionType2 : "",
-                    transactionFinalDate : new Date(),
+                    transactionFinalDate : null,
                     transactionNewOrExisting : "new",
                     transactionDocumentType : "",
                     transactionAdditionalDetails:[],
@@ -56,9 +56,15 @@ $(function(){
                 };
 
                 $scope.popup2_open = function(){
+                    //alert(self.ticket.replyByDate);
                     $scope.transactionFinalDate_popup.opened = true;
                 };
-
+                $scope.minDateFinal = new Date();
+                $scope.$watch(angular.bind(this,function(){
+                    return this.ticket.replyByDate;
+                }), function(newValue, oldValue) {
+                    $scope.minDateFinal=new Date(newValue);
+                });
                 
                  $scope.dateOptions = {
                     dateDisabled: false,
@@ -67,13 +73,19 @@ $(function(){
                     minDate: new Date(),
                     startingDay: 1
                 };
-
-
+                $scope.dateOptions2 = {
+                    dateDisabled: false,
+                    formatYear: 'yy',
+                    maxDate: new Date(2020, 5, 22),
+                    minDate:new Date($scope.minDateFinal),
+                    startingDay: 1
+                };
+                
 
                 /**
                  * Multiple Upload file functionality
                  */
-
+                
                  $scope.uploadFiles = function(files, errFiles) {
                     $scope.files = files;
                     $scope.errFiles = errFiles;

@@ -14,6 +14,7 @@ $(function(){
 							designation : '',
 							location : '',
 							userType:'',
+							lastPassword:'',
 							active : false,
 							markDirect : false
 						};
@@ -61,6 +62,9 @@ $(function(){
 			                  self.createUser(self.user);
 			              }else{
 			              	 console.log('Saving  Location', self.user);
+							 if(self.user.password == ''){
+								 //self.user.password = self.user.lastPassword;
+							 }
 			                 self.updateUser(self.user, self.user._id);
 			                 console.log('User updated with id ', self.user._id);
 			              }
@@ -99,7 +103,8 @@ $(function(){
 			              for(var i = 0; i < self.users.length; i++){
 			                  if(self.users[i]._id === id) {
 			                     self.user = angular.copy(self.users[i]);
-			                     self.user.password='';
+								 self.user.lastPassword = self.user.password;
+								 self.user.password='';
 
 			                     break;
 			                  }
@@ -124,6 +129,7 @@ $(function(){
 							designation : '',
 							location : '',
 							userType:'',
+							lastPassword:'',
 							active : false,
 							markDirect : false
 						};

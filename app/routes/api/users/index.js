@@ -2,6 +2,7 @@ var express  = require('express');
 var mongoose = require('mongoose');
 var router   = express.Router();
 var jwt      = require('jwt-simple');
+var bcrypt = require('bcrypt');
 //Get Required Model
 
 var User = require(__base + 'app/models/userMaster');
@@ -71,6 +72,9 @@ console.log(req.body.firstName+' '+req.body.email+' '+req.body.password+' '+req.
 		console.log('nahi chla');
 		res.status(400).json({success : false , msg : "Invalid parameters"});
 	}else{
+		var salt = bcrypt.genSaltSync(10);
+		var hash = bcrypt.hashSync(req.body.password, salt);
+		req.body.password = hash;
 		User.update({_id : req.params.id},{$set:{
 			firstName : req.body.firstName,
 			lastName : (req.body.lastName)?req.body.lastName:'',
