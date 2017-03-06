@@ -1,0 +1,80 @@
+<div ng-controller="DocumentApprovalController as ctrl">
+
+
+<div class="col-md-8" >
+	<div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw"></i> Document Approval 
+
+                            
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                           <div class="row">
+                               
+                                <div class="col-md-12">
+                                    <table class="table table-striped ">
+                                        <tr>
+                                            <th>Document Type</th>
+                                            <th>Description</th>
+                                            
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                            <th>Details</th>
+                                        </tr>
+                                        <tr ng-repeat="document in ctrl.documents">
+                                            <td>{{document.documentTemplateId.legalType}}</td>
+                                            <td>{{document.documentTemplateId.description}}</td>
+                                            
+                                            <td><button class="btn btn-sm btn-primary" ng-click="ctrl.edit(document._id)">Edit</button></td>
+                                            <td><button class="btn btn-sm btn-danger" ng-click="ctrl.remove(document._id)">Delete</button></td>
+                                            <td><a ui-sref="dashboard.document-approvaldetail({id :document._id})" class="btn btn-sm btn-success">Details</a></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                           	                           	
+                         
+                            </div>
+                        <!-- /.panel-body -->
+                    </div>
+</div>
+</div>
+<!---Side Panel-->
+           		  <div class="col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-plus"></i> Document Approval
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                    		
+                    		<form class="form" name="documentForm" ng-submit="ctrl.submit()">
+                          <input type="hidden" ng-model="ctrl.document._id">
+                    			<div class="form-group">
+                    				<label>Document Template</label>
+                    				<documentsapproval ng-model="ctrl.document.documentId" ></documentsapproval>
+                    			</div>
+
+
+                                <div ng-repeat="designation in ctrl.document.designations" class="templateFieldWrapper">
+                                    <button class="btn btn-sm btn-default remove-templateField" type="button" ng-click="ctrl.removeField($index)">X</button>
+                                    <div class="form-group">
+                                        <label>Designation ({{$index +1}})</label>
+                                        <designations ng-model="designation.designation"  name="designation" ></designations>
+                                    </div>
+                                    
+                                </div>
+                                <hr>
+                                <button ng-click="ctrl.addFieldTemplate()" type="button" class="btn btn-default btn-block">Add Fields</button>
+                    			<hr>
+                    			<input class="btn btn-block btn-primary" type="submit" ng-disabled="documentForm.$invalid" value="{{!ctrl.document._id ? 'Add' : 'Update'}}"/>
+
+                    		</form>	        
+                    	
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+
+           </div>
+
+</div>

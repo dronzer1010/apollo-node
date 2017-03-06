@@ -3,13 +3,37 @@ $(function(){
 	'use strict';
     var appService = angular.module('apolloApp');
     appService.factory('documentTemplateFieldService', ['$http', '$q', function($http, $q){
-        var url= 'https://apollo-node.herokuapp.com';
+        var url= 'http://localhost:3000';
 
          return {
 
 
               fetchAllDocumentTemplates: function() {
 	            return $http.get(url+'/api/documents/')
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while fetching documents');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
+			fetchAllApprovedDocumentTemplates: function() {
+	            return $http.get(url+'/api/documents/approve')
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while fetching documents');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
+			fetchApprovalDocumentTemplates: function() {
+	            return $http.get(url+'/api/documents/approved')
 	            .then(
 	                    function(response){
 	                        return response.data;
@@ -32,6 +56,18 @@ $(function(){
 	                    }
 	            );
 	        },
+			approveDocumentTemplate: function(template){
+	            return $http.post(url+'/api/documents/approve', template)
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while creating designation');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
             updateDocument: function(document, id){
 	            return $http.put(url+'/api/documents/'+id, document)
 	            .then(
@@ -44,8 +80,33 @@ $(function(){
 	                    }
 	            );
 	        },
+
+			updateApprovedDocument: function(document, id){
+	            return $http.put(url+'/api/documents/approve/'+id, document)
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while updating document');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
             deleteDocument: function(id){
 	            return $http.delete(url+'/api/documents/'+id)
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                       
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
+			deleteApprovedDocument: function(id){
+	            return $http.delete(url+'/api/documents/approve/'+id)
 	            .then(
 	                    function(response){
 	                        return response.data;

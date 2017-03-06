@@ -18,6 +18,10 @@ var DocumentTemplateField = new Schema({
       type:String,
       default : 'N'
   },
+  approved :{
+      type : Boolean ,
+      default : false,
+  },
   fields :[
       {
           fieldName :{

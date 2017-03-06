@@ -130,6 +130,17 @@
 				templateUrl : 'js/admin/documentTemplateField/documentTemplateFieldDetail.html',
 				
 			})
+			.state('dashboard.document-approval' ,{
+				url : '/admin/documentApprovalMaster',
+				templateUrl : 'js/admin/documentApproval/documentApproval.html',
+				controller : 'DocumentApprovalController'
+			})
+			.state('dashboard.document-approvaldetail' ,{
+				url : '/admin/documentApprovalMaster/:id',
+				templateUrl : 'js/admin/documentApproval/documentApprovalDetail.html',
+				
+			})
+
 			.state('dashboard.ticketDetails' ,{
 				url : '/user/ticket/:id',
 				templateUrl : 'js/user/ticket/ticketDetail.html',
