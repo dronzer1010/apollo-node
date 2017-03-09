@@ -106,7 +106,7 @@ router.get('/approve' , function(req,res){
 });
 
 router.get('/approve/:id' , function(req,res){
-	var populateQuery = [{path:'documentTemplateId'},{path:'designations.designation'}];
+	var populateQuery = [{path:'documentTemplateId'},{path:'designations.designation'}];{{field.fieldName}}
 	DocumentApproval.findOne({_id:req.params.id})
 					.populate(populateQuery)
 					.exec(function(err ,docs){

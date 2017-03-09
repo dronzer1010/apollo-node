@@ -198,7 +198,45 @@ $(function(){
                     }
                     
                     self.reset();
-                }
+                };
+
+
+
+
+
+
+
+                /**
+                 * Modal service
+                 */
+                self.open = function(parent ){
+
+                    
+                    self.modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'myModalContent.html',
+                        controller : function($uibModalInstance , $scope){
+
+
+
+                            this.document="";
+                            this.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            }
+                        },
+                        controllerAs :'ctrl2',
+                        scope : $scope,
+                        size: 'md',
+                        appendTo: angular.element($document[0].querySelector(parent)),
+                        resolve: {
+                            
+                        }
+                    });
+                    //add
+
+                };
 
 
             }]);

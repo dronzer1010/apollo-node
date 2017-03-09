@@ -108,7 +108,7 @@
                                             </tr>
                                             <tr ng-repeat="document in attachedDocuments">
                                                 <td>{{attachedDocuments.indexOf(document) + 1}}</td>
-                                                <td><a href="{{document}}">{{document.split('/')[2]}}</a></td>
+                                                <td><a href="{{document.url}}" target="_blank">{{document.name}}</a></td>
                                                 <td><button class="btn btn-sm btn-primary">Approve</button></td>
                                             </tr>
                                         </table>

@@ -12,7 +12,34 @@ var config = require(__base + 'app/config/database');
 router.get('/' , function(req,res){
 	var populateQuery = [{path:'designation'},{path:'location'}];
 
-	User.find({markAsDeleted : false})
+	if(req.query.des){
+		console.log(req.query.des);
+		User.find({markAsDeleted : false , designation : req.query.des })
+		.populate(populateQuery)
+		.exec(function(err,data){
+			if(!err){
+				res.status(200).json({success : true , data : data});
+			}else{
+				res.status(400).json({success : false , msg : err});
+			}
+		});
+	}else{
+		User.find({markAsDeleted : false})
+		.populate(populateQuery)
+		.exec(function(err,data){
+			if(!err){
+				res.status(200).json({success : true , data : data});
+			}else{
+				res.status(400).json({success : false , msg : err});
+			}
+		});
+	}
+});
+
+router.get('/markedusers' , function(req,res){
+	var populateQuery = [{path:'designation'},{path:'location'}];
+
+	User.find({markAsDeleted : false , markDirect : true})
 		.populate(populateQuery)
 		.exec(function(err,data){
 			if(!err){
@@ -36,7 +63,6 @@ router.get('/markedusers' , function(req,res){
 			}
 		});
 });
-
 
 
 router.post('/' , function(req,res){

@@ -18,6 +18,19 @@ $(function(){
 			            );
 			        },
 
+					fetchAllDesignationUsers: function(designation) {
+			            return $http.get(url+'/api/users?des='+designation)
+			            .then(
+			                    function(response){
+			                        return response.data;
+			                    }, 
+			                    function(errResponse){
+			                        console.error('Error while fetching designation users');
+			                        return $q.reject(errResponse);
+			                    }
+			            );
+			        },
+
 			        createUser: function(user){
 			            return $http.post(url+'/api/users/', user)
 			            .then(
