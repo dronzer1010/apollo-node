@@ -5,6 +5,10 @@ var Schema = mongoose.Schema;
 // set up a mongoose model
 var DocumentMaster = new Schema({
 
+    documentName :{
+        type : String,
+        required : true
+    },
     ticketId :{
          type: Schema.Types.ObjectId, 
          ref: 'Tickets',

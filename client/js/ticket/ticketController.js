@@ -37,7 +37,8 @@ $(function(){
                     litigationCourtLocation : "",
                     litigationAmount : "",
                     othersNotes : "",
-                    documents : []
+                    documents : [],
+                    fileName : []
 
                 }
 
@@ -100,6 +101,7 @@ $(function(){
                             $timeout(function () {
                                 file.result = response.data;
                                 self.ticket.documents.push(response.data.path);
+                                self.ticket.fieldName.push(response.data.name);
                                 //$scope.progressbar.complete();
                                 
                             });
@@ -178,11 +180,12 @@ $(function(){
                         litigationCourtLocation : "",
                         litigationAmount : "",
                         othersNotes : "",
-                        documents : []
+                        documents : [],
+                        fileName : []
 
                     }
-                    $scope.files = "";
-                    $scope.errFiles = "";
+                    $scope.files = null;
+                    $scope.errFiles = null;
                 };
 
 

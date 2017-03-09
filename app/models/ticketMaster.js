@@ -127,9 +127,14 @@ var TicketMaster = new Schema({
           type : String
       }
   },
-  attachedDocuments : {
-      type : [String]
-  },
+  attachedDocuments : [{
+      url : {
+          type: String
+      },
+      name : {
+       type: String   
+      }
+  }],
   ticketOwner:{
     type: Schema.Types.ObjectId, 
     ref: 'Users', 

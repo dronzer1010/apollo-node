@@ -26,7 +26,8 @@ router.post('/' , function(req,res ,next){
                     console.log(req.file);
                      res.status(200).send({
                       success : true ,
-                      path : '/docs/'+req.file.filename
+                      path : '/docs/'+req.file.filename ,
+                      name : req.file.originalname
                 });
         }
     });
@@ -45,7 +46,8 @@ router.post('/task/:id' , function(req,res ,next){
            if(!err){
              res.status(200).send({
                       success : true ,
-                      path : '/docs/'+req.file.filename
+                      path : '/docs/'+req.file.filename,
+                      name : req.file.originalname
                 });
            }else{
               res.end("Error uploading file." , err);

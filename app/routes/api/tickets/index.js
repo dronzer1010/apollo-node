@@ -19,6 +19,18 @@ router.post('/' , function(req,res){
     if(!req.body.firstName || !req.body.email || !req.body.location || !req.body.designation ||!req.body.replyByDate || !req.body.ticketType){
         res.status(200).send({success : false , msg : "Invalid parameters"});
     }else{
+
+        var attachedDoc=[];
+
+        for(var i=0;i<req.body.documents.length;i++){
+            var temp ={};
+            console.log(req.body.documents[i]+" ---- "+req.body.fileName[i]);
+            temp.url=req.body.documents[i];
+            temp.name = req.body.fileName[i];
+            attachedDoc.push(temp);
+        }
+
+
         var transactionType2 = (req.body.transactionType2)?req.body.transactionType2:null;
         var transactionDocumentType = (req.body.transactionDocumentType)?req.body.transactionDocumentType:null;
         var newTicket = new Ticket({
@@ -60,7 +72,7 @@ router.post('/' , function(req,res){
             othersDetails : {
                 notes :(req.body.ticketType == 'othersType')?req.body.othersNotes : null,
             },
-            attachedDocuments : (req.body.documents)?req.body.documents:[] 
+            attachedDocuments :attachedDoc
 
         });
 
@@ -82,6 +94,7 @@ router.post('/' , function(req,res){
 
                 req.body.documents.forEach(function(item){
                     var tempDoc = new Document({
+                        documentName:item.name,
                         ticketId : data._id,
                         taskId : null,
                         nameOfUser : data.firstName+' '+data.lastName,
@@ -96,7 +109,7 @@ router.post('/' , function(req,res){
                         documentLocation : req.body.location,
                         documentOrigin : 'internal',
                         documentLegalTypeId: null,
-                        documentUrl : item,
+                        documentUrl : item.url,
                         notes:null
                         
                     });
