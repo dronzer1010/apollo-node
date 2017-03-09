@@ -92,7 +92,9 @@ router.post('/' , function(req,res){
                     
                 });
 
-                req.body.documents.forEach(function(item){
+                attachedDoc.forEach(function(item){
+
+
                     var tempDoc = new Document({
                         documentName:item.name,
                         ticketId : data._id,

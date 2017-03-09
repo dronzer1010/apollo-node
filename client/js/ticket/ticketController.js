@@ -101,7 +101,7 @@ $(function(){
                             $timeout(function () {
                                 file.result = response.data;
                                 self.ticket.documents.push(response.data.path);
-                                self.ticket.fieldName.push(response.data.name);
+                                self.ticket.fileName.push(response.data.name);
                                 //$scope.progressbar.complete();
                                 
                             });
