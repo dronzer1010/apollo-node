@@ -340,7 +340,7 @@
               <div class="row">
                   <div class="col-md-6" ng-repeat="designation in ctrl2.document.designations">
                       <label>User {{$index+1}} </label>
-                      <desuser des="designation._id" ng-model="ctrl2.some"></desuser>
+                      <desuser des="designation.designation._id" ng-model="ctrl2.some"></desuser>
                   </div>
               </div>
           </form>
