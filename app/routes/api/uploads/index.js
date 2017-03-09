@@ -23,7 +23,7 @@ router.post('/' , function(req,res ,next){
             return res.end("Error uploading file." , err);
         }else{
          var  tempfile = req.file.path.split('/');
-           
+                    console.log(req.file);
                      res.status(200).send({
                       success : true ,
                       path : '/docs/'+req.file.filename

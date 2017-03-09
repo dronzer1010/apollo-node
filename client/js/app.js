@@ -255,6 +255,18 @@
         $state.go(to.redirectTo, toParams, {location: 'replace'});
       }
   });
+
+
+  	//Keep Track of Current and Previous States
+	$rootScope.previousState;
+	$rootScope.currentState;
+	$rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+    	$rootScope.previousState = from.name;
+    	$rootScope.currentState = to.name;
+    	console.log('Previous state:'+$rootScope.previousState)
+    	console.log('Current state:'+$rootScope.currentState)
+	});
+
 	}]);
 
 
