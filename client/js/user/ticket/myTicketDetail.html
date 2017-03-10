@@ -45,7 +45,7 @@
                                                 <br>
                                                 Final Date : {{transactionalDetails.finalDate }}
                                                 <br>
-                                                Notes : {{transactionalDetails.notes}}
+                                                Notes : {{ticketNotes}}
 
                                             </p>
                                         </div>
@@ -64,12 +64,14 @@
                                                Counsel Appointed (Y/N) : {{litigationalDetails.counselAppointed}}
                                                <br>
                                                Amount : INR {{litigationalDetails.amount}}
+                                               <br>
+                                               Notes : {{ticketNotes}}
                                             </p>
                                         </div>
                                         <div ng-if="ticketType=='othersType'">
                                             <h5>Others Details </h5>
                                             <p>
-                                                Notes : {{othersDetails.notes}}
+                                                Notes : {{ticketNotes}}
                                             </p>
                                         </div>
                                         <hr>
