@@ -226,7 +226,7 @@ $(function(){
                                 $uibModalInstance.dismiss('cancel');
                             }
                         },
-                        controllerAs :'ctrl2',
+                        controllerAs :'ctrl3',
                         scope : $scope,
                         size: 'md',
                         appendTo: angular.element($document[0].querySelector(parent)),

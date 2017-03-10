@@ -332,15 +332,15 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label >Document Type</label>
-                    <approved ng-model="ctrl2.document" ></approved>
+                    <approved ng-model="ctrl3.document" ></approved>
                   </div>
                 </div>
               </div>
 
               <div class="row">
-                  <div class="col-md-6" ng-repeat="designation in ctrl2.document.designations">
+                  <div class="col-md-6" ng-repeat="designation in ctrl3.document.designations">
                       <label>User {{$index+1}} </label>
-                      <desuser des="designation.designation._id" ng-model="ctrl2.some"></desuser>
+                      <desuser des="designation.designation._id" ng-model="ctrl3.some[$index]"></desuser>
                   </div>
               </div>
           </form>
@@ -348,11 +348,11 @@
         <div class="modal-footer">
             <div class="row">
               <div class="col-md-2">
-                <button class="btn btn-primary" type="button" ng-click="ctrl2.cancel()">Submit</button>
+                <button class="btn btn-primary" type="button" ng-click="ctrl3.cancel()">Submit</button>
             
               </div>
               <div class="col-md-3 pull-right">
-                <button class="btn btn-warning" type="button" ng-click="ctrl2.cancel()">Cancel</button>
+                <button class="btn btn-warning" type="button" ng-click="ctrl3.cancel()">Cancel</button>
               </div>
             </div>
         </div>
