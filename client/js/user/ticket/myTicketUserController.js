@@ -112,7 +112,7 @@ $(function(){
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'coManagerTemplate.html',
-                        controller : function($uibModalInstance,ticketService , $scope){
+                        controller : function($uibModalInstance,ticketService , $scope , $state){
                             var self2=this;
                            self2.submit=function(){
                                
