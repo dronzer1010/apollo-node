@@ -217,7 +217,7 @@ $(function(){
                         ariaLabelledBy: 'modal-title',
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'myModalContent.html',
-                        controller : function($uibModalInstance , $scope){
+                        controller : function($uibModalInstance , $scope ,$state){
 
 
                             var self=this;
