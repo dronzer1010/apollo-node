@@ -69,7 +69,32 @@ var DocumentMaster = new Schema({
     documentUrl : {
         type:String,
         required : true
+    },
+    approved : {
+        type : Boolean ,
+        default : false
+    },
+    additionalDetails :[
+      {
+          fieldName :{
+              type : String
+          },
+          fieldValue : {
+              type:String
+          }
+      }
+  ],
+
+  approvalBy :[{
+    type:Schema.Types.ObjectId,
+    ref:'Users'
+}],
+
+    approvalDoneBy :{
+       type:Schema.Types.ObjectId,
+        ref:'Users' 
     }
+
 
 },{
     timestamps: true

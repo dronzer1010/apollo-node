@@ -164,7 +164,8 @@ $(function(){
                         transactionType2 : "",
                         transactionFinalDate : new Date(),
                         transactionNewOrExisting : "new",
-                        transactionDocumentType : "medico_legal",
+                        transactionDocumentType : "",
+                        transactionAdditionalDetails:[],
                         transactionNotes : "" ,
                         litigationNoticeReceived : "N",
                         litigationNoticeFrom : "",
@@ -197,6 +198,8 @@ $(function(){
 
                     self.ticket.transactionAdditionalDetails=[];
 
+
+                    //Data Set Here
                     data.fields.forEach(function(item){
                         var temp_data ={
                             fieldName : item.fieldName ,

@@ -44,6 +44,30 @@ $(function(){
 	                    }
 	            );
 	        },
+			fetchApprovedDocById: function(id) {
+	            return $http.get(url+'/api/documents/approved/'+id)
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while fetching Approved  documents by ID');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
+			queryDocument: function(query){
+	            return $http.post(url+'/api/document-master/search', query)
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while creating designation');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
             createDocumentTemplate: function(template){
 	            return $http.post(url+'/api/documents/', template)
 	            .then(
@@ -58,6 +82,18 @@ $(function(){
 	        },
 			approveDocumentTemplate: function(template){
 	            return $http.post(url+'/api/documents/approve', template)
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while creating designation');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
+			approveDocument: function(data,id){
+	            return $http.post(url+'/api/document-master/approve/'+id, data)
 	            .then(
 	                    function(response){
 	                        return response.data;

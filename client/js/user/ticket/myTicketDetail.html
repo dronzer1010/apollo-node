@@ -48,6 +48,11 @@
                                                 Notes : {{ticketNotes}}
 
                                             </p>
+                                            <hr>
+                                            <h5>Additional Details</h5>
+                                            <p ng-repeat="obj in transactionalDetails.additionalDetails">
+                                                <span ng-show="!(obj.fieldValue.length == 0)">{{obj.fieldName}} : {{obj.fieldValue}}</span>
+                                            </p>
                                         </div>
 
                                         <div ng-if="ticketType=='litigationalType'">
@@ -115,8 +120,8 @@
                                             </tr>
                                             <tr ng-if="attachedDocuments.length!=0" ng-repeat="document in attachedDocuments">
                                                 <td>{{attachedDocuments.indexOf(document) + 1}}</td>
-                                                <td><a href="{{document.url}}" target="_blank">{{document.name}}</a></td>
-                                                <td><button class="btn btn-sm btn-primary" ng-click="ctrl.open('body')">Approve</button></td>
+                                                <td><a href="{{document.documentUrl}}" target="_blank">{{document.documentName}}</a></td>
+                                                <td><button class="btn btn-sm btn-primary" ng-click="ctrl.open('body' , document._id)" ng-disabled="document.approved">{{document.approved ? 'Approved' : 'Approve'}}</button></td>
                                             </tr>
                                             <tr ng-if="attachedDocuments.length==0">
                                                 <td colspan="3" style="text-align:center">No Documents Attached</td>
@@ -329,28 +334,43 @@
             <h3 class="modal-title" id="modal-title">Document Template</h3>
         </div>
         <div class="modal-body" id="modal-body">
-          <form class="form">
+          <form class="form" name="approvalForm">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label >Document Type</label>
-                    <approved ng-model="ctrl3.document" ></approved>
+                    <documents ng-model="ctrl3.document.documentType" ng-change="render(ctrl3.document.documentType)"></documents>
+                    <!--<approved ng-model="ctrl3.document" ></approved>-->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6" ng-repeat="field in ctrl3.document.documentType.fields">
+                  <div class="form-group">
+                    <label >{{field.fieldName}}</label>
+                    <input  type="field.fieldType" class="form-control" ng-model="ctrl3.document.docAdditionalDetail[$index].fieldValue" required>
                   </div>
                 </div>
               </div>
 
+              <hr/>
+              <h5>Document Approval</h5>
+                  <div ng-show="approvedDoc.length == 0"> No Approval </div>
               <div class="row">
-                  <div class="col-md-6" ng-repeat="designation in ctrl3.document.designations">
+                  
+
+                  <div class="col-md-6" ng-repeat="designation in approvedDoc">
                       <label>User {{$index+1}} </label>
-                      <desuser des="designation.designation._id" ng-model="ctrl3.some[$index]"></desuser>
+                      <desuser des="designation.designation" ng-model="ctrl3.document.approvedBy[$index]" required></desuser>
                   </div>
               </div>
+              
           </form>
         </div>
         <div class="modal-footer">
             <div class="row">
               <div class="col-md-2">
-                <button class="btn btn-primary" type="button" ng-click="ctrl3.cancel()">Submit</button>
+                <button class="btn btn-primary" type="button" ng-disabled="approvalForm.$invalid" ng-click="ctrl3.submit(ctrl3.document)">Submit</button>
             
               </div>
               <div class="col-md-3 pull-right">

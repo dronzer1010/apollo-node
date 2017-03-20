@@ -88,6 +88,18 @@ router.get('/approved' , function(req,res){
 			});
 });
 
+router.get('/approved/:id' , function(req,res){
+	
+	DocumentApproval.findOne({documentTemplateId : req.params.id})
+			.exec(function(err ,docs){
+						if(!err){
+							res.status(200).json({success : true , data : docs});
+						}else{
+							res.status(400).json({success : false , msg : err});
+						}
+			});
+});
+
 
 
 

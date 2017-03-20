@@ -61,6 +61,16 @@ var TicketMaster = new Schema({
           type: Schema.Types.ObjectId, 
           ref: 'DocumentTemplateField',
       },
+      additionalDetails :[
+      {
+          fieldName :{
+              type : String
+          },
+          fieldValue : {
+              type:String
+          }
+      }
+  ],
       finalDate : {
           type : Date
       },
@@ -128,13 +138,10 @@ var TicketMaster = new Schema({
       }
   },
   attachedDocuments : [{
-      url : {
-          type: String
-      },
-      name : {
-       type: String   
-      }
-  }],
+      type: Schema.Types.ObjectId, 
+        ref: 'DocumentMaster',
+  }
+  ],
   ticketOwner:{
     type: Schema.Types.ObjectId, 
     ref: 'Users', 

@@ -30,6 +30,8 @@ router.post('/' , function(req,res){
             attachedDoc.push(temp);
         }
 
+        var additionalDetails = (req.body.transactionAdditionalDetails)?req.body.transactionAdditionalDetails : [];
+        console.log;
 
         var transactionType2 = (req.body.transactionType2)?req.body.transactionType2:null;
         var transactionDocumentType = (req.body.transactionDocumentType)?req.body.transactionDocumentType:null;
@@ -53,6 +55,7 @@ router.post('/' , function(req,res){
                 transactionType : (req.body.ticketType == 'transactionalType')?transactionType2 : null,
                 documentType : (req.body.ticketType == 'transactionalType')?transactionDocumentType : null,
                 notes : (req.body.ticketType == 'transactionalType')?req.body.transactionNotes : null,
+                additionalDetails : (req.body.ticketType == 'transactionalType')?additionalDetails : null,
             },
             litigationalDetails : {
                 noticeReceived : (req.body.ticketType == 'litigationalType')?req.body.litigationNoticeReceived : null ,
@@ -72,7 +75,7 @@ router.post('/' , function(req,res){
             othersDetails : {
                 notes :(req.body.ticketType == 'othersType')?req.body.othersNotes : null,
             },
-            attachedDocuments :attachedDoc
+            attachedDocuments :[]
 
         });
 
@@ -112,13 +115,26 @@ router.post('/' , function(req,res){
                         documentOrigin : 'internal',
                         documentLegalTypeId: null,
                         documentUrl : item.url,
-                        notes:null
+                        notes:null,
+                        approved : false,
+                        additionalDetails :[],
+                        approvalBy:[],
+                        approvalDoneBy:null
                         
                     });
 
-                    tempDoc.save(function(err ,data){
+                    tempDoc.save(function(err ,doc){
                         if(!err){
-                            console.log("Document Saved");
+
+                            Ticket.update({_id:data._id},{$push:{attachedDocuments :doc._id }} , function(err, tick){
+                                if(!err){
+                                    console.log("Document Saved");
+                                }else{
+                                    console.log("Ticket Not Updated");
+                                }
+                            });
+
+                            
                         }else{
                             console.log("Error in document creation");
                             console.log(err);
@@ -187,7 +203,7 @@ router.get('/',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -207,7 +223,7 @@ router.get('/open',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:null})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -228,7 +244,7 @@ router.get('/marked',function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find( {isPicked:false,markDirectTo:decoded._id})
                 .populate(populateQuery)
                 .exec( function(err,docs){
@@ -312,7 +328,7 @@ router.get('/mytickets' , function(req,res){
 
     if(token){
         var decoded = jwt.decode(token, config.secret);
-        var populateQuery = [{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
         Ticket.find({$or:[ {ticketOwner:decoded._id},{ticketCo_Owners :decoded._id} ]})
                 .populate(populateQuery)
                 .exec( function(err,docs){

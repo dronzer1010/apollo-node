@@ -57,6 +57,7 @@
 				url : '/login',
 				templateUrl :'js/login/login.html'
 			})
+			
 			.state('create-ticket',{
 				url :'/ticket',
 				templateUrl : 'js/ticket/ticket.html',
@@ -73,6 +74,10 @@
 				url : '/dashboard',
 				templateUrl : 'js/admin/dashboard/dashboard.html',
 				controller : 'DashboardController'
+			})
+			.state('dashboard.document-search' , {
+				url : '/document-search?query',
+				templateUrl :'js/search/search.html'
 			})
 			.state('dashboard.home',{
 				url : '/dashboard/home',

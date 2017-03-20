@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('MyTicketUserController',['$scope','$interval','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope ,$interval,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
+            .controller('MyTicketUserController',['$scope','documentTemplateFieldService','$interval','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope,documentTemplateFieldService ,$interval,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -209,7 +209,7 @@ $(function(){
                 /**
                  * Modal service
                  */
-                self.open = function(parent ){
+                self.open = function(parent , documentId ){
 
                     
                     self.modalInstance = $uibModal.open({
@@ -220,10 +220,65 @@ $(function(){
                         controller : function($uibModalInstance , $scope){
 
 
-
-                            this.document="";
+                            var self=this;
+                            self.document={};
+                            this.document.documentType="";
                             this.cancel = function(){
                                 $uibModalInstance.dismiss('cancel');
+                            };
+
+                            self.submit = function(data){
+                                if(data.documentType){
+                                    data.approvalDoneBy = $rootScope.user.sessionId ;
+                                    documentTemplateFieldService.approveDocument(data , documentId)
+                                .then(function(doc){
+                                        $uibModalInstance.dismiss('cancel');
+                                        $state.reload();
+									},function(errResponse){
+                                       
+										console.log('error fetching designations');
+									});
+                                }else{
+
+                                }
+                            };
+
+                            $scope.approvedDoc=[];
+                            $scope.render=function(data){
+                                self.document.docAdditionalDetail=[];
+
+
+                                //Data Set Here
+                                if(data){
+                                    data.fields.forEach(function(item){
+                                        var temp_data ={
+                                            fieldName : item.fieldName ,
+                                            fieldValue : ""
+                                        }
+
+                                        self.document.docAdditionalDetail.push(temp_data);
+                                    });
+                                    documentTemplateFieldService.fetchApprovedDocById(data._id)
+                                .then(function(docs){
+                                        if(docs.data){
+                                            $scope.approvedDoc = docs.data.designations;
+                                            self.document.approvedBy=[];
+                                        }else{
+                                            $scope.approvedDoc = [];
+                                            self.document.approvedBy=[];
+                                        }
+										
+                                       // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
+									},function(errResponse){
+                                        $scope.approvedDoc =[];
+										console.log('error fetching designations');
+									});
+                                }
+                                
+
+
+                                
+                                
                             }
                         },
                         controllerAs :'ctrl3',

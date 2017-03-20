@@ -42,6 +42,11 @@
                                                 <br>
                                                 Notes : {{ticketNotes}}
 
+                                                <h5>Additional Details</h5>
+                                            <p ng-repeat="obj in transactionalDetails.additionalDetails">
+                                                <span ng-show="!(obj.fieldValue.length == 0)">{{obj.fieldName}} : {{obj.fieldValue}}</span>
+                                            </p>
+
                                             </p>
                                         </div>
 
@@ -106,12 +111,12 @@
                                             <tr>
                                                 <th>No.</th>
                                                 <th>Document</th>
-                                                <th>Approve</th>
+                                                
                                             </tr>
                                             <tr ng-if="attachedDocuments.length!=0" ng-repeat="document in attachedDocuments">
                                                 <td>{{attachedDocuments.indexOf(document) + 1}}</td>
-                                                <td><a href="{{document.url}}" target="_blank">{{document.name}}</a></td>
-                                                <td><button class="btn btn-sm btn-primary">Approve</button></td>
+                                                <td><a href="{{document.documentUrl}}" target="_blank">{{document.documentName}}</a></td>
+                                                
                                             </tr>
                                             <tr ng-if="attachedDocuments.length==0">
                                                 <td colspan="3" style="text-align:center">No Documents Attached</td>
