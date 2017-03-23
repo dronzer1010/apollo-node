@@ -17,7 +17,9 @@ router.post('/search' , function(req,res){
 	if(req.body.query){
 		var q=req.body.query;
 		var query = new RegExp(q, "i");
-		Document.find({documentName :{$regex : query} , approved : true},function(err , docs){
+		Document.find({$text: {$search: req.body.query} , approved : true},{ score : { $meta: "textScore" } })
+				.sort({ score : { $meta: 'textScore' } })
+				.exec(function(err , docs){
 			if(!err){
 				res.status(200).send({
 					success : true ,

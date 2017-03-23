@@ -100,5 +100,5 @@ var DocumentMaster = new Schema({
     timestamps: true
 });
 
-
+DocumentMaster.index({'$**': 'text'});
 module.exports = mongoose.model('DocumentMaster', DocumentMaster);
