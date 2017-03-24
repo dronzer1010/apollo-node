@@ -109,7 +109,7 @@ router.post('/' , function(req, res){
 
 
 router.get('/:id',function(req,res){
-    var populateQuery = [{path:'taskMaster'},{path:'taskHandlerLocation'}];
+    var populateQuery = [{path:'taskMaster'},{path:'ticketId'},{path:'taskHandlerLocation'},{path:'attachedDocuments'}];
     Task.findOne({_id:req.params.id})
     .populate(populateQuery)
     .exec(function(err,data){

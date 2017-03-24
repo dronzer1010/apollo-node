@@ -45,15 +45,18 @@ router.post('/task/:id' , function(req,res ,next){
 
 
 
-
-         Task.findOne({_id:req.params.id} ,function(err,task){
+         var populateQuery = [{path:'taskMaster'},{path:'ticketId'},{path:'taskHandlerLocation'}];
+         Task.findOne({_id:req.params.id})
+         .populate(populateQuery)
+         .exec(function(err,task){
            if(!err){
+             console.log(task.ticketId);
              var tempDoc = new Document({
                         documentName:req.file.originalname,
                         ticketId : task.ticketId,
                         taskId : task._id,
-                        nameOfUser : "",
-                        emailOfUser : "",
+                        nameOfUser : task.ticketId.firstName,
+                        emailOfUser : task.ticketId.email,
                         notes : null,
                         documentType : null,
                         documentFileType : null,
@@ -61,7 +64,7 @@ router.post('/task/:id' , function(req,res ,next){
                         parentDocument: null,
                         relationType : 'parent',
                         documentDescription : null,
-                        documentLocation : null,
+                        documentLocation : task.taskHandlerLocation,
                         documentOrigin : 'internal',
                         documentLegalTypeId: null,
                         documentUrl : '/docs/'+req.file.filename,
@@ -75,7 +78,7 @@ router.post('/task/:id' , function(req,res ,next){
 
                   tempDoc.save(function(err,document){
                     if(!err){
-                       Task.update({_id:req.params.id},{$push:document},function(err,data){
+                       Task.update({_id:req.params.id},{$push:{attachedDocuments:document}},function(err,data){
                           if(!err){
                             res.status(200).send({
                                       success : true ,
@@ -83,15 +86,15 @@ router.post('/task/:id' , function(req,res ,next){
                                       name : req.file.originalname
                                 });
                           }else{
-                              res.end("Error uploading file." , err);
+                              res.status(400).send({success:false , msg : "Error Uploading File" , err : err});
                           }
                         });
                     }else{
-
+                      res.status(400).send({success:false , msg : "Error Uploading File" , err : err});
                     }
                   });
            }else{
-
+             res.status(400).send({success:false , msg : "Error Uploading File" , err : err});
            }
          });
 

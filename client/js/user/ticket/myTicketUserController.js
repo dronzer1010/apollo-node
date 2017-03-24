@@ -13,7 +13,7 @@ $(function(){
                     ,$scope.itemsPerPage = 5
                     ,$scope.maxSize = 5;
                     $scope.searchText={};
-                    
+
                     $scope.searchText.ticketStatus = "open";
 
                     
@@ -107,7 +107,7 @@ $(function(){
                     self.message="";
                 };
 
-                self.open = function(parent , data ){
+                self.openComanager = function(parent , data ){
 
                     
                     self.modalInstance = $uibModal.open({

@@ -1,6 +1,6 @@
 $(function(){
     angular.module('apolloApp')
-            .controller('TaskController',['$scope','$state','$timeout','$interval','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService','ngProgressFactory','Upload',function($scope ,$state,$timeout ,$interval ,$rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService,ngProgressFactory,Upload){
+            .controller('TaskController',['$scope','$document','documentTemplateFieldService','$state','$timeout','$interval','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService','ngProgressFactory','Upload','$uibModal',function($scope,$document,documentTemplateFieldService ,$state,$timeout ,$interval ,$rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService,ngProgressFactory,Upload,$uibModal){
                 var self =  this;
                 $scope.progressbar = ngProgressFactory.createInstance();
                 self.task={};
@@ -17,7 +17,7 @@ $(function(){
                                             }
                                         }
                                        //// $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
-                                       ticketService.getTaskList(self.task.ticketId).then(function(data){
+                                       ticketService.getTaskList(self.task.ticketId._id).then(function(data){
                                             self.tasks=data.data.task_list;   
                                        },function(err){
                                           console.log(err); 
@@ -26,6 +26,7 @@ $(function(){
 										console.log('error fetching designations');
 									});
                 };
+
 
 
                 self.getNotes = function(){
@@ -37,6 +38,8 @@ $(function(){
                     });
                 };
 
+
+                
 
                 self.sendNotes=function(n_id , s_mail ,type){
                     if($rootScope.user){
@@ -102,6 +105,95 @@ $(function(){
                          $state.go('dashboard');
                     }   
                 }
+
+
+
+                 /**
+                 * Modal service
+                 */
+                self.open = function(parent , documentId ){
+
+                    
+                    self.modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'myModalContent.html',
+                        controller : function($uibModalInstance , $scope ,$state){
+
+
+                            var self=this;
+                            self.document={};
+                            this.document.documentType="";
+                            this.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            };
+
+                            self.submit = function(data){
+                                if(data.documentType){
+                                    data.approvalDoneBy = $rootScope.user.sessionId ;
+                                    documentTemplateFieldService.approveDocument(data , documentId)
+                                .then(function(doc){
+                                        $uibModalInstance.dismiss('cancel');
+                                        $state.reload();
+									},function(errResponse){
+                                       
+										console.log('error fetching designations');
+									});
+                                }else{
+
+                                }
+                            };
+
+                            $scope.approvedDoc=[];
+                            $scope.render=function(data){
+                                self.document.docAdditionalDetail=[];
+
+
+                                //Data Set Here
+                                if(data){
+                                    data.fields.forEach(function(item){
+                                        var temp_data ={
+                                            fieldName : item.fieldName ,
+                                            fieldValue : ""
+                                        }
+
+                                        self.document.docAdditionalDetail.push(temp_data);
+                                    });
+                                    documentTemplateFieldService.fetchApprovedDocById(data._id)
+                                .then(function(docs){
+                                        if(docs.data){
+                                            $scope.approvedDoc = docs.data.designations;
+                                            self.document.approvedBy=[];
+                                        }else{
+                                            $scope.approvedDoc = [];
+                                            self.document.approvedBy=[];
+                                        }
+										
+                                       // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
+									},function(errResponse){
+                                        $scope.approvedDoc =[];
+										console.log('error fetching designations');
+									});
+                                }
+                                
+
+
+                                
+                                
+                            }
+                        },
+                        controllerAs :'ctrl3',
+                        scope : $scope,
+                        size: 'md',
+                        appendTo: angular.element($document[0].querySelector(parent)),
+                        resolve: {
+                            
+                        }
+                    });
+                    //add
+
+                };
                 
             }]);
 }());
