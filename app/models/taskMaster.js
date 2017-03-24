@@ -56,9 +56,11 @@ var TaskMaster = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Tickets',
     },
-    attachedDocuments : {
-      type : [String]
-  },
+    attachedDocuments : [{
+      type: Schema.Types.ObjectId, 
+        ref: 'DocumentMaster',
+  }
+  ],
     
 
 

@@ -12,6 +12,9 @@ $(function(){
                     ,$scope.currentPage = 1
                     ,$scope.itemsPerPage = 5
                     ,$scope.maxSize = 5;
+                    $scope.searchText={};
+                    
+                    $scope.searchText.ticketStatus = "open";
 
                     
                 $scope.messages=[];

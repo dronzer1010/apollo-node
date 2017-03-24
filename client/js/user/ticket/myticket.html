@@ -12,11 +12,15 @@
                                    <div class="col-md-5">
                                         <div class="input-group">
                                             <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
-                                            <input type="text" class="form-control" placeholder="Search .." aria-describedby="basic-addon1" ng-model="searchText">
+                                            <input type="text" class="form-control" placeholder="Search by ticket type .." aria-describedby="basic-addon1" ng-model="searchText.ticketType">
                                         </div>
                                     </div>
-                                    
-                                    <div class="col-md-3 col-md-offset-4">
+                                    <div class="col-md-4" style="padding-top:8px"> 
+                                        <input type="radio" ng-model="searchText.ticketStatus" value="open"/> Open
+                                        <input type="radio" ng-model="searchText.ticketStatus" value="closed"/> Closed
+
+                                    </div>
+                                    <div class="col-md-3 ">
                                         
                                         <select style="" ng-model="orderList" ng-init="orderList='createdAt'" class="form-control">
                                             <option value="-ticketPriority">Priority</option>
@@ -66,8 +70,9 @@
                                     <a class="btn btn-sm btn-primary" ui-sref="dashboard.myTicketDetails({id : ticket._id})">Details</a>
                                 </td>
                                 <td>
-                                    <button ng-if="ticket.isPicked==false"class="btn btn-warning btn-sm" ng-click="ctrl.pickTicket(ticket._id)">Pick</button>
-                                    <button ng-if="ticket.isPicked==true" class="btn btn-default btn-sm" disabled>Picked</button>
+                                    <span ng-if="ticket.ticketStatus=='open'" class="label label-success">Open</span>
+                                    <span ng-if="ticket.ticketStatus=='closed'" class="label label-danger">Closed</span>
+                                    
                                 </td>
                                 
                             </tr>
