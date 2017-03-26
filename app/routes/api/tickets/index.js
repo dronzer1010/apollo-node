@@ -52,12 +52,14 @@ router.post('/' , function(req,res){
                 type : (req.body.ticketType == 'transactionalType')?req.body.transactionType : null ,
                 finalDate : (req.body.ticketType == 'transactionalType')?req.body.transactionFinalDate : null,
                 newOrExisting : (req.body.ticketType == 'transactionalType')?req.body.transactionNewOrExisting : null,
-                transactionType : (req.body.ticketType == 'transactionalType')?transactionType2 : null,
+                transactionType : (req.body.ticketType == 'transactionalType')?transactionType : null,
                 documentType : (req.body.ticketType == 'transactionalType')?transactionDocumentType : null,
                 notes : (req.body.ticketType == 'transactionalType')?req.body.transactionNotes : null,
                 additionalDetails : (req.body.ticketType == 'transactionalType')?additionalDetails : null,
             },
             litigationalDetails : {
+                litigationType : (req.body.litigationType)?req.body.litigationType:null,
+                litigationNonMedicoType :(req.body.litigationNonMedicoType)?((req.body.litigationType == 'non_medico_legal')?req.body.litigationNonMedicoType:null):null,
                 noticeReceived : (req.body.ticketType == 'litigationalType')?req.body.litigationNoticeReceived : null ,
                 noticeFrom : (req.body.ticketType == 'litigationalType')?req.body.litigationNoticeFrom : null ,
                 noticeAgainst : (req.body.ticketType == 'litigationalType')?req.body.litigationNoticeAgainst : null ,
@@ -294,7 +296,8 @@ router.put('/close/:id' , function(req,res){
     if(token){
         var decoded = jwt.decode(token, config.secret);
         
-        Ticket.findOne({_id : req.params.id},function(err,ticket){
+        if(req.body.closingNote){
+            Ticket.findOne({_id : req.params.id},function(err,ticket){
             if(!err){
                 ticket.task_list.forEach(function(item){
                         Task.update({_id : item},{$set:{status:'closed'}},function(err,data){
@@ -307,13 +310,16 @@ router.put('/close/:id' , function(req,res){
                 });
             }
         });
-        Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed'}},function(err,data){
+        Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed' , ticketClosingNote : req.body.closingNote}},function(err,data){
                     if(!err){
                         res.status(200).send({success : true ,msg : "Ticked Closed"});
                     }else{
                         res.status(400).send({success : false , msg : err});
                     }
                 });
+        }else{
+
+        }
 
     }else{
         res.status(403).send({success : false , msg : "Token not provided"});

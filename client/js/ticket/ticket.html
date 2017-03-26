@@ -138,6 +138,34 @@
                    <div id="litigationalType" class="type_module" ng-show="ctrl.ticket.ticketType == 'litigationalType'" >
 
                      <div class="row">
+                       <div class="col-md-6">
+                         <div class="form-group">
+                        <label for="email">Type :</label>
+                        <select class="form-control" ng-model="ctrl.ticket.litigationType">
+                          <option value="medico_legal">Medico Legal</option>
+                          <option value="non_medico_legal">Non-Medico Legal</option>
+                          <option value="tax_related">Tax Related</option>
+                        </select>
+                      </div>
+                       </div>
+                       <div class="col-md-6" ng-show="ctrl.ticket.litigationType=='non_medico_legal'">
+                         <div class="form-group">
+                        <label for="email">Non-Medico Legal Type:</label>
+                        <select class="form-control" ng-model="ctrl.ticket.litigationNonMedicoType" >
+                          <option value="contracts_related">Contracts related</option>
+                          <option value="statutory_compliance">Statutory Compliance</option>
+                          <option value="land_matters">Land Matters</option>
+                          <option value="labour_related">Labour Related</option>
+                          <option value="pharmacy_licenses">Pharmacy Licenses</option>  
+                        </select>
+                      </div>
+                       </div>
+
+
+                     </div>
+
+
+                     <div class="row">
                      <div class="col-md-6">
                        <div class="form-group">
                          <label for="email">Notice Received</label>
@@ -157,7 +185,13 @@
 
                      
 
-                   </div> 
+                   </div>
+
+
+                   
+                   
+                   <div ng-show="ctrl.ticket.litigationNoticeReceived=='Y'">
+
 
                    <div class="row">
                      <div class="col-md-6">
@@ -210,7 +244,7 @@
                      </div>
 
                    </div>
-
+                   </div>
                    <div class="row">
                      <div class="col-md-6">
                        <div class="form-group">
@@ -228,7 +262,9 @@
                       </div>
                      </div>
 
-                     <div class="col-md-6">
+
+
+                     <div class="col-md-6" ng-show="ctrl.ticket.litigationCouselAppointed=='Y'">
                        <div class="form-group">
                         <label for="email">Counsel Address </label>
                         <textarea class="form-control name="counselAddress"" ng-model="ctrl.ticket.litigationCouselAddress"></textarea>
@@ -237,7 +273,7 @@
 
                    </div>
 
-                   <div class="row">
+                   <div class="row" ng-show="ctrl.ticket.litigationCouselAppointed=='Y'">
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Counsel phone number</label>
@@ -253,6 +289,8 @@
                      </div>
 
                    </div>
+
+
 
                    <div class="row">
                      <div class="col-md-6">
@@ -307,21 +345,6 @@
 
                      <div class="col-md-6">
                        <div class="form-group">
-                        <label for="email">Transaction Type</label>
-                        <documents ng-model="ctrl.ticket.transactionType2"></documents>
-                       
-                      </div>
-                     </div>
-
-                     
-
-                   </div>
-
-                   <div class="row">
-                    
-
-                     <div class="col-md-6">
-                       <div class="form-group">
                         <label for="email">Final Date </label>
                         <p class="input-group">
                           <input type="text" class="form-control" name="transactionFinalDate" uib-datepicker-popup="dd/MM/yyyy"   datepicker-options="dateOptions2" ng-model="ctrl.ticket.transactionFinalDate" is-open="transactionFinalDate_popup.opened"   close-text="Close"  />
@@ -331,6 +354,17 @@
                         </p>
                       </div>
                      </div>
+
+                     
+
+                     
+
+                   </div>
+
+                   <div class="row">
+                    
+
+                     
 
                      <div class="col-md-6">
                        <div class="form-group">
@@ -348,40 +382,18 @@
                       </div>
                      </div>
 
-
-                   </div>
-
-                   <div class="row">
-
-                   <div class="col-md-6">
+                     <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Additional details</label>
                         <documents ng-model="ctrl.ticket.transactionDocumentType" ng-change="ctrl.open('body' ,ctrl.ticket.transactionDocumentType)"></documents>
-                        <!--
-                        <select class="form-control" id="document_fill" name="documentType" ng-model="ctrl.ticket.transactionDocumentType">
-                        <option selected="selected" value="medico_legal">Medico Legal</option>
-                        <option value="non_medico">Non Medico</option>
-                        <option value="lease_agreements">Lease Aggreements</option>
-                        <option value="property_agreements">Property Agreements</option>
-                        <option value="share_purchase">Share Purchase</option>
-                        <option value="JV">JV</option>
-                        <option value="loans">Loans</option>
-                        <option value="contracts">Contracts</option>
-                        <option value="taxation">Taxation</option>
-                        </select>
-                        -->
+                        
                       </div>
                      </div>
-                     
-                     <!--
-                     <div class="col-md-6">
-                       <div class="form-group">
-                        <label for="email">Notes</label>
-                        <textarea class="form-control" name="transactionNotes" ng-model="ctrl.ticket.transactionNotes"></textarea>
-                      </div>
-                     </div>-->
+
 
                    </div>
+
+                   
 
                    </div>
 

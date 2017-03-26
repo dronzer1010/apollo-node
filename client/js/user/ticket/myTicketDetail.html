@@ -28,7 +28,7 @@
                                     <div class="col-md-4">
                                         <button class="btn btn-sm btn-block" ng-click="ctrl.openComanager('body',_id)">Add Co-Manager</button>
                                         <br>
-                                        <button class="btn btn-sm btn-danger btn-block" ng-click="ctrl.closeTicket(_id)" ng-disabled="ticketStatus=='closed'">{{(ticketStatus=='closed')?'Ticket Closed':'Close Ticket'}}</button>
+                                        <button class="btn btn-sm btn-danger btn-block" ng-click="ctrl.closeTicketModal('body',_id)" ng-disabled="ticketStatus=='closed'">{{(ticketStatus=='closed')?'Ticket Closed':'Close Ticket'}}</button>
                                     </div>
                                 </div>
                                 <hr>
@@ -293,6 +293,38 @@
                     </div>
 
            </div>
+
+<script type="text/ng-template" id="closingTicket.html">
+
+        <div class="modal-header">
+            <h3 class="modal-title" id="CM-modal-title">Ticket Closing Note</h3>
+        </div>
+        <div class="modal-body" id="CM-modal-body">
+          <form class="form" name="ticketClosing">
+              <div class="row">
+                <div class="col-md-12" >
+                  <div class="form-group">
+                    <label >Closing Note</label>
+                    <textarea class="form-control" ng-model="closingNote" style="resize:none" required></textarea>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-primary" type="button" ng-click="submit(closingNote)" ng-disabled="ticketClosing.$invalid">Submit</button>
+
+              </div>
+              <div class="col-md-3 pull-right">
+                <button class="btn btn-warning" type="button" ng-click="cancel()" >Cancel</button>
+              </div>
+            </div>
+        </div>
+
+</script>
+
 
 
 

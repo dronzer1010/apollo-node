@@ -297,5 +297,54 @@ $(function(){
                 };
 
 
+
+
+
+
+                /**
+                 * Modal service
+                 */
+                self.closeTicketModal = function(parent ,ticketId ){
+
+                    
+                    self.modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'closingTicket.html',
+                        controller : function($uibModalInstance ,ticketService , $scope ,$state){
+
+                            $scope.closingNote="";
+                            
+                            $scope.submit=function(data){
+                                var data={};
+                                data.closingNote = data;
+                                ticketService.closeTicket(ticketId ,data).then(function(response){
+                                    $state.reload();
+                                }, function(errResponse){
+										console.log('error picking ticket');
+									});
+                            };
+                            $scope.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            }; 
+                                
+                            
+                        },
+                        controllerAs :'closeCtrl',
+                        scope : $scope,
+                        size: 'md',
+                        appendTo: angular.element($document[0].querySelector(parent)),
+                        resolve: {
+                            
+                        }
+                    });
+                    //add
+
+                };
+
+
+
+
             }]);
 }());

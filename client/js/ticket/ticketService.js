@@ -127,10 +127,11 @@ $(function(){
 				},
 
 
-			closeTicket: function(id){
+			closeTicket: function(id ,data){
 					var config =	{
 						method: 'PUT',
 						url: url+'/api/tickets/close/'+id,
+						data :data,
 						headers: {
 							authorization : $rootScope.user.token
 						},

@@ -23,8 +23,11 @@ $(function(){
                     transactionNewOrExisting : "new",
                     transactionDocumentType : "",
                     transactionAdditionalDetails:[],
+                    litigationType :"medico_legal",
+                    litigationNonMedicoType:"contracts_related" ,
+
                     transactionNotes : "" ,
-                    litigationNoticeReceived : "N",
+                    litigationNoticeReceived : "Y",
                     litigationNoticeFrom : "",
                     litigationNoticeAgainst : "",
                     litigationOpposingLawyer : "",

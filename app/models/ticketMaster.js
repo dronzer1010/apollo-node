@@ -88,6 +88,12 @@ var TicketMaster = new Schema({
 
   },
   litigationalDetails : {
+      litigationType : {
+          type:String
+      },
+      litigationNonMedicoType : {
+          type:String
+      },
       noticedReceived : {
           type : String ,
           default : 'N'
@@ -163,6 +169,9 @@ ticketStatus : {
     type:String,
     enum:['open','inprogress' ,'closed'],
     default : 'open'
+},
+ticketClosingNote : {
+    type:String
 }
 },{
     timestamps: true
