@@ -70,7 +70,7 @@ router.post('/' , function(req,res){
                 counselPhone : (req.body.ticketType == 'litigationalType')?req.body.litigationCounselPhone : null ,
                 counselEmail : (req.body.ticketType == 'litigationalType')?req.body.litigationCounselEmail : null,
                 courtLocation : (req.body.ticketType == 'litigationalType')?req.body.litigationCourtLocation : null,
-                amount : (req.body.ticketType == 'litigationalType')?req.body.litigationAmount : null,
+                amount : (req.body.ticketType == 'litigationalType')?((parseInt(req.body.litigationAmount)!=NaN)?parseInt(req.body.litigationAmount):0) : 0,
             },
             othersDetails : {
                 notes :(req.body.ticketType == 'othersType')?req.body.othersNotes : null,

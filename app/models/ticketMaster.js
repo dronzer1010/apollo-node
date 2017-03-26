@@ -127,7 +127,8 @@ var TicketMaster = new Schema({
           type : String , 
       },
       amount : {
-          type : String
+          type : Number,
+          default:0
       }
 
 

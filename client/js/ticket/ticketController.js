@@ -5,6 +5,7 @@ $(function(){
 
                 var self = this ;
                 $scope.progressbar = ngProgressFactory.createInstance();
+                $scope.fileInput=null;
                 self.ticket = {
                     firstName : "",
                     lastName : "",
@@ -29,7 +30,7 @@ $(function(){
                     litigationOpposingLawyer : "",
                     litigationContactAddress : "",
                     litigationContactEmail : "",
-                    litigationCourt : "A",
+                    litigationCourt : "",
                     litigationCouselAppointed : "Y",
                     litigationCouselAddress : "",
                     litigationCouselPhone : "",
@@ -173,7 +174,7 @@ $(function(){
                         litigationOpposingLawyer : "",
                         litigationContactAddress : "",
                         litigationContactEmail : "",
-                        litigationCourt : "A",
+                        litigationCourt : "",
                         litigationCouselAppointed : "Y",
                         litigationCouselAddress : "",
                         litigationCouselPhone : "",
@@ -187,6 +188,7 @@ $(function(){
                     }
                     $scope.files = null;
                     $scope.errFiles = null;
+                    $scope.fileInput=null;
                 };
 
 

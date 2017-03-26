@@ -204,11 +204,8 @@
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Court / Forum</label>
-                        <select class="form-control" ng-model="ctrl.ticket.litigationCourt" name="courtForum" >
-                          <option value="A">Option A</option>
-                          <option value="B">Option B</option>
-                          <option value="C">Option C</option>
-                        </select>
+                        <input class="form-control" type="text" ng-model="ctrl.ticket.litigationCourt" name="courtForum" />
+                         
                       </div>
                      </div>
 
@@ -273,7 +270,13 @@
                      </div>
 
                    </div>
-
+                   <div class="row">
+                     <div class="col-md-12">
+                       <div class="well">
+                         * Amount Under Litigation should be in INR
+                       </div>
+                     </div>
+                   </div>
                    </div>
                    <!-- end litigation-->
 
@@ -362,21 +365,21 @@
                         <option value="property_agreements">Property Agreements</option>
                         <option value="share_purchase">Share Purchase</option>
                         <option value="JV">JV</option>
-                        <option value="contracts">Contracts</option>
                         <option value="loans">Loans</option>
+                        <option value="contracts">Contracts</option>
                         <option value="taxation">Taxation</option>
                         </select>
                         -->
                       </div>
                      </div>
                      
-                     
+                     <!--
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Notes</label>
                         <textarea class="form-control" name="transactionNotes" ng-model="ctrl.ticket.transactionNotes"></textarea>
                       </div>
-                     </div>
+                     </div>-->
 
                    </div>
 
@@ -388,12 +391,13 @@
 
                    <div id="othersType" class="type_module" ng-show="ctrl.ticket.ticketType == 'othersType'">
                      <div class="row">
+                       <!--
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Notes</label>
                         <input type="text" name="otherNotes" class="form-control" ng-model="ctrl.ticket.othersNotes">
                       </div>
-                     </div>
+                     </div>-->
 
                      
 
@@ -419,6 +423,7 @@
                       ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true"
                       accept="image/*,application/pdf" 
                       ngf-pattern="'image/*,application/pdf'"
+                      ngf-keep="'distinct'"
 
                    >
                      <p>Drop files here
@@ -426,7 +431,7 @@
                      <p>OR</p>
                      <div class="row">
                        <div class="col-md-4 col-md-offset-4">
-                         <input type="file" ngf-select="uploadFiles($files)" multiple="multiple" >
+                         <input type="file" ng-model="fileInput" ngf-select="uploadFiles($files)" multiple="multiple" ngf-keep="'distinct'" >
                        </div>
                      </div>
                    </div>
