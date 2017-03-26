@@ -129,7 +129,7 @@ $(function(){
 
 			closeTicket: function(id ,data){
 					var config =	{
-						method: 'PUT',
+						method: 'POST',
 						url: url+'/api/tickets/close/'+id,
 						data :data,
 						headers: {

@@ -290,7 +290,7 @@ router.put('/pick/:id' , function(req,res){
     } 
 });
 
-router.put('/close/:id' , function(req,res){
+router.post('/close/:id' , function(req,res){
    var token = getToken(req.headers);
 
     if(token){

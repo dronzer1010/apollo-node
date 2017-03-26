@@ -305,7 +305,7 @@
                 <div class="col-md-12" >
                   <div class="form-group">
                     <label >Closing Note</label>
-                    <textarea class="form-control" ng-model="closingNote" style="resize:none" required></textarea>
+                    <textarea class="form-control" ng-model="closeCtrl.closingNote" style="resize:none" required></textarea>
                   </div>
                 </div>
               </div>
@@ -314,11 +314,11 @@
         <div class="modal-footer">
             <div class="row">
               <div class="col-md-2">
-                <button class="btn btn-primary" type="button" ng-click="submit(closingNote)" ng-disabled="ticketClosing.$invalid">Submit</button>
+                <button class="btn btn-primary" type="button" ng-click="closeCtrl.submit(closeCtrl.closingNote)" ng-disabled="ticketClosing.$invalid">Submit</button>
 
               </div>
               <div class="col-md-3 pull-right">
-                <button class="btn btn-warning" type="button" ng-click="cancel()" >Cancel</button>
+                <button class="btn btn-warning" type="button" ng-click="closeCtrl.cancel()" >Cancel</button>
               </div>
             </div>
         </div>

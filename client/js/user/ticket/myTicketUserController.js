@@ -313,19 +313,19 @@ $(function(){
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'closingTicket.html',
                         controller : function($uibModalInstance ,ticketService , $scope ,$state){
-
-                            $scope.closingNote="";
+                            var self = this;
+                            self.closingNote="";
                             
-                            $scope.submit=function(data){
+                            self.submit=function(notes){
                                 var data={};
-                                data.closingNote = data;
+                                data.closingNote = notes;
                                 ticketService.closeTicket(ticketId ,data).then(function(response){
                                     $state.reload();
                                 }, function(errResponse){
 										console.log('error picking ticket');
 									});
                             };
-                            $scope.cancel = function(){
+                            self.cancel = function(){
                                 $uibModalInstance.dismiss('cancel');
                             }; 
                                 
