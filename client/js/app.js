@@ -40,7 +40,7 @@
 
 
     /** End Authentication Module */
-	var apolloApp = angular.module('apolloApp' , ['ui.router','angularMoment','ui.bootstrap','underscore','ngFileUpload','ngAnimate','toaster','apolloApp.authentication','ngProgress','ui.calendar']);
+	var apolloApp = angular.module('apolloApp' , ['ui.router','angularMoment','ui.bootstrap','underscore','ngFileUpload','ngAnimate','toaster','apolloApp.authentication','ngProgress','ui.calendar' ,'720kb.datepicker']);
 
 	apolloApp.config(function($stateProvider , $urlRouterProvider,$qProvider){
 

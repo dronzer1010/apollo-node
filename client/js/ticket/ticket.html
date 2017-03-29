@@ -477,10 +477,23 @@
           <form class="form">
               <div class="row">
                 <div class="col-md-6" ng-repeat="field in ctrl.ticket.transactionDocumentType.fields">
+
                   <div class="form-group">
                     <label >{{field.fieldName}}</label>
-                    <input type="field.fieldType" class="form-control" ng-model="ctrl.ticket.transactionAdditionalDetails[$index].fieldValue">
+
+
+                    <datepicker ng-if="field.fieldType=='date'" date-format="longDate">
+                      <input class="form-control" ng-model="ctrl.ticket.transactionAdditionalDetails[$index].fieldValue" type="text"/>
+                    </datepicker>
+
+
+                    <input type="field.fieldType" ng-if="field.fieldType!='date' && field.fieldType!='number'" class="form-control" ng-model="ctrl.ticket.transactionAdditionalDetails[$index].fieldValue">
+
+
+                    <input type="field.fieldType" ng-if="field.fieldType=='number'"  class="form-control" ng-model="ctrl.ticket.transactionAdditionalDetails[$index].fieldValue" only-digits>
+
                   </div>
+
                 </div>
               </div>
           </form>
