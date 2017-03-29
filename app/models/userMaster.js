@@ -35,7 +35,7 @@ var UserMaster = new Schema({
   },
   userType :{
   	type:String ,
-  	enum : ['admin','legalteam_member' ,'executive','senior_counsel'],
+  	enum : ['admin','legalteam_member' ,'executive','senior_counsel' ,'local_manager'],
   	default : 'legalteam_member'
   },
   markDirect :{

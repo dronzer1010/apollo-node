@@ -306,7 +306,7 @@ $(function(){
                  */
                 self.closeTicketModal = function(parent ,ticketId ){
 
-                    
+                    console.log(ticketId);
                     self.modalInstance = $uibModal.open({
                         animation: true,
                         ariaLabelledBy: 'modal-title',
