@@ -30,6 +30,16 @@ $(function(){
 									});
                 };
 
+                self.dataExport = function(){
+                    ticketService.getMyTicketsExport()
+                                .then(function(tickets){
+										//self.tickets = tickets.data;
+                                       // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
+									},function(errResponse){
+										console.log('error fetching designations');
+									});
+                };
+
 
                 
 

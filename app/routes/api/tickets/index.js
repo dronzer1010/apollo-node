@@ -512,7 +512,7 @@ router.get('/mytickets/export' , function(req,res){
                 .exec( function(err,docs){
                 if(!err){
 
-                    var report = excel.buildExport(
+                    var report = Excel.buildExport(
                         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
                             {
                             name: 'Ticket Details', // <- Specify sheet name (optional)
