@@ -24,6 +24,7 @@ $(function(){
                     ticketService.getMyTickets()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
+                                        
                                        // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
 									},function(errResponse){
 										console.log('error fetching designations');
@@ -32,10 +33,22 @@ $(function(){
 
                 self.dataExport = function(){
                     ticketService.getMyTicketsExport()
-                                .then(function(tickets){
+                                .then(function(data){
 										//self.tickets = tickets.data;
                                        // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
-									},function(errResponse){
+									
+                                       var anchor = angular.element('<a/>');
+                                        anchor.css({display: 'none'}); // Make sure it's not visible
+                                        angular.element(document.body).append(anchor); // Attach to document
+
+                                        anchor.attr({
+                                            href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+                                            target: '_blank',
+                                            download: 'ticket-export.xlsx'
+                                        })[0].click();
+
+                                        anchor.remove();
+                            },function(errResponse){
 										console.log('error fetching designations');
 									});
                 };

@@ -501,7 +501,19 @@ router.get('/mytickets/export' , function(req,res){
             
 
             var specification = {
-                
+                    _id: {
+                        displayName: 'Ticket Id',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 // <- width in pixels
+                    },
+                    firstName: {
+                        displayName: 'Ticket Creator',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 // <- width in pixels
+                    },
+
                 };
 
 
