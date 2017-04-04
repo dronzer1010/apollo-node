@@ -21,6 +21,7 @@ $(function(){
                 self.tickets = [];
 
                 self.fetchAllTickets = function(){
+                    console.log("I am in");
                     ticketService.getMyTickets()
                                 .then(function(tickets){
 										self.tickets = tickets.data;
@@ -384,16 +385,16 @@ $(function(){
                         ariaDescribedBy: 'modal-body',
                         templateUrl: 'editTicket.html',
                         controller : function($uibModalInstance ,ticketService , $scope ,$state){
-                            var self = this;
-                            self.dataFill = function(){
+                            var myself = this;
+                            myself.dataFill = function(){
                                 ticketService.getTicketById(ticketId).then(function(response){
-                                    self.ticket = response.data;
+                                    myself.ticket = response.data;
                                 }, function(errResponse){
 										console.log('error picking ticket');
 									});
                             };
 
-                            self.dataFill();
+                            myself.dataFill();
                                 
                             
                         },

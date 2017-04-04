@@ -56,7 +56,7 @@ $(function(){
 								return response.data;
 							}, 
 							function(errResponse){
-								console.error('Error while fetching ticket');
+								console.error('Error while fetching ticket By ID');
 								return $q.reject(errResponse);
 							}
 					);
@@ -96,7 +96,7 @@ $(function(){
 								return response.data;
 							}, 
 							function(errResponse){
-								console.error('Error while fetching ticket');
+								console.error('Error while fetching My ticket');
 								return $q.reject(errResponse);
 							}
 					);

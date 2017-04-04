@@ -464,7 +464,7 @@ router.get('/tasks/:id' , function(req,res){
 /**
  * Excel Export Functionality
  */
-
+/*
 
 router.get('/mytickets/export' , function(req,res){
    var token = getToken(req.headers);
@@ -475,9 +475,7 @@ router.get('/mytickets/export' , function(req,res){
 
 
 
-        /**
-         * Excel Styles
-         */
+      
         var styles = {
             headerDark: {
                 fill: {
@@ -512,9 +510,7 @@ router.get('/mytickets/export' , function(req,res){
 
 
 
-            /**
-             * Excel Heading
-             */
+          
             var heading = [
                     [{value: 'a1', style: styles.headerDark}, {value: 'b1', style: styles.headerDark}, {value: 'c1', style: styles.headerDark}],
                    
@@ -571,7 +567,7 @@ router.get('/mytickets/export' , function(req,res){
 });
 
 
-
+*/
 
 
 /**
