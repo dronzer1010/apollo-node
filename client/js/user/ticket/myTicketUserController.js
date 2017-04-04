@@ -42,9 +42,9 @@ $(function(){
                                         angular.element(document.body).append(anchor); // Attach to document
 
                                         anchor.attr({
-                                            href: 'data:attachment/csv;charset=utf-8,' + encodeURI(data),
+                                            href: 'data:attachment/xlsx' + encodeURI(data),
                                             target: '_blank',
-                                            download: 'ticket-export.xlsx'
+                                            download: 'report.xlsx'
                                         })[0].click();
 
                                         anchor.remove();
