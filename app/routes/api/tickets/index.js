@@ -534,9 +534,11 @@ router.get('/mytickets/export' , function(req,res){
                             }
                         ]
                     );
-
-                    res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
-                    res.send(report);
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                    res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+                    res.end(report, 'binary');
+                    //res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
+                    //res.send(report);
                     //res.status(200).send({success : true , data : docs});--
                 }else{
                     res.status(400).send({success : false , msg : err});

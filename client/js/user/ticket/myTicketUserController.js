@@ -36,18 +36,24 @@ $(function(){
                                 .then(function(data){
 										//self.tickets = tickets.data;
                                        // $scope.filteredTickets = tickets.data.slice(0,$scope.numPerPage);
-									
-                                       var anchor = angular.element('<a/>');
+                                    console.log(data);
+                                       console.log(encodeURI(data));
+                                      if (window.navigator.msSaveOrOpenBlob) {
+                                        var blob = new Blob([data]);  //csv data string as an array.
+                                        // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+                                        window.navigator.msSaveBlob(blob, "Report.xls");
+                                    } else {
+                                        var anchor = angular.element('<a/>');
                                         anchor.css({display: 'none'}); // Make sure it's not visible
-                                        angular.element(document.body).append(anchor); // Attach to document
+                                        angular.element(document.body).append(anchor); // Attach to document for FireFox
 
                                         anchor.attr({
-                                            href: 'data:attachment/xlsx' + encodeURI(data),
+                                            href: 'data:attachment/xls;charset=utf-8,' + encodeURI(data),
                                             target: '_blank',
-                                            download: 'report.xlsx'
-                                        })[0].click();
-
-                                        anchor.remove();
+                                            download:"Report.xls"
+                                    })[0].click();
+                                    anchor.remove();
+                                    }
                             },function(errResponse){
 										console.log('error fetching designations');
 									});
