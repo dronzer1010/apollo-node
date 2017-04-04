@@ -518,7 +518,7 @@ router.get('/mytickets/export' , function(req,res){
                 if(!err){
 
                     conf.rows=docs;
-                   var result=nodeExcel.execute(conf);
+                   var result=Excel.execute(conf);
                     res.setHeader('Content-Type','application/vnd.openxmlformates');
                     res.setHeader("Content-Disposition","attachment;filename="+"todo.xlsx");
                     res.end(result,'binary');
