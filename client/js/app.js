@@ -156,6 +156,7 @@
 					}
 				}
 			})
+			
 			.state('dashboard.markedTicketDetails' ,{
 				url : '/user/marked-ticket/:id',
 				templateUrl : 'js/user/ticket/markedTicketDetail.html',

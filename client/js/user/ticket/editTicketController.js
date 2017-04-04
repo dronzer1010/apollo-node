@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('MyTicketUserController',['$scope','documentTemplateFieldService','$interval','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope,documentTemplateFieldService ,$interval,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
+            .controller('EditTicketController',['$scope','documentTemplateFieldService','$interval','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope,documentTemplateFieldService ,$interval,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -361,43 +361,6 @@ $(function(){
                             
                         },
                         controllerAs :'closeCtrl',
-                        scope : $scope,
-                        size: 'md',
-                        appendTo: angular.element($document[0].querySelector(parent)),
-                        resolve: {
-                            
-                        }
-                    });
-                    //add
-
-                };
-
-
-
-
-                self.openEditModal = function(parent ,ticketId ){
-
-                    console.log(ticketId);
-                    self.modalInstance = $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'editTicket.html',
-                        controller : function($uibModalInstance ,ticketService , $scope ,$state){
-                            var self = this;
-                            self.dataFill = function(){
-                                ticketService.getTicketById(ticketId).then(function(response){
-                                    self.ticket = response.data;
-                                }, function(errResponse){
-										console.log('error picking ticket');
-									});
-                            };
-
-                            self.dataFill();
-                                
-                            
-                        },
-                        controllerAs :'editCtrl',
                         scope : $scope,
                         size: 'md',
                         appendTo: angular.element($document[0].querySelector(parent)),

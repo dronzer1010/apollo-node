@@ -222,6 +222,27 @@ router.get('/',function(req,res){
     }
 });
 
+
+router.get('/:id',function(req,res){
+    var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+        Ticket.findOne( {_id:req.params.id})
+                .populate(populateQuery)
+                .exec( function(err,docs){
+                if(!err){
+                    res.status(200).send({success : true , data : docs});
+                }else{
+                    res.status(400).send({success : false , msg : err});
+                }
+            });
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    }
+});
+
 router.get('/open',function(req,res){
     var token = getToken(req.headers);
 

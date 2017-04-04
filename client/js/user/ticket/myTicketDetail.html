@@ -29,6 +29,8 @@
                                         <button class="btn btn-sm btn-block" ng-click="ctrl.openComanager('body',_id)">Add Co-Manager</button>
                                         <br>
                                         <button class="btn btn-sm btn-danger btn-block" ng-click="ctrl.closeTicketModal('body',_id)" ng-disabled="ticketStatus=='closed'">{{(ticketStatus=='closed')?'Ticket Closed':'Close Ticket'}}</button>
+                                        <br>
+                                        <button class="btn btn-sm btn-warning btn-block" ng-click="ctrl.openEditModal('body',_id)">Complete Ticket</button>
                                     </div>
                                 </div>
                                 <hr>
@@ -412,5 +414,425 @@
         </div>
 
 
+    </script>
+
+
+
+
+
+    <!-- Template for edit Ticket -->
+
+    <script type="text/ng-template" id="editTicket.html">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Complete Ticket</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <!-- Modal Body Here -->
+                <form class="ticket_form" name="ticketForm">
+                   
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">First Name <span class="mand_field">*</span> </label>
+                        <input type="text" name="firstName" class="form-control" ng-model="editCtrl.ticket.firstName" required>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Last Name </label>
+                        <input type="text" name="lastName" class="form-control" ng-model="editCtrl.ticket.lastName">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Email <span class="mand_field">*</span></label>
+                        <input type="text" name="email" class="form-control" ng-model="ctrl.ticket.email" required> 
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Location <span class="mand_field">*</span></label>
+                        <locations ng-model="ctrl.ticket.location" name="location" required></locations>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Designation <span class="mand_field">*</span></label>
+                        <designations ng-model="ctrl.ticket.designation"  name="designation" required></designations>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Ticket Priority <span class="mand_field">*</span></label>
+                        
+                         <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="ticketPriority" value="2" ng-model="ctrl.ticket.ticketPriority" required>High
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="ticketPriority" value="1" ng-model="ctrl.ticket.ticketPriority" required>Medium
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="ticketPriority" value="0" ng-model="ctrl.ticket.ticketPriority" required>Low
+                        </label>
+                         </div>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-12">
+                       <div class="form-group">
+                        <label for="email">Notes For Ticket </label>
+                        <textarea class="form-control" name="ticketNotes" ng-model="ctrl.ticket.ticketNotes"></textarea>
+                      </div>
+                     </div>
+                   </div>
+                   
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                         <label for="email">Mark Direct to </label>
+                        <markedusers ng-model="ctrl.ticket.markDirectTo" name="markDirectTo"></markedusers>
+                      </div>
+                     </div>
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Ticket Type <span class="mand_field">*</span></label>
+                        
+                         <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="ticket_type" ng-model="ctrl.ticket.ticketType" value="transactionalType" required>Transactional
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="ticket_type" ng-model="ctrl.ticket.ticketType" value="litigationalType" required>Litigational
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="ticket_type" ng-model="ctrl.ticket.ticketType" value="othersType" required>Others
+                        </label>
+                         </div>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Reply By Date</label>
+                        <p class="input-group">
+                          <input type="text" class="form-control" name="replyByDate" uib-datepicker-popup="dd/MM/yyyy"  datepicker-options="dateOptions" ng-model="ctrl.ticket.replyByDate" is-open="replyByDate_popup.opened"  close-text="Close"  />
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="popup1_open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                        </p>
+                      </div>
+                     </div>
+
+                   </div>
+                   <!-- Start litigation-->
+                   <div id="litigationalType" class="type_module" ng-show="ctrl.ticket.ticketType == 'litigationalType'" >
+
+                     <div class="row">
+                       <div class="col-md-6">
+                         <div class="form-group">
+                        <label for="email">Type :</label>
+                        <select class="form-control" ng-model="ctrl.ticket.litigationType">
+                          <option value="medico_legal">Medico Legal</option>
+                          <option value="non_medico_legal">Non-Medico Legal</option>
+                          <option value="tax_related">Tax Related</option>
+                        </select>
+                      </div>
+                       </div>
+                       <div class="col-md-6" ng-show="ctrl.ticket.litigationType=='non_medico_legal'">
+                         <div class="form-group">
+                        <label for="email">Non-Medico Legal Type:</label>
+                        <select class="form-control" ng-model="ctrl.ticket.litigationNonMedicoType" >
+                          <option value="contracts_related">Contracts related</option>
+                          <option value="statutory_compliance">Statutory Compliance</option>
+                          <option value="land_matters">Land Matters</option>
+                          <option value="labour_related">Labour Related</option>
+                          <option value="pharmacy_licenses">Pharmacy Licenses</option>  
+                        </select>
+                      </div>
+                       </div>
+
+
+                     </div>
+
+
+                     <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                         <label for="email">Notice Received</label>
+                        
+                         <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" value="Y" name="noticeReceived" ng-model="ctrl.ticket.litigationNoticeReceived">Yes
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" value="N" name="noticeReceived" ng-model="ctrl.ticket.litigationNoticeReceived">No
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+                     
+
+                   </div>
+
+
+                   
+                   
+                   <div ng-show="ctrl.ticket.litigationNoticeReceived=='Y'">
+
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Notice from</label>
+                        <input type="text" class="form-control"name="noticeFrom" ng-model="ctrl.ticket.litigationNoticeFrom">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Notice against</label>
+                        <input type="text" class="form-control" name="noticeagainst" ng-model="ctrl.ticket.litigationNoticeAgainst">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Opposing Lawyer</label>
+                        <input type="text" class="form-control" name="oppLawyer" ng-model="ctrl.ticket.litigationOpposingLawyer">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Contact Address</label>
+                        <input type="text" class="form-control" name="contactAddress" ng-model="ctrl.ticket.litigationContactAddress">
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Contact email</label>
+                        <input type="email" class="form-control" name="contactemail" ng-model="ctrl.ticket.litigationContactEmail">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Court / Forum</label>
+                        <input class="form-control" type="text" ng-model="ctrl.ticket.litigationCourt" name="courtForum" />
+                         
+                      </div>
+                     </div>
+
+                   </div>
+                   </div>
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Counsel appointed </label>
+                        <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" value="Y" name="counselAppointed" ng-model="ctrl.ticket.litigationCouselAppointed">Yes
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" value="N" name="counselAppointed" ng-model="ctrl.ticket.litigationCouselAppointed">No
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+
+
+                     <div class="col-md-6" ng-show="ctrl.ticket.litigationCouselAppointed=='Y'">
+                       <div class="form-group">
+                        <label for="email">Counsel Address </label>
+                        <textarea class="form-control name="counselAddress"" ng-model="ctrl.ticket.litigationCouselAddress"></textarea>
+                      </div>
+                     </div>
+
+                   </div>
+
+                   <div class="row" ng-show="ctrl.ticket.litigationCouselAppointed=='Y'">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Counsel phone number</label>
+                        <input type="text" class="form-control" name="counselPhone" ng-model="ctrl.ticket.litigationCouselPhone">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Counsel email</label>
+                        <input type="email" class="form-control" name="counselEmail" ng-model="ctrl.ticket.litigationCouselEmail">
+                      </div>
+                     </div>
+
+                   </div>
+
+
+
+                   <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Location of court</label>
+                        <input type="text" class="form-control" name="courtLocation" ng-model="ctrl.ticket.litigationCourtLocation">
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Amount under litigation</label>
+                        <input type="text" class="form-control" name="amount" ng-model="ctrl.ticket.litigationAmount">
+                      </div>
+                     </div>
+
+                   </div>
+                   <div class="row">
+                     <div class="col-md-12">
+                       <div class="well">
+                         * Amount Under Litigation should be in INR
+                       </div>
+                     </div>
+                   </div>
+                   </div>
+                   <!-- end litigation-->
+
+
+                   <!-- Start Transactional-->
+
+                   <div id="transactionalType" class="type_module" ng-show="ctrl.ticket.ticketType == 'transactionalType'">
+
+                    <div class="row">
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Type</label>
+                        <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" ng-model="ctrl.ticket.transactionType" name="transactionType" value="opinion">Opinion
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio"  ng-model="ctrl.ticket.transactionType" name="transactionType" value="renegotiation">Renegotiation
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio"  ng-model="ctrl.ticket.transactionType" name="transactionType" value="template">Template
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Final Date </label>
+                        <p class="input-group">
+                          <input type="text" class="form-control" name="transactionFinalDate" uib-datepicker-popup="dd/MM/yyyy"   datepicker-options="dateOptions2" ng-model="ctrl.ticket.transactionFinalDate" is-open="transactionFinalDate_popup.opened"   close-text="Close"  />
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="popup2_open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                        </p>
+                      </div>
+                     </div>
+
+                     
+
+                     
+
+                   </div>
+
+                   <div class="row">
+                    
+
+                     
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">New / Existing</label>
+                        <div style="margin-top:5px;">
+
+                           <label class="radio-inline">
+                          <input type="radio" name="newExist" ng-model="ctrl.ticket.transactionNewOrExisting" value="new">New
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="newExist"  ng-model="ctrl.ticket.transactionNewOrExisting" value="existing">Existing
+                        </label>
+                        
+                         </div>
+                      </div>
+                     </div>
+
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Additional details</label>
+                        <documents ng-model="ctrl.ticket.transactionDocumentType" ng-change="ctrl.open('body' ,ctrl.ticket.transactionDocumentType)"></documents>
+                        
+                      </div>
+                     </div>
+
+
+                   </div>
+
+                   
+
+                   </div>
+
+                   <!--end Transactional-->
+
+                   <!-- Start others-->
+
+                   <div id="othersType" class="type_module" ng-show="ctrl.ticket.ticketType == 'othersType'">
+                     <div class="row">
+                       <!--
+                     <div class="col-md-6">
+                       <div class="form-group">
+                        <label for="email">Notes</label>
+                        <input type="text" name="otherNotes" class="form-control" ng-model="ctrl.ticket.othersNotes">
+                      </div>
+                     </div>-->
+
+                     
+
+                   </div>
+                   </div>
+
+                   <!--End Others-->
+                   
+                   </form>
+            <!-- Modal Body Ends -->
+        </div>
+        <div class="modal-footer">
+
+        </div>
     </script>
 </div>
