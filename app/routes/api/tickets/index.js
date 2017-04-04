@@ -13,7 +13,7 @@ var mg       = require('nodemailer-mailgun-transport');
 var config = require(__base + 'app/config/database');
 var helper = require('sendgrid').mail;
 
-var Excel = require('excel-export');
+var Excel = require('node-excel-export');
 
 
 router.post('/' , function(req,res){
@@ -499,15 +499,22 @@ router.get('/mytickets/export' , function(req,res){
                    
                 ];
             
-            var conf={};
-            conf.specification = [
-                        {
-                    caption:'Sl.',
-                    type:'number',
-                    width:3
-                },    
 
-            ];
+            var specification = {
+                    _id: {
+                        displayName: 'Ticket Id',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 // <- width in pixels
+                    },
+                    firstName: {
+                        displayName: 'Ticket Id',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 // <- width in pixels
+                    },
+
+                };
 
 
 
@@ -517,12 +524,20 @@ router.get('/mytickets/export' , function(req,res){
                 .exec( function(err,docs){
                 if(!err){
 
-                    conf.rows=docs;
-                   var result=Excel.execute(conf);
-                    res.setHeader('Content-Type','application/vnd.openxmlformates');
-                    res.setHeader("Content-Disposition","attachment;filename="+"todo.xlsx");
-                    res.end(result,'binary');
-                    //res.status(200).send({success : true , data : docs});
+                    var report = Excel.buildExport(
+                        [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
+                            {
+                            name: 'Ticket Details', // <- Specify sheet name (optional)
+                            heading: heading, // <- Raw heading array (optional)
+                            specification: specification, // <- Report specification
+                            data: docs // <-- Report data
+                            }
+                        ]
+                    );
+
+                    res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
+                    res.send(report);
+                    //res.status(200).send({success : true , data : docs});--
                 }else{
                     res.status(400).send({success : false , msg : err});
                 }
