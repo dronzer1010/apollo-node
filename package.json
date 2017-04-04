@@ -16,7 +16,9 @@
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.7.0",
     "morgan": "^1.7.0",
+    "msexcel-builder": "0.0.2",
     "multer": "^1.2.0",
+    "node-excel-export": "^1.2.0",
     "nodemailer": "^2.7.0",
     "nodemailer-mailgun-transport": "^1.2.4",
     "sendgrid": "^4.7.1"

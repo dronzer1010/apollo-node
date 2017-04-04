@@ -13,6 +13,8 @@ var mg       = require('nodemailer-mailgun-transport');
 var config = require(__base + 'app/config/database');
 var helper = require('sendgrid').mail;
 
+var Excel = require('node-excel-export');
+
 
 router.post('/' , function(req,res){
 
@@ -431,6 +433,112 @@ router.get('/tasks/:id' , function(req,res){
     }
 });
 
+
+
+
+
+
+
+
+/**
+ * Excel Export Functionality
+ */
+
+
+router.get('/mytickets/export' , function(req,res){
+   var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+
+
+
+        /**
+         * Excel Styles
+         */
+        var styles = {
+            headerDark: {
+                fill: {
+                fgColor: {
+                    rgb: 'FF000000'
+                }
+                },
+                font: {
+                color: {
+                    rgb: 'FFFFFFFF'
+                },
+                sz: 14,
+                bold: true,
+                underline: true
+                }
+            },
+            cellPink: {
+                fill: {
+                fgColor: {
+                    rgb: 'FFFFCCFF'
+                }
+                }
+            },
+            cellGreen: {
+                fill: {
+                fgColor: {
+                    rgb: 'FF00FF00'
+                }
+                }
+            }
+            };
+
+
+
+            /**
+             * Excel Heading
+             */
+            var heading = [
+                    [{value: 'a1', style: styles.headerDark}, {value: 'b1', style: styles.headerDark}, {value: 'c1', style: styles.headerDark}],
+                   
+                ];
+            
+
+            var specification = {
+                
+                };
+
+
+
+
+        Ticket.find({$or:[ {ticketOwner:decoded._id},{ticketCo_Owners :decoded._id} ]})
+                .populate(populateQuery)
+                .exec( function(err,docs){
+                if(!err){
+
+                    var report = excel.buildExport(
+                        [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
+                            {
+                            name: 'Ticket Details', // <- Specify sheet name (optional)
+                            heading: heading, // <- Raw heading array (optional)
+                            specification: specification, // <- Report specification
+                            data: docs // <-- Report data
+                            }
+                        ]
+                    );
+
+                    res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
+                    res.send(report);
+                    //res.status(200).send({success : true , data : docs});
+                }else{
+                    res.status(400).send({success : false , msg : err});
+                }
+            });
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    } 
+});
+
+
+
+
+
 /**
  *  Generic token parsing function
  */
@@ -446,6 +554,10 @@ var getToken = function (headers) {
     return null;
   }
 };
+
+
+
+
 
 
 module.exports = router;
