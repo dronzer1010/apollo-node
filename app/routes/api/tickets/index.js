@@ -69,10 +69,10 @@ router.post('/' , function(req,res){
                 contactAddress : (req.body.ticketType == 'litigationalType')?req.body.litigationContactAddress : null ,
                 contactEmail : (req.body.ticketType == 'litigationalType')?req.body.litigationContactEmail : null,
                 court : (req.body.ticketType == 'litigationalType')?req.body.litigationCourt : null ,
-                counselAppointed : (req.body.ticketType == 'litigationalType')?req.body.litigationCounselAppointed : null ,
-                counselAddress : (req.body.ticketType == 'litigationalType')?req.body.litigationCounselAddress : null ,
-                counselPhone : (req.body.ticketType == 'litigationalType')?req.body.litigationCounselPhone : null ,
-                counselEmail : (req.body.ticketType == 'litigationalType')?req.body.litigationCounselEmail : null,
+                counselAppointed : (req.body.ticketType == 'litigationalType')?req.body.litigationCouselAppointed : null ,
+                counselAddress : (req.body.ticketType == 'litigationalType')?req.body.litigationCouselAddress : null ,
+                counselPhone : (req.body.ticketType == 'litigationalType')?req.body.litigationCouselPhone : null ,
+                counselEmail : (req.body.ticketType == 'litigationalType')?req.body.litigationCouselEmail : null,
                 courtLocation : (req.body.ticketType == 'litigationalType')?req.body.litigationCourtLocation : null,
                 amount : (req.body.ticketType == 'litigationalType')?((parseInt(req.body.litigationAmount)!=NaN)?parseInt(req.body.litigationAmount):0) : 0,
             },
@@ -223,9 +223,9 @@ router.get('/',function(req,res){
 });
 
 
-router.get('/:id',function(req,res){
+router.get('/indi/:id',function(req,res){
     var token = getToken(req.headers);
-
+    console.log("Iam being called");
     if(token){
         var decoded = jwt.decode(token, config.secret);
         var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
@@ -354,7 +354,7 @@ router.post('/close/:id' , function(req,res){
 
 router.get('/mytickets' , function(req,res){
    var token = getToken(req.headers);
-
+   console.log("APi Called");
     if(token){
         var decoded = jwt.decode(token, config.secret);
         var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
@@ -464,7 +464,7 @@ router.get('/tasks/:id' , function(req,res){
 /**
  * Excel Export Functionality
  */
-/*
+
 
 router.get('/mytickets/export' , function(req,res){
    var token = getToken(req.headers);
@@ -567,7 +567,7 @@ router.get('/mytickets/export' , function(req,res){
 });
 
 
-*/
+
 
 
 /**
