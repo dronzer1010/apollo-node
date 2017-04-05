@@ -28,9 +28,9 @@ router.get('/' , function(req,res){
 		.populate(populateQuery)
 		.exec(function(err,data){
 			if(!err){
-				res.status(200).json({success : true , data : data});
 			}else{
 				res.status(400).json({success : false , msg : err});
+				res.status(200).json({success : true , data : data});
 			}
 		});
 	}
@@ -105,7 +105,7 @@ console.log(req.body.firstName+' '+req.body.email+' '+req.body.password+' '+req.
 			firstName : req.body.firstName,
 			lastName : (req.body.lastName)?req.body.lastName:'',
 			email : req.body.email,
-			password : req.body.password,
+			// password : req.body.password,
 			designation : req.body.designation,
 			location : req.body.location,
 			userType : req.body.userType ,
@@ -194,6 +194,25 @@ router.post('/login' , function(req,res){
             		}
             	});
             }
+		});
+	}
+});
+
+
+router.post("/admin/changepassword" , function(req,res){
+	if(!req.body.userId || !req.body.password){
+		res.status(400).send({success: false, msg: 'Invalid Data'});
+	}else{
+		var salt = bcrypt.genSaltSync(10);
+		var hash = bcrypt.hashSync(req.body.password, salt);
+		var newpassword = hash;
+
+		User.update({_id:req.body.userId},{$set:{password:newpassword}} , function(err ,data){
+			if(!err){
+				res.status(200).send({success: true, msg: 'Password Updated'});
+			}else{
+				res.status(400).send({success: false, msg: 'Password update failed' , err :err});	
+			}
 		});
 	}
 });

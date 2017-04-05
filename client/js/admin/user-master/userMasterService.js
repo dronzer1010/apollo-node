@@ -43,6 +43,18 @@ $(function(){
 			                    }
 			            );
 			        },
+					adminChangeUserPassword: function(data){
+			            return $http.post(url+'/api/users/admin/changepassword', data)
+			            .then(
+			                    function(response){
+			                        return response.data;
+			                    }, 
+			                    function(errResponse){
+			                        console.error('Error changing password');
+			                        return $q.reject(errResponse);
+			                    }
+			            );
+			        },
 
 			        activateUser : function(data){
 			        	 return $http.post(url+'/api/users/activate', data)

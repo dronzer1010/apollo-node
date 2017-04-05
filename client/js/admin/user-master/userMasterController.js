@@ -1,7 +1,7 @@
 $(function(){
 	'use strict' ;
 	var app = angular.module('apolloApp')
-					.controller('UserMasterController' , ['$scope','$rootScope','userMasterService' , function($scope ,$rootScope, userMasterService){
+					.controller('UserMasterController' , ['$scope','$rootScope','userMasterService','$uibModal','$document' , function($scope ,$rootScope, userMasterService ,$uibModal,$document){
 						
 						var self = this;
 						$scope.currentUser = $rootScope.user.email;
@@ -54,6 +54,21 @@ $(function(){
 													.then(self.fetchAllUsers, function(errResponse){
 														console.log('error creating  User');
 													});
+						};
+						$scope.resetForm = function(){
+							self.user = {
+							_id : null ,
+							firstName : '',
+							lastName : '',
+							email : '',
+							password : '',
+							designation : '',
+							location : '',
+							userType:'',
+							lastPassword:'',
+							active : false,
+							markDirect : false
+						};
 						};
 						self.submit = function() {
 							//console.log('Im called');
@@ -139,6 +154,49 @@ $(function(){
 
 						self.fetchAllUsers();
 
+
+
+						/**
+						 * Change password
+						 */
+
+						                self.changePasswordModal = function(parent ,userId ){
+
+									//console.log(ticketId);
+									self.modalInstance = $uibModal.open({
+										animation: true,
+										ariaLabelledBy: 'modal-title',
+										ariaDescribedBy: 'modal-body',
+										templateUrl: 'changePasswordTemplate.html',
+										controller : function($uibModalInstance ,userMasterService , $scope ,$state){
+
+										var self=this;
+										self.newPass = "";
+										self.confirmPass = ""	;
+
+										self.submit = function(pass){
+											var data = {};
+											data.userId = userId;
+											data.password = pass;
+
+											userMasterService.adminChangeUserPassword(data)
+			          								.then($uibModalInstance.dismiss('cancel'), function(errResponse){
+														$uibModalInstance.dismiss('cancel');
+													});
+										};		
+											
+										},
+										controllerAs :'changeCtrl',
+										scope : $scope,
+										size: 'md',
+										appendTo: angular.element($document[0].querySelector(parent)),
+										resolve: {
+											
+										}
+									});
+									//add
+
+								};
 
 					}]);
 }());
