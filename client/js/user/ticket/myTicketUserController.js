@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('MyTicketUserController',['$scope','documentTemplateFieldService','$interval','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope,documentTemplateFieldService ,$interval,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
+            .controller('MyTicketUserController',['$scope','FileSaver','Blob','$q','$http','documentTemplateFieldService','$interval','$uibModal','$document','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope,FileSaver,Blob,$q,$http,documentTemplateFieldService ,$interval,$uibModal,$document, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -33,6 +33,10 @@ $(function(){
                 };
 
                 self.dataExport = function(){
+
+
+
+                    /*
                     ticketService.getMyTicketsExport()
                                 .then(function(data){
 										//self.tickets = tickets.data;
@@ -57,7 +61,34 @@ $(function(){
                                     }
                             },function(errResponse){
 										console.log('error fetching designations');
-									});
+									});*/
+
+var deferred = $q.defer();
+                                    $http({
+                                        url:"http://localhost:3001/api/tickets/mytickets/export",
+                                        method: "GET",
+                                        headers: {
+                                        
+                                        authorization : $rootScope.user.token
+                                        },
+                                    responseType: "arraybuffer"
+                                    }).then(
+        function (data, status, headers) {
+            console.log(data.data);
+           
+            var blob = new Blob([data.data], { type: 'application/vnd.openxmlformats' });
+            var currDate = new Date();
+            var fileName = "Tickets_"+currDate+'.xlsx';
+            FileSaver.saveAs(blob, fileName);
+            deferred.resolve(fileName);                    
+        }, function (data, status) {
+            var e = /* error */
+            deferred.reject(e);
+        });
+    return deferred.promise;
+
+
+
                 };
 
 
@@ -374,7 +405,9 @@ $(function(){
                 };
 
 
-
+                /**
+                 *  Complete Ticket Model
+                 */
 
                 self.openEditModal = function(parent ,ticketId ){
 
@@ -395,6 +428,20 @@ $(function(){
                             };
 
                             myself.dataFill();
+
+
+                            myself.submit = function(data){
+                                console.log(data);
+                                ticketService.editTicket(data ,data._id).then(function(response){
+                                    $state.reload();
+                                }, function(errResponse){
+										console.log('error edit ticket');
+									});
+                               // $uibModalInstance.dismiss('cancel');
+                            };
+                            myself.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            };
                                 
                             
                         },

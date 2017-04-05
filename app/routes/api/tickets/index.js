@@ -13,6 +13,8 @@ var mg       = require('nodemailer-mailgun-transport');
 var config = require(__base + 'app/config/database');
 var helper = require('sendgrid').mail;
 
+var fs = require('fs');
+
 var Excel = require('node-excel-export');
 
 
@@ -54,7 +56,7 @@ router.post('/' , function(req,res){
                 type : (req.body.ticketType == 'transactionalType')?req.body.transactionType : null ,
                 finalDate : (req.body.ticketType == 'transactionalType')?req.body.transactionFinalDate : null,
                 newOrExisting : (req.body.ticketType == 'transactionalType')?req.body.transactionNewOrExisting : null,
-                transactionType : (req.body.ticketType == 'transactionalType')?transactionType : null,
+                transactionType : (req.body.ticketType == 'transactionalType')?null : null,
                 documentType : (req.body.ticketType == 'transactionalType')?transactionDocumentType : null,
                 notes : (req.body.ticketType == 'transactionalType')?req.body.transactionNotes : null,
                 additionalDetails : (req.body.ticketType == 'transactionalType')?additionalDetails : null,
@@ -197,6 +199,67 @@ router.post('/' , function(req,res){
 
 });
 
+
+
+router.put('/edit/:id' , function(req,res){
+    var token = getToken(req.headers);
+
+    if(token){
+        var decoded = jwt.decode(token, config.secret);
+        console.log(req.body);
+       // var populateQuery = [{path:'attachedDocuments'},{path:'designation'},{path:'location'},{path:'task_list'},{path:'ticketCo_Owners'},{path:'transactionalDetails.documentType'},{path:'transactionalDetails.transactionType'}];
+       
+       Ticket.update({_id:req.params.id} ,{$set:{
+           firstName : req.body.firstName ,
+            lastName : (req.body.lastName)?req.body.lastName :'',
+            email : req.body.email ,
+            location : req.body.location ,
+            designation : req.body.designation ,
+            ticketPriority : req.body.ticketPriority,
+            ticketNotes : (req.body.ticketNotes)?req.body.ticketNotes : '',
+            ticketType : req.body.ticketType,
+            replyByDate : req.body.replyByDate ,
+            transactionalDetails : {
+                type : (req.body.ticketType == 'transactionalType')?req.body.transactionalDetails.type: null ,
+                finalDate : (req.body.ticketType == 'transactionalType')?req.body.transactionalDetails.finalDate : null,
+                newOrExisting : (req.body.ticketType == 'transactionalType')?req.body.transactionalDetails.newOrExisting : null,
+               
+                documentType : (req.body.ticketType == 'transactionalType')?req.body.transactionalDetails.documentType : null,
+                notes : (req.body.ticketType == 'transactionalType')?req.body.transactionalDetails.notes : null,
+                additionalDetails : (req.body.ticketType == 'transactionalType')?req.body.transactionalDetails.additionalDetails : null,
+            },
+            litigationalDetails : {
+                litigationType : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.litigationType:null,
+                litigationNonMedicoType :(req.body.ticketType == 'litigationalType')?((req.body.litigationalDetails.litigationType == 'non_medico_legal')?req.body.litigationNonMedicoType:null):null,
+                noticeReceived : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.noticeReceived : null ,
+                noticeFrom : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.noticeFrom : null ,
+                noticeAgainst : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.noticeAgainst : null ,
+                opposingLawyer : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.opposingLawyer : null ,
+                contactAddress : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.contactAddress : null ,
+                contactEmail : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.contactEmail : null,
+                court : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.court : null ,
+                counselAppointed : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.couselAppointed : null ,
+                counselAddress : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.couselAddress : null ,
+                counselPhone : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.couselPhone : null ,
+                counselEmail : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.couselEmail : null,
+                courtLocation : (req.body.ticketType == 'litigationalType')?req.body.litigationalDetails.courtLocation : null,
+                amount : (req.body.ticketType == 'litigationalType')?((parseInt(req.body.litigationalDetails.amount)!=NaN)?parseInt(req.body.litigationalDetails.amount):0) : 0,
+            },
+            othersDetails : {
+                notes :(req.body.ticketType == 'othersType')?req.body.othersNotes : null,
+            },
+           
+       }},function(err , data){
+           if(!err){
+               res.status(200).send({success :true , msg : "Ticket Updated"});
+           }else{
+               res.status(400).send({success :false , msg : "Ticket Update Failed" , err : err});
+           }
+       });
+    }else{
+        res.status(403).send({success : false , msg : "Token not provided"});
+    }
+});
 
 
 
@@ -480,29 +543,46 @@ router.get('/mytickets/export' , function(req,res){
             headerDark: {
                 fill: {
                 fgColor: {
-                    rgb: 'FF000000'
-                }
+                    rgb: 'FFFFFFFF'
+                },
+                patternType:"none"
                 },
                 font: {
                 color: {
-                    rgb: 'FFFFFFFF'
+                    rgb: 'FF000000'
                 },
-                sz: 14,
+                sz: 12,
                 bold: true,
-                underline: true
+                underline: false
                 }
             },
             cellPink: {
                 fill: {
-                fgColor: {
-                    rgb: 'FFFFCCFF'
-                }
+                bgColor: {
+                    rgb: 'none'
+
+                },
+                patternType:"none"
                 }
             },
             cellGreen: {
                 fill: {
                 fgColor: {
                     rgb: 'FF00FF00'
+                }
+                }
+            },
+            cellYellow: {
+                fill: {
+                fgColor: {
+                    rgb: 'FFFFFF00'
+                }
+                }
+            },
+            cellRed: {
+                fill: {
+                fgColor: {
+                    rgb: 'FFFF0000'
                 }
                 }
             }
@@ -525,11 +605,98 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 // <- width in pixels
                     },
                     firstName: {
-                        displayName: 'Ticket Id',
+                        displayName: 'First Name',
                         headerStyle: styles.headerDark,
                         cellStyle: styles.cellPink, // <- Cell style
                         width: 220 // <- width in pixels
                     },
+                    lastName: {
+                        displayName: 'Last Name',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 // <- width in pixels
+                    },
+                    email: {
+                        displayName: 'Email',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 // <- width in pixels
+                    },
+                    location : {
+                        
+                        displayName: 'Location',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val.name+' , '+val.division
+                           
+                        }
+                        
+
+                    },
+                    designation: {
+                        displayName: 'Designation',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val.designation
+                           
+                        }
+                    },
+                    ticketPriority: {
+                        displayName: 'Priority',
+                        headerStyle: styles.headerDark,
+                        cellStyle: function(val , row){
+                            if(val == '0'){
+                                return styles.cellPink;
+                            }
+                            if(val == '1'){
+                                return styles.cellYellow;
+
+                            }
+                            if(val == '2'){
+                                return styles.cellRed;
+                            }
+
+                        }, // <- Cell style
+                        cellFormat : function(val , row){
+                            if(val == '0'){
+                                return 'Low';
+                            }
+                            if(val == '1'){
+                                return 'Medium';
+                            }
+                            if(val == '2'){
+                                return 'High';
+                            }
+                        },
+                        width: 220 , // <- width in pixels,
+                        
+                    },
+                    ticketStatus: {
+                        displayName: 'Designation',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        
+                    
+                    cellStyle: function(val , row){
+                            if(val == 'open'){
+                                return styles.cellGreen;
+                            }
+                            if(val == 'closed'){
+                                return styles.cellRed;
+
+                            }
+                            
+
+                        },
+
+                    }
 
                 };
 
@@ -545,15 +712,23 @@ router.get('/mytickets/export' , function(req,res){
                         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
                             {
                             name: 'Ticket Details', // <- Specify sheet name (optional)
-                            heading: heading, // <- Raw heading array (optional)
+                            heading: [], // <- Raw heading array (optional)
                             specification: specification, // <- Report specification
                             data: docs // <-- Report data
                             }
                         ]
                     );
-                    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-                    res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
-                    res.end(report, 'binary');
+                   
+                    fs.writeFile("report.xls", report,  "binary",function(err) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                             res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                            res.setHeader("Content-Disposition", "attachment; filename=" + "Report.xlsx");
+                            res.end(report, 'binary');
+                            console.log("The file was saved!");
+                        }
+                    });
                     //res.attachment('report.xlsx'); // This is sails.js specific (in general you need to set headers)
                     //res.send(report);
                     //res.status(200).send({success : true , data : docs});--

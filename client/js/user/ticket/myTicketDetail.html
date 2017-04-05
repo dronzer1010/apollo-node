@@ -647,10 +647,10 @@
                         <div style="margin-top:5px;">
 
                            <label class="radio-inline">
-                          <input type="radio" value="Y" name="counselAppointed" ng-model="editCtrl.ticket.litigationalDetails.couselAppointed">Yes
+                          <input type="radio" value="Y" name="counselAppointed" ng-model="editCtrl.ticket.litigationalDetails.counselAppointed">Yes
                         </label>
                         <label class="radio-inline">
-                          <input type="radio" value="N" name="counselAppointed" ng-model="editCtrl.ticket.litigationalDetails.couselAppointed">No
+                          <input type="radio" value="N" name="counselAppointed" ng-model="editCtrl.ticket.litigationalDetails.counselAppointed">No
                         </label>
                         
                          </div>
@@ -659,27 +659,27 @@
 
 
 
-                     <div class="col-md-6" ng-show="editCtrl.ticket.litigationalDetails.couselAppointed=='Y'">
+                     <div class="col-md-6" ng-show="editCtrl.ticket.litigationalDetails.counselAppointed=='Y'">
                        <div class="form-group">
                         <label for="email">Counsel Address </label>
-                        <textarea class="form-control name="counselAddress"" ng-model="editCtrl.ticket.litigationalDetails.couselAddress"></textarea>
+                        <textarea class="form-control name="counselAddress"" ng-model="editCtrl.ticket.litigationalDetails.counselAddress"></textarea>
                       </div>
                      </div>
 
                    </div>
 
-                   <div class="row" ng-show="editCtrl.ticket.litigationalDetails.couselAppointed=='Y'">
+                   <div class="row" ng-show="editCtrl.ticket.litigationalDetails.counselAppointed=='Y'">
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Counsel phone number</label>
-                        <input type="text" class="form-control" name="counselPhone" ng-model="editCtrl.ticket.litigationalDetails.couselPhone">
+                        <input type="text" class="form-control" name="counselPhone" ng-model="editCtrl.ticket.litigationalDetails.counselPhone">
                       </div>
                      </div>
 
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Counsel email</label>
-                        <input type="email" class="form-control" name="counselEmail" ng-model="editCtrl.ticket.litigationalDetails.couselEmail">
+                        <input type="email" class="form-control" name="counselEmail" ng-model="editCtrl.ticket.litigationalDetails.counselEmail">
                       </div>
                      </div>
 
@@ -691,14 +691,14 @@
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Location of court</label>
-                        <input type="text" class="form-control" name="courtLocation" ng-model="ctrl.ticket.litigationCourtLocation">
+                        <input type="text" class="form-control" name="courtLocation" ng-model="editCtrl.ticket.litigationalDetails.courtLocation">
                       </div>
                      </div>
 
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Amount under litigation</label>
-                        <input type="text" class="form-control" name="amount" ng-model="ctrl.ticket.litigationAmount">
+                        <input type="text" class="form-control" name="amount" ng-model="editCtrl.ticket.litigationalDetails.amount">
                       </div>
                      </div>
 
@@ -716,37 +716,32 @@
 
                    <!-- Start Transactional-->
 
-                   <div id="transactionalType" class="type_module" ng-show="ctrl.ticket.ticketType == 'transactionalType'">
+                   <div id="transactionalType" class="type_module" ng-show="editCtrl.ticket.ticketType == 'transactionalType'">
 
                     <div class="row">
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Type</label>
-                        <div style="margin-top:5px;">
 
-                           <label class="radio-inline">
-                          <input type="radio" ng-model="ctrl.ticket.transactionType" name="transactionType" value="opinion">Opinion
-                        </label>
-                        <label class="radio-inline">
-                          <input type="radio"  ng-model="ctrl.ticket.transactionType" name="transactionType" value="renegotiation">Renegotiation
-                        </label>
-                        <label class="radio-inline">
-                          <input type="radio"  ng-model="ctrl.ticket.transactionType" name="transactionType" value="template">Template
-                        </label>
+                        <select ng-model="editCtrl.ticket.transactionalDetails.type" class="form-control">
+                          <option  value="opinion">Opinion</option>
+                          <option value="renegotiation">Renegotiation</option>
+                          <option value="template">Template</option>
+                        </select>
                         
-                         </div>
                       </div>
                      </div>
 
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Final Date </label>
-                        <p class="input-group">
-                          <input type="text" class="form-control" name="transactionFinalDate" uib-datepicker-popup="dd/MM/yyyy"   datepicker-options="dateOptions2" ng-model="ctrl.ticket.transactionFinalDate" is-open="transactionFinalDate_popup.opened"   close-text="Close"  />
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="popup2_open()"><i class="glyphicon glyphicon-calendar"></i></button>
-                          </span>
-                        </p>
+
+                          <datepicker  date-format="longDate">
+                            <input class="form-control" ng-model="editCtrl.ticket.transactionalDetails.finalDate" type="text"/>
+                        </datepicker>
+
+
+                        
                       </div>
                      </div>
 
@@ -767,10 +762,10 @@
                         <div style="margin-top:5px;">
 
                            <label class="radio-inline">
-                          <input type="radio" name="newExist" ng-model="ctrl.ticket.transactionNewOrExisting" value="new">New
+                          <input type="radio" name="newExist" ng-model="editCtrl.ticket.transactionalDetails.newOrExisting" value="new">New
                         </label>
                         <label class="radio-inline">
-                          <input type="radio" name="newExist"  ng-model="ctrl.ticket.transactionNewOrExisting" value="existing">Existing
+                          <input type="radio" name="newExist"  ng-model="editCtrl.ticket.transactionalDetails.newOrExisting" value="existing">Existing
                         </label>
                         
                          </div>
@@ -780,7 +775,7 @@
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Additional details</label>
-                        <documents ng-model="ctrl.ticket.transactionDocumentType" ng-change="ctrl.open('body' ,ctrl.ticket.transactionDocumentType)"></documents>
+                        <documents ng-model="editCtrl.ticket.transactionalDetails.documentType" ng-change="ctrl.open('body' ,ctrl.ticket.transactionDocumentType)"></documents>
                         
                       </div>
                      </div>
@@ -796,7 +791,7 @@
 
                    <!-- Start others-->
 
-                   <div id="othersType" class="type_module" ng-show="ctrl.ticket.ticketType == 'othersType'">
+                   <div id="othersType" class="type_module" ng-show="editCtrl.ticket.ticketType == 'othersType'">
                      <div class="row">
                        <!--
                      <div class="col-md-6">
@@ -817,7 +812,15 @@
             <!-- Modal Body Ends -->
         </div>
         <div class="modal-footer">
+          <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-primary" type="button" ng-click="editCtrl.submit(editCtrl.ticket)" ng-disabled="ticketForm.$invalid">Submit</button>
 
+              </div>
+              <div class="col-md-3 pull-right">
+                <button class="btn btn-warning" type="button" ng-click="editCtrl.cancel()" >Cancel</button>
+              </div>
+            </div>
         </div>
     </script>
 </div>
