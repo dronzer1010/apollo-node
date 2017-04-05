@@ -124,12 +124,10 @@
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Reply By Date</label>
-                        <p class="input-group">
-                          <input type="text" class="form-control" name="replyByDate" uib-datepicker-popup="dd/MM/yyyy"  datepicker-options="dateOptions" ng-model="ctrl.ticket.replyByDate" is-open="replyByDate_popup.opened"  close-text="Close"  />
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="popup1_open()"><i class="glyphicon glyphicon-calendar"></i></button>
-                          </span>
-                        </p>
+                        <datepicker  date-format="longDate">
+                          <input class="form-control" ng-model="ctrl.ticket.replyByDate" type="text"/>
+                        </datepicker>
+                        
                       </div>
                      </div>
 
@@ -346,12 +344,12 @@
                      <div class="col-md-6">
                        <div class="form-group">
                         <label for="email">Final Date </label>
-                        <p class="input-group">
-                          <input type="text" class="form-control" name="transactionFinalDate" uib-datepicker-popup="dd/MM/yyyy"   datepicker-options="dateOptions2" ng-model="ctrl.ticket.transactionFinalDate" is-open="transactionFinalDate_popup.opened"   close-text="Close"  />
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="popup2_open()"><i class="glyphicon glyphicon-calendar"></i></button>
-                          </span>
-                        </p>
+                        
+                        <datepicker  date-format="longDate">
+                          <input class="form-control" ng-model="ctrl.ticket.transactionFinalDate" type="text" date-max-limit="{{ctrl.ticket.replyByDate.toDateString()}}"/>
+                        </datepicker>
+                        
+                        
                       </div>
                      </div>
 
