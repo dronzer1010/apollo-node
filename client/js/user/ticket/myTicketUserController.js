@@ -65,7 +65,7 @@ $(function(){
 
 var deferred = $q.defer();
                                     $http({
-                                        url:"http://localhost:3001/api/tickets/mytickets/export",
+                                        url:"https://apollo-node.herokuapp.com/api/tickets/mytickets/export",
                                         method: "GET",
                                         headers: {
                                         

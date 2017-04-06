@@ -3,7 +3,7 @@ $(function(){
     'use strict';
  	var appService = angular.module('apolloApp');
 	appService.factory('ticketService', ['$http', '$q','$rootScope', function($http, $q , $rootScope){
-        var url= 'http://localhost:3001';
+        var url= 'https://apollo-node.herokuapp.com';
 
         return {
         
