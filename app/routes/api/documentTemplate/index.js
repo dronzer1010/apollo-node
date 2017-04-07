@@ -77,7 +77,7 @@ router.delete('/:id' , function(req,res){
 
 
 router.get('/approved' , function(req,res){
-	
+	var populateQuery = [{path:'documentTemplateId'},{path:'designations.designation'}];
 	Document.find({approved : false})
 			.exec(function(err ,docs){
 						if(!err){
@@ -89,8 +89,9 @@ router.get('/approved' , function(req,res){
 });
 
 router.get('/approved/:id' , function(req,res){
-	
+	var populateQuery = [{path:'documentTemplateId'},{path:'designations.designation'}];
 	DocumentApproval.findOne({documentTemplateId : req.params.id})
+					.populate(populateQuery)
 			.exec(function(err ,docs){
 						if(!err){
 							res.status(200).json({success : true , data : docs});

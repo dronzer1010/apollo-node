@@ -394,7 +394,8 @@
                   
 
                   <div class="col-md-6" ng-repeat="designation in approvedDoc">
-                      <label>{{designation.designation.designation}} </label>
+
+                      <label>{{designation.designation}} </label>
                       <desuser des="designation.designation" ng-model="ctrl3.document.approvedBy[$index]" required></desuser>
                   </div>
               </div>
