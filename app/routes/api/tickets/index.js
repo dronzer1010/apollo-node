@@ -761,6 +761,18 @@ router.post('/report' , function(req,res){
 
    var type = req.body.ticketType ;
    console.log(req.body.ticketType);
+   var q_date = (req.body.queryDate)?req.body.queryDate : null;
+   if(q_date){
+        var dateObj = new Date(q_date);
+        console.log(dateObj);
+        var q_month = dateObj.getUTCMonth(); //months from 1-12
+        var q_day = dateObj.getUTCDate();
+        var q_year = dateObj.getUTCFullYear();
+
+
+   }
+
+
    if(!type ){
        res.status(400).send({
            success : false ,
@@ -768,7 +780,8 @@ router.post('/report' , function(req,res){
        });
    }else{
        if(type == "medico_legal"){
-           Ticket.aggregate([
+           if(!q_date){
+               Ticket.aggregate([
                 {
                     $match : {
                         ticketType : "litigationalType" ,
@@ -801,17 +814,59 @@ router.post('/report' , function(req,res){
                     });
                 }
             });
+           }else{
+
+
+
+
+               Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "medico_legal",
+                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                    }            
+                },
+                {
+                    $group :{
+                        _id : "_id" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+           }
        }
        else if(type == "tax_related"){
 
            /**
             * Type Tax Related
             */
-           Ticket.aggregate([
+            if(!q_date){
+                 Ticket.aggregate([
                 {
                     $match : {
                         ticketType : "litigationalType" ,
-                        'litigationalDetails.litigationType' : "tax_related"
+                        'litigationalDetails.litigationType' : "tax_related",
+                        
                     }            
                 },
                 {
@@ -841,20 +896,59 @@ router.post('/report' , function(req,res){
                 }
             });
 
+            }else{
+                 Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "tax_related",
+                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                    }            
+                },
+                {
+                    $group :{
+                        _id : "_id" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+
+            }
 
             /**
              * End Tax related
              */
        }
        else if(type== "non_medico_legal"){
-           var sub_type = (req.body.subType)?req.body.subType : "contracts_related";
+           if(!q_date){
+               var sub_type = (req.body.subType)?req.body.subType : "contracts_related";
            console.log(sub_type);
            Ticket.aggregate([
             {
                 $match : {
                     ticketType : "litigationalType" ,
                     'litigationalDetails.litigationType' : "non_medico_legal",
-                    'litigationalDetails.litigationNonMedicoType' : sub_type
+                    'litigationalDetails.litigationNonMedicoType' : sub_type,
+                    
                 }            
             },
             {
@@ -883,6 +977,47 @@ router.post('/report' , function(req,res){
                 });
             }
         });
+           }else{
+               var sub_type = (req.body.subType)?req.body.subType : "contracts_related";
+           console.log(sub_type);
+           console.log(q_year+" / "+q_month+" / "+q_day);
+           console.log(new Date(q_year , q_month , q_day));
+           Ticket.aggregate([
+            {
+                $match : {
+                    ticketType : "litigationalType" ,
+                    'litigationalDetails.litigationType' : "non_medico_legal",
+                    'litigationalDetails.litigationNonMedicoType' : sub_type,
+                    ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                }            
+            },
+            {
+                $group :{
+                    _id : "_id" ,
+                    amount : {
+                        $sum : "$litigationalDetails.amount" ,
+
+                    },
+                    count : {
+                        $sum : 1
+                    }
+                }
+            }
+        ] , function(err , data){
+            if(!err){
+                res.status(200).send({
+                    success : true ,
+                    data : data
+
+                });
+            }else{
+                res.status(400).send({
+                    success : false ,
+                    err : err
+                });
+            }
+        });
+           }
        }
    }
     

@@ -1,4 +1,4 @@
-<div ng-controller="LocationMasterController as ctrl">
+<div ng-controller="ReportController as ctrl">
 
 
 <div class="col-md-12" >
@@ -26,7 +26,7 @@
                                             </datepicker>
                                         </div>
                                         <div class= "col-md-2 pull-right">
-                                            <button class="btn btn-primary">Fetch Data</button>
+                                            <button class="btn btn-primary" ng-click="ctrl.fetchData(ctrl.dateFrom , ctrl.dateTo)">Fetch Data</button>
                                         </div>
                                     </div>
                                 </div>
@@ -52,11 +52,11 @@
                                        <tr>
                                            <td>No</td>
                                            <td></td>
-                                           <td>No. of Cases </td>
+                                           <td>No. of Tickets </td>
                                            <td>Amount Claimed (Rs. Lakhs)</td>
                                            <td>Cases Added</td>
                                            <td>Cases Disposed</td>
-                                           <td>No. of Cases </td>
+                                           <td>No. of Tickets </td>
                                            <td>Amount Claimed (Rs. Lakhs)</td>
                                            <td>Low</td>
                                            <td>Medium</td>
@@ -67,12 +67,12 @@
                                        <tr>
                                            <td>1</td>
                                            <td>Medico Legal Cases</td>
+                                           <td>{{ctrl.MedicoFrom.count}}</td>
+                                           <td>{{ctrl.MedicoFrom.amount}}</td>
                                            <td></td>
                                            <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
+                                           <td>{{ctrl.MedicoTo.count}}</td>
+                                           <td>{{ctrl.MedicoTo.amount}}</td>
                                            <td></td>
                                            <td></td>
                                            <td></td>
@@ -97,12 +97,12 @@
                                        <tr>
                                            <td></td>
                                            <td>a. Contract Related</td>
+                                           <td>{{ctrl.NonMedicoCRFrom.count}}</td>
+                                           <td>{{ctrl.NonMedicoCRFrom.amount}}</td>
                                            <td></td>
                                            <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
+                                           <td>{{ctrl.NonMedicoCRTo.count}}</td>
+                                           <td>{{ctrl.NonMedicoCRTo.amount}}</td>
                                            <td></td>
                                            <td></td>
                                            <td></td>
@@ -172,12 +172,12 @@
                                        <tr>
                                            <td>3</td>
                                            <td>Tax Related</td>
+                                           <td>{{ctrl.TaxFrom.count}}</td>
+                                           <td>{{ctrl.TaxFrom.amount}}</td>
                                            <td></td>
                                            <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
+                                           <td>{{ctrl.TaxTo.count}}</td>
+                                           <td>{{ctrl.TaxTo.amount}}</td>
                                            <td></td>
                                            <td></td>
                                            <td></td>
