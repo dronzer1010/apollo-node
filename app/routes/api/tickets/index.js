@@ -757,7 +757,9 @@ router.get('/report' , function(req,res){
             $match : {
                 ticketType : "litigationalType" ,
                 'litigationalDetails.litigationType' : "medico_legal"
-            },
+            }            
+        },
+        {
             $group :{
                 _id : "$_id" ,
                 amount : {
