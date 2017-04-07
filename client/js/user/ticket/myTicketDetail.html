@@ -26,11 +26,11 @@
 
                                     </div>
                                     <div class="col-md-4">
-                                        <button class="btn btn-sm btn-block" ng-click="ctrl.openComanager('body',_id)">Add Co-Manager</button>
+                                        <button class="btn btn-sm btn-block" ng-click="ctrl.openComanager('body',_id)" ng-disabled="ticketStatus=='closed'">Add Co-Manager</button>
                                         <br>
                                         <button class="btn btn-sm btn-danger btn-block" ng-click="ctrl.closeTicketModal('body',_id)" ng-disabled="ticketStatus=='closed'">{{(ticketStatus=='closed')?'Ticket Closed':'Close Ticket'}}</button>
                                         <br>
-                                        <button class="btn btn-sm btn-warning btn-block" ng-click="ctrl.openEditModal('body',_id)">Complete Ticket</button>
+                                        <button class="btn btn-sm btn-warning btn-block" ng-click="ctrl.openEditModal('body',_id)" ng-disabled="ticketStatus=='closed'">Complete Ticket</button>
                                     </div>
                                 </div>
                                 <hr>
