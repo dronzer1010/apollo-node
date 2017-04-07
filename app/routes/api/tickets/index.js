@@ -745,6 +745,48 @@ router.get('/mytickets/export' , function(req,res){
 
 
 
+
+/**
+ *  Aggregation For Reports
+ */
+
+
+router.get('/report' , function(req,res){
+    Ticket.aggregate([
+        {
+            $match : {
+                ticketType : "litigationalType" ,
+                'litigationalDetails.litigationType' : "medico_legal"
+            },
+            $group :{
+                _id : "$_id" ,
+                amount : {
+                    $sum : "$litigationalDetails.amount" ,
+
+                },
+                count : {
+                    $sum : 1
+                }
+            }
+        }
+    ] , function(err , data){
+        if(!err){
+            res.status(200).send({
+                success : true ,
+                data : data
+
+            });
+        }else{
+            res.status(400).send({
+                success : false ,
+                err : err
+            });
+        }
+    });
+});
+
+
+
 /**
  *  Generic token parsing function
  */

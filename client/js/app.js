@@ -84,6 +84,11 @@
 				templateUrl : 'js/user/calendar/calendar.html',
 				controller : 'CalendarController'
 			})
+			.state('dashboard.reports',{
+				url : '/dashboard/reports',
+				templateUrl : 'js/admin/reports/firstReport.html',
+				controller : 'ReportController'
+			})
 			.state('dashboard.location' ,{
 				url : '/admin/locationMaster' ,
 				templateUrl : 'js/admin/location-master/locationMaster.html',
