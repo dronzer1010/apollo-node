@@ -380,10 +380,25 @@
               </div>
               <div class="row">
                 <div class="col-md-6" ng-repeat="field in ctrl3.document.documentType.fields">
-                  <div class="form-group">
+                  <div class="form-group"  ng-show="field.fieldType=='text'">
                     <label >{{field.fieldName}}</label>
-                    <input  type="field.fieldType" class="form-control" ng-model="ctrl3.document.docAdditionalDetail[$index].fieldValue" required>
+                    <input  type="field.fieldType" class="form-control" ng-model="ctrl3.document.docAdditionalDetail[$index].fieldValue" ng-required="field.fieldType=='text'">
                   </div>
+
+
+                  <div class="form-group"  ng-show="field.fieldType=='date'">
+                    <label >{{field.fieldName}}</label>
+                    <datepicker  date-format="longDate">
+                            <input class="form-control" ng-model="ctrl3.document.docAdditionalDetail[$index].fieldValue" ng-required="field.fieldType=='date'"/>
+                        </datepicker>
+                  </div>
+
+
+                  <div class="form-group"  ng-show="field.fieldType=='number'">
+                    <label >{{field.fieldName}}</label>
+                    <input  type="field.fieldType" class="form-control" only-digit ng-model="ctrl3.document.docAdditionalDetail[$index].fieldValue" ng-required="field.fieldType=='number'">
+                  </div>
+                   
                 </div>
               </div>
 
