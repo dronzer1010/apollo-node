@@ -172,6 +172,13 @@ ticketStatus : {
 },
 ticketClosingNote : {
     type:String
+},
+ticketClosingDate : {
+    type:Date,
+    default : null
+},
+ticketOpeningDate : {
+    type :Date 
 }
 },{
     timestamps: true

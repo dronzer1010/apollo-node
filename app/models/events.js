@@ -32,7 +32,13 @@ var Events = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Tasks',
         default : null 
+    },
+    status : {
+        type : String ,
+        enum : ["open" , "close"],
+        default : "open"
     }
+
 
 },{
     timestamps: true

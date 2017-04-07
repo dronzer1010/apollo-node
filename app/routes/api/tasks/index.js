@@ -51,7 +51,8 @@ router.post('/' , function(req, res){
                             title : req.body.name,
                             taskRef : task._id,
                             eventOwner : req.body.master,
-                            additionalData: task._id
+                            additionalData: task._id,
+                            status : "open"
                         });
                         tempEvent.save(function(err,event){
                             if(!err){

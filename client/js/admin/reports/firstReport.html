@@ -10,19 +10,43 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body data-holder">
+                            <div class="row top-bar">
+                                <div class="col-md-12 top-bar-wrapper">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>From :</label>
+                                            <datepicker  date-format="longDate">
+                                                <input class="form-control" ng-model="ctrl.dateFrom" type="text"/>
+                                            </datepicker>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>To :</label>
+                                            <datepicker  date-format="longDate">
+                                                <input class="form-control" ng-model="ctrl.dateTo" type="text"/>
+                                            </datepicker>
+                                        </div>
+                                        <div class= "col-md-2 pull-right">
+                                            <button class="btn btn-primary">Fetch Data</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                            <div class="row">
                            	
 							   <div class="col-md-12">
-								   <table class="table table-striped">
+								   <table class="table table-striped table-bordered">
 									   <tr>
                                            <td colspan="11" style="text-align:center">Legal Cases Summary  As On </td>
                                        </tr>
                                        <tr>
                                            <td>Sl.</td>
                                            <td>Type</td>
-                                           <td colspan="2">As on 30.12.2009</td>
+                                           <td colspan="2">As on {{ctrl.dateFrom}}</td>
                                            <td colspan="2">During Quarter</td>
-                                           <td colspan="2">As on 31.03.2010</td>
+                                           <td colspan="2">As on {{ctrl.dateTo}}</td>
                                            <td colspan="3">Degree Of Risk</td>
                                        </tr>
                                        <tr>

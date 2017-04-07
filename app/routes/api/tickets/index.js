@@ -81,7 +81,9 @@ router.post('/' , function(req,res){
             othersDetails : {
                 notes :(req.body.ticketType == 'othersType')?req.body.othersNotes : null,
             },
-            attachedDocuments :[]
+            attachedDocuments :[],
+            ticketClosingDate : null,
+            ticketOpeningDate : new Date(),
 
         });
 
@@ -98,6 +100,7 @@ router.post('/' , function(req,res){
                     title : "Ticket : "+data._id,
                     ticketRef : data._id,
                     additionalData: data._id,
+                    status : "open"
                     
                 });
 
@@ -396,7 +399,7 @@ router.post('/close/:id' , function(req,res){
                 });
             }
         });
-        Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed' , ticketClosingNote : req.body.closingNote}},function(err,data){
+        Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed' ,ticketClosingDate : new Date(), ticketClosingNote : req.body.closingNote}},function(err,data){
                     if(!err){
                         res.status(200).send({success : true ,msg : "Ticked Closed"});
                     }else{
@@ -751,40 +754,139 @@ router.get('/mytickets/export' , function(req,res){
  */
 
 
-router.get('/report' , function(req,res){
-    Ticket.aggregate([
-        {
-            $match : {
-                ticketType : "litigationalType" ,
-                'litigationalDetails.litigationType' : "medico_legal"
-            }            
-        },
-        {
-            $group :{
-                _id : "$_id" ,
-                amount : {
-                    $sum : "$litigationalDetails.amount" ,
+router.post('/report' , function(req,res){
 
+
+    console.log(req.body);
+
+   var type = req.body.ticketType ;
+   console.log(req.body.ticketType);
+   if(!type ){
+       res.status(400).send({
+           success : false ,
+           msg : "Invalid Data request"
+       });
+   }else{
+       if(type == "medico_legal"){
+           Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "medico_legal"
+                    }            
                 },
-                count : {
-                    $sum : 1
+                {
+                    $group :{
+                        _id : "_id" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+       }
+       else if(type == "tax_related"){
+
+           /**
+            * Type Tax Related
+            */
+           Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "tax_related"
+                    }            
+                },
+                {
+                    $group :{
+                        _id : "_id" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+
+
+            /**
+             * End Tax related
+             */
+       }
+       else if(type== "non_medico_legal"){
+           var sub_type = (req.body.subType)?req.body.subType : "contracts_related";
+           console.log(sub_type);
+           Ticket.aggregate([
+            {
+                $match : {
+                    ticketType : "litigationalType" ,
+                    'litigationalDetails.litigationType' : "non_medico_legal",
+                    'litigationalDetails.litigationNonMedicoType' : sub_type
+                }            
+            },
+            {
+                $group :{
+                    _id : "_id" ,
+                    amount : {
+                        $sum : "$litigationalDetails.amount" ,
+
+                    },
+                    count : {
+                        $sum : 1
+                    }
                 }
             }
-        }
-    ] , function(err , data){
-        if(!err){
-            res.status(200).send({
-                success : true ,
-                data : data
+        ] , function(err , data){
+            if(!err){
+                res.status(200).send({
+                    success : true ,
+                    data : data
 
-            });
-        }else{
-            res.status(400).send({
-                success : false ,
-                err : err
-            });
-        }
-    });
+                });
+            }else{
+                res.status(400).send({
+                    success : false ,
+                    err : err
+                });
+            }
+        });
+       }
+   }
+    
+    
 });
 
 
