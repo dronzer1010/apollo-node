@@ -178,11 +178,15 @@ $(function(){
 											var data = {};
 											data.userId = userId;
 											data.password = pass;
-
+											console.log(data);
 											userMasterService.adminChangeUserPassword(data)
 			          								.then($uibModalInstance.dismiss('cancel'), function(errResponse){
 														$uibModalInstance.dismiss('cancel');
 													});
+										};
+
+										self.cancel = function(){
+												$uibModalInstance.dismiss('cancel');
 										};		
 											
 										},
