@@ -188,7 +188,7 @@ router.post('/login' , function(req,res){
 	}
 });
 
-/*
+
 router.post("/admin/changepassword" , function(req,res){
 	if(!req.body.userId || !req.body.password){
 		res.status(400).send({success: false, msg: 'Invalid Data'});
@@ -205,5 +205,5 @@ router.post("/admin/changepassword" , function(req,res){
 			}
 		});
 	}
-});*/
+});
 module.exports = router;
