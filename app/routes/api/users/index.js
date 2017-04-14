@@ -9,7 +9,7 @@ var User = require(__base + 'app/models/userMaster');
 var config = require(__base + 'app/config/database');
 
 
-router.get('/' , function(req,res){
+router.get('/u' , function(req,res){
 	var populateQuery = [{path:'designation'},{path:'location'}];
 
 	if(req.query.des){
@@ -36,19 +36,7 @@ router.get('/' , function(req,res){
 	}
 });
 
-router.get('/markedusers' , function(req,res){
-	var populateQuery = [{path:'designation'},{path:'location'}];
 
-	User.find({markAsDeleted : false , markDirect : true})
-		.populate(populateQuery)
-		.exec(function(err,data){
-			if(!err){
-				res.status(200).json({success : true , data : data});
-			}else{
-				res.status(400).json({success : false , msg : err});
-			}
-		});
-});
 
 router.get('/markedusers' , function(req,res){
 	var populateQuery = [{path:'designation'},{path:'location'}];
