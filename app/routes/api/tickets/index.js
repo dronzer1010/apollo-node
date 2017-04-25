@@ -767,6 +767,22 @@ router.get('/mytickets/export' , function(req,res){
                 .populate(populateQuery)
                 .exec( function(err,docs){
                 if(!err){
+                    var data_docs=[];
+                    docs.forEach(doc){
+                        var data={};
+                        data._id = doc._id;
+                        data.firstName = doc.firstName;
+                        data.lastName =  doc.lastName;
+                        data.email = doc.email;
+                        data.location = doc.locaion.name+' , '+doc.location.division;
+                        data.designation = doc.designation.designation;
+                        data.ticketPriority = doc.ticketPriority;
+                        data.ticketStatus = doc.ticketStatus;
+                        data.ticketNotes = doc.ticketNotes;
+                        data.ticketType = doc.ticketType;
+
+                        data_docs.push(doc);
+                    };
 
                     var report = Excel.buildExport(
                         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
@@ -774,7 +790,7 @@ router.get('/mytickets/export' , function(req,res){
                             name: 'Ticket Details', // <- Specify sheet name (optional)
                             heading: [], // <- Raw heading array (optional)
                             specification: specification, // <- Report specification
-                            data: docs // <-- Report data
+                            data: data_docs // <-- Report data
                             }
                         ]
                     );
