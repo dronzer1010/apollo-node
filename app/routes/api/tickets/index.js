@@ -633,7 +633,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            return val.name+' , '+val.division
+                            return val
                            
                         }
                         
@@ -646,7 +646,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            return val.designation
+                            return val
                            
                         }
                     },
@@ -727,6 +727,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(val == 'othersType'){
                                 return 'Others';
                             }
+                            if(val==""){
+                                return "Nil"
+                            }
                            
                         }
                     },
@@ -740,6 +743,10 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }
+                                else
                                 return val;
                             }
                             //return val
@@ -756,6 +763,10 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }
+                                else
                                 return val;
                             }
                             //return val
@@ -772,6 +783,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                 return val;
                             }
                             //return val
@@ -788,6 +802,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                 return val.legalType;
                             }
                             //return val
@@ -812,6 +829,9 @@ router.get('/mytickets/export' , function(req,res){
                                 }
                                 if(val == 'tax_related'){
                                     return 'Tax Related'
+                                }
+                                if(val==""){
+                                    return "Nil"
                                 }
                             }
                             //return val
@@ -844,6 +864,9 @@ router.get('/mytickets/export' , function(req,res){
                                 if(val == 'pharmacy_licenses'){
                                     return 'Pharmacy Licenses'
                                 }
+                                if(val==""){
+                                    return "Nil"
+                                }
                             
                             }
                             //return val
@@ -867,6 +890,9 @@ router.get('/mytickets/export' , function(req,res){
 
                                 if(val == 'N')
                                 return 'No'
+                                if(val==""){
+                                    return "Nil"
+                                }
                             }
                             //return val
                            
@@ -882,7 +908,11 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
-                               return val;
+                                if(val==""){
+                                    return "Nil"
+                                }
+                                else
+                                return val;
                             }
                             //return val
                            
@@ -898,7 +928,10 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
-                               return val;
+                                if(val==""){
+                                    return "Nil"
+                                }else
+                                    return val;
                             }
                             //return val
                            
@@ -914,6 +947,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                return val;
                             }
                             //return val
@@ -930,6 +966,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                return val;
                             }
                             //return val
@@ -946,6 +985,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                return val;
                             }
                             //return val
@@ -962,7 +1004,10 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
-                               return val;
+                                if(val==""){
+                                    return "Nil"
+                                }else
+                                return val;
                             }
                             //return val
                            
@@ -978,7 +1023,10 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
-                               return val;
+                                if(val==""){
+                                    return "Nil"
+                                }else
+                                return val;
                             }
                             //return val
                            
@@ -995,7 +1043,10 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
-                               return val;
+                                if(val==""){
+                                    return "Nil"
+                                }else
+                                return val;
                             }
                             //return val
                            
@@ -1027,7 +1078,10 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
-                               return val;
+                                if(val==""){
+                                    return "Nil"
+                                }else
+                                return val;
                             }
                             //return val
                            
@@ -1043,6 +1097,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                return val;
                             }
                             //return val
@@ -1059,6 +1116,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                return val+' INR';
                             }
                             //return val
@@ -1107,6 +1167,9 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val==""){
+                                    return "Nil"
+                                }else
                                return val;
                             }
                             //return val
@@ -1146,7 +1209,7 @@ router.get('/mytickets/export' , function(req,res){
                         data.tranDocumentType = doc.transactionalDetails.documentType;
                         data.litiType = doc.litigationalDetails.litigationType;
                         data.litiNonMedicoType = doc.litigationalDetails.litigationNonMedicoType;
-                        data.litiNoticeReceived = doc.litigationalDetails.noticeReceived;
+                        data.litiNoticeReceived = doc.litigationalDetails.noticedReceived;
                         data.litiNoticeFrom = doc.litigationalDetails.noticeFrom;
                         data.litiNoticeAgainst =doc.litigationalDetails.noticeAgainst;
                         data.litiOpposingLawyer = doc.litigationalDetails.opposingLawyer;
