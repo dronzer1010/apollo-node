@@ -725,7 +725,7 @@ router.get('/mytickets/export' , function(req,res){
                                 return 'Litigational';
                             }
                             if(val == 'othersType'){
-                                return 'Others;
+                                return 'Others';
                             }
                            
                         }
