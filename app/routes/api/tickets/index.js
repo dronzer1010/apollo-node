@@ -730,31 +730,28 @@ router.get('/mytickets/export' , function(req,res){
                            
                         }
                     },
-                    transactionalDetails: {
-                        type:{
-                            displayName: 'Transactional Type',
-                            headerStyle: styles.headerDark,
-                            cellStyle: styles.cellPink, // <- Cell style
-                            width: 220 , // <- width in pixels,
-                            cellFormat : function(val , row){
-                                //console.log(val.name);
-                                return val
-                            
-                            }
-                        },
-                        newOrExisting:{
-                            displayName: 'New / Existing',
-                            headerStyle: styles.headerDark,
-                            cellStyle: styles.cellPink, // <- Cell style
-                            width: 220 , // <- width in pixels,
-                            cellFormat : function(val , row){
-                                //console.log(val.name);
-                                return val
-                            
-                            }
+                    tranType: {
+                        displayName: 'Transaction Type',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val
+                           
                         }
                     },
-                   
+                    tranNewOrExisting: {
+                        displayName: 'New/Existing',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val
+                           
+                        }
+                    },
                     
 
 
@@ -780,6 +777,28 @@ router.get('/mytickets/export' , function(req,res){
                         data.ticketStatus = doc.ticketStatus;
                         data.ticketNotes = doc.ticketNotes;
                         data.ticketType = doc.ticketType;
+                        data.tranType = doc.transactionalDetails.type;
+                        data.tranNewOrExisting = doc.transactionalDetails.newOrExisting;
+                        data.tranFinalDate = doc.transactionalDetails.finalDate;
+                        data.tranDocumentType = doc.transactionalDetails.documentType;
+                        data.litiType = doc.litigationalDetails.litigationType;
+                        data.litiNonMedicoType = doc.litigationalDetails.litigationNonMedicoType;
+                        data.litiNoticeReceived = doc.litigationalDetails.noticeReceived;
+                        data.litiNoticeFrom = doc.litigationalDetails.noticeFrom;
+                        data.litiNoticeAgainst =doc.litigationalDetails.noticeAgainst;
+                        data.litiOpposingLawyer = doc.litigationalDetails.opposingLawyer;
+                        data.litiContactAddress = doc.litigationalDetails.contactAddress;
+                        data.litiContactEmail = doc.litigationalDetails.contactEmail;
+                        data.litiCourt = doc.litigationalDetails.court;
+                        data.litiCounselAppointed = doc.litigationalDetails.counselAppointed;
+                        data.litiCounselAddress = doc.litigationalDetails.counselAddress;
+                        data.litiCounselPhone = doc.litigationalDetails.counselPhone;
+                        data.litiCounselEmail = doc.litigationalDetails.counselEmail;
+                        data.litiCourtLocation = doc.litigationalDetails.courtLocation;
+                        data.litiAmount = doc.litigationalDetails.amount;
+                        data.ticketClosingNote=doc.ticketClosingNote;
+                        data.ticketClosingDate = doc.ticketClosingDate;
+                        data.ticketOpeningDate = doc.ticketOpeningDate;
 
                         data_docs.push(data);
                     });

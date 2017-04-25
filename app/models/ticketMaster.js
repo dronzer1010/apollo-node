@@ -53,7 +53,6 @@ var TicketMaster = new Schema({
 
       type : {
           type : String,
-
           default : 'opinion'
 
       },
