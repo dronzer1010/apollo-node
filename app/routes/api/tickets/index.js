@@ -759,7 +759,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            if(val.documentType!=''){
+                            if(val.documentType){
                                 return val.documentType.legalType;
                             }else{
                                 return 'Nil'
