@@ -92,6 +92,18 @@ $(function(){
 	                    }
 	            );
 	        },
+			updateNewName: function(id , data){
+	            return $http.put(url+'/api/document-master/changename/'+id, data)
+	            .then(
+	                    function(response){
+	                        return response.data;
+	                    }, 
+	                    function(errResponse){
+	                        console.error('Error while updating name');
+	                        return $q.reject(errResponse);
+	                    }
+	            );
+	        },
 			approveDocument: function(data,id){
 	            return $http.post(url+'/api/document-master/approve/'+id, data)
 	            .then(

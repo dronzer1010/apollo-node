@@ -120,11 +120,13 @@
                                             <tr>
                                                 <th>No.</th>
                                                 <th>Document</th>
+                                                <th>Edit</th>
                                                 <th>Approve</th>
                                             </tr>
                                             <tr ng-if="attachedDocuments.length!=0" ng-repeat="document in attachedDocuments">
                                                 <td>{{attachedDocuments.indexOf(document) + 1}}</td>
                                                 <td><a href="{{document.documentUrl}}" target="_blank">{{document.documentName}}</a></td>
+                                                <td><button class="btn btn-sm btn-default" ng-click="ctrl.updateDocumentName('body' ,document._id , document.documentName)">Edit</button></td>
                                                 <td><button class="btn btn-sm btn-primary" ng-click="ctrl.open('body' , document._id)" ng-disabled="document.approved || ticketStatus=='closed'">{{document.approved ? 'Approved' : 'Approve'}}</button></td>
                                             </tr>
                                             <tr ng-if="attachedDocuments.length==0">
@@ -363,7 +365,36 @@
 
 </script>
 
+<script type="text/ng-template" id="newName.html">
 
+        <div class="modal-header">
+            <h3 class="modal-title" id="CM-modal-title">Update Document Name</h3>
+        </div>
+        <div class="modal-body" id="CM-modal-body">
+          <form class="form" name="updateNewName">
+              <div class="row">
+                <div class="col-md-6" >
+                  <div class="form-group">
+                    <label >New Document Name</label>
+                    <input class="form-control" ng-model="updateNameCtrl.newName" required/>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+            <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-primary" type="button" ng-click="updateNameCtrl.submit(updateNameCtrl.newName)" ng-disabled="updateNewName.$invalid">Submit</button>
+
+              </div>
+              <div class="col-md-3 pull-right">
+                <button class="btn btn-warning" type="button" ng-click="updateNameCtrl.cancel()" >Cancel</button>
+              </div>
+            </div>
+        </div>
+
+</script>
 
 
 

@@ -197,6 +197,53 @@ $(function(){
                     //add
 
                 };
+
+
+
+
+                /**
+                 * Update Next Date
+                 */
+                self.updateDocumentName = function(parent ,docId , name ){
+
+                    console.log(docId);
+                    self.modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'newName.html',
+                        controller : function($uibModalInstance ,documentTemplateFieldService , $scope ,$state){
+                            var self = this;
+                            self.newName=name;
+                            
+                            self.submit=function(NewName){
+                                console.log(NewName);
+                                var data={};
+                                data.newName = NewName;
+                                documentTemplateFieldService.updateNewName(docId ,data).then(function(response){
+                                    $state.reload();
+                                }, function(errResponse){
+										console.log('error updating next name');
+									});
+                            };
+                            self.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            }; 
+                                
+                            
+                        },
+                        controllerAs :'updateCtrl',
+                        scope : $scope,
+                        size: 'md',
+                        appendTo: angular.element($document[0].querySelector(parent)),
+                        resolve: {
+                            
+                        }
+                    });
+                    //add
+
+                };
+
                 
             }]);
 }());
