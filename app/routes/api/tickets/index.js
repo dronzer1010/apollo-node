@@ -737,7 +737,12 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            return val
+                            if(val){
+                                return 'Nil';
+                            }else{
+                                return val;
+                            }
+                            //return val
                            
                         }
                     },
@@ -748,7 +753,44 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            return val
+                            if(val){
+                                return 'Nil';
+                            }else{
+                                return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    tranFinalDate: {
+                        displayName: 'Final Date',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(val){
+                                return 'Nil';
+                            }else{
+                                return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    tranDocumentType: {
+                        displayName: 'Document Type',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(val){
+                                return 'Nil';
+                            }else{
+                                return val.legalType;
+                            }
+                            //return val
                            
                         }
                     },
