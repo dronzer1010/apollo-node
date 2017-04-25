@@ -858,6 +858,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
+                            console.log("Value is "+val);
                             if(!val){
                                 return 'Nil';
                             }else{
