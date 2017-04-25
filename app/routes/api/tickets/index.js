@@ -781,7 +781,7 @@ router.get('/mytickets/export' , function(req,res){
                         data.ticketNotes = doc.ticketNotes;
                         data.ticketType = doc.ticketType;
 
-                        data_docs.push(doc);
+                        data_docs.push(data);
                     });
 
                     var report = Excel.buildExport(
