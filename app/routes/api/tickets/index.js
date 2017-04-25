@@ -681,7 +681,7 @@ router.get('/mytickets/export' , function(req,res){
                         
                     },
                     ticketStatus: {
-                        displayName: 'Designation',
+                        displayName: 'Status',
                         headerStyle: styles.headerDark,
                         cellStyle: styles.cellPink, // <- Cell style
                         width: 220 , // <- width in pixels,
@@ -699,7 +699,72 @@ router.get('/mytickets/export' , function(req,res){
 
                         },
 
-                    }
+                    },
+                    ticketNotes: {
+                        displayName: 'Notes',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val
+                           
+                        }
+                    },
+                    ticketType: {
+                        displayName: 'Ticket Type',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(val == 'transactionalType'){
+                                return 'Transactional';
+                            }
+                            if(val == 'litigationalType'){
+                                return 'Litigational';
+                            }
+                            if(val == 'othersType'){
+                                return 'Others;
+                            }
+                           
+                        }
+                    },
+                    transactionalDetails: {
+                        displayName: 'Transactional Type',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val.type
+                           
+                        }
+                    },
+                    transactionalDetails: {
+                        displayName: 'New / Existing',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val.newOrExisting
+                           
+                        }
+                    },
+                    transactionalDetails: {
+                        displayName: 'Document Type',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            return val.documentType.legalType
+                           
+                        }
+                    },
+                    
+
 
                 };
 
@@ -774,11 +839,15 @@ router.post('/report' , function(req,res){
 
 
    if(!type ){
+
        res.status(400).send({
            success : false ,
            msg : "Invalid Data request"
        });
    }else{
+
+       //Medico Legal Type
+
        if(type == "medico_legal"){
            if(!q_date){
                Ticket.aggregate([
@@ -855,6 +924,7 @@ router.post('/report' , function(req,res){
             });
            }
        }
+//Medico Legal Ends Here
        else if(type == "tax_related"){
 
            /**
@@ -938,6 +1008,7 @@ router.post('/report' , function(req,res){
              * End Tax related
              */
        }
+       //Non Medico Legal Starts From Here
        else if(type== "non_medico_legal"){
            if(!q_date){
                var sub_type = (req.body.subType)?req.body.subType : "contracts_related";
@@ -1019,6 +1090,9 @@ router.post('/report' , function(req,res){
         });
            }
        }
+       
+
+
    }
     
     

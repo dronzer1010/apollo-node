@@ -11,8 +11,11 @@ $(function(){
                                 .then(function(task){
 
 										self.task = task.msg;
+                                        if(task.msg==null){
+                                                $state.go('login');
+                                            }
                                         if(!$cookieStore.get('apolloUser')){
-                                            if(self.task.status=='closed'){
+                                            if(self.task.status=='closed' ){
                                                 $state.go('login');
                                             }
                                         }

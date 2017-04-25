@@ -125,7 +125,7 @@
                                             <tr ng-if="attachedDocuments.length!=0" ng-repeat="document in attachedDocuments">
                                                 <td>{{attachedDocuments.indexOf(document) + 1}}</td>
                                                 <td><a href="{{document.documentUrl}}" target="_blank">{{document.documentName}}</a></td>
-                                                <td><button class="btn btn-sm btn-primary" ng-click="ctrl.open('body' , document._id)" ng-disabled="document.approved">{{document.approved ? 'Approved' : 'Approve'}}</button></td>
+                                                <td><button class="btn btn-sm btn-primary" ng-click="ctrl.open('body' , document._id)" ng-disabled="document.approved || ticketStatus=='closed'">{{document.approved ? 'Approved' : 'Approve'}}</button></td>
                                             </tr>
                                             <tr ng-if="attachedDocuments.length==0">
                                                 <td colspan="3" style="text-align:center">No Documents Attached</td>

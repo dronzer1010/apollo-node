@@ -84,6 +84,12 @@
 				templateUrl : 'js/user/calendar/calendar.html',
 				controller : 'CalendarController'
 			})
+			.state('dashboard.change-password',{
+				url : '/dashboard/change-password',
+				templateUrl : 'js/user/password/changePassword.html',
+				controller : 'ChangePasswordController'
+				
+			})
 			.state('dashboard.reports',{
 				url : '/dashboard/reports',
 				templateUrl : 'js/admin/reports/firstReport.html',

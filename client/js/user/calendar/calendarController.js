@@ -8,13 +8,18 @@ $(function(){
                 $scope.events = [];
                 
                 var self =  this;
+                var eventDate , currDate;
                 self.fetchAllEvents = function(){
                     ticketService.getAllEvents()
                                 .then(function(events){
 										//$scope.events = events.data;
                                         angular.forEach(events.data , function(value){
+
                                             if(value.type=="ticket"){
-                                                $scope.events.push({
+                                                eventDate = new Date(value.start);
+                                                currDate = new Date();
+                                                if(eventDate >= currDate){
+                                                    $scope.events.push({
                                                 title : value.title,
                                                 start : new Date(value.start),
                                                 catchy:value.additionalData,
@@ -24,8 +29,23 @@ $(function(){
                                                 type:"ticket"
                                                
                                             });
+                                                }else{
+                                                    $scope.events.push({
+                                                title : value.title,
+                                                start : new Date(value.start),
+                                                catchy:value.additionalData,
+                                                allDay: true,
+                                                stick: true,
+                                                color: '#ff0000',
+                                                type:"ticket"
+                                               
+                                            });
+                                                }
                                             }else{
-                                                $scope.events.push({
+                                                eventDate = new Date(value.start);
+                                                currDate = new Date();
+                                                if(eventDate>=currDate){
+                                                    $scope.events.push({
                                                 title : value.title,
                                                 start : new Date(value.start),
                                                 catchy:value.additionalData,
@@ -36,6 +56,20 @@ $(function(){
 
                                                
                                             });
+                                                }else{
+                                                    $scope.events.push({
+                                                title : value.title,
+                                                start : new Date(value.start),
+                                                catchy:value.additionalData,
+                                                allDay: true,
+                                                stick: true,
+                                                color: '#ff0000',
+                                                type : "task"
+                                               
+
+                                               
+                                            });
+                                                }
                                             }
                                         });
                                         
