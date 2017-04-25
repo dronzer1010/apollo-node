@@ -423,6 +423,7 @@ var deferred = $q.defer();
                             self.nextDate="";
                             
                             self.submit=function(date){
+                                console.log(date);
                                 var data={};
                                 data.nextDate = date;
                                 ticketService.updateNextDate(ticketId ,data).then(function(response){

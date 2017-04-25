@@ -165,7 +165,7 @@ $(function(){
 					);
 			},
 
-			updateNextDate : function(data , id){
+			updateNextDate : function(id, data){
 				var config =	{
 						method: 'PUT',
 						url: url+'/api/tickets/nextdate/'+id,
