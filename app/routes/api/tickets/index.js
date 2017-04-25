@@ -794,6 +794,326 @@ router.get('/mytickets/export' , function(req,res){
                            
                         }
                     },
+                    litiType: {
+                        displayName: 'Litigational Type',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                                if(val=='medico_legal'){
+                                    return 'Medico Legal'
+                                }
+                                if(val == 'non_medico_legal'){
+                                    return 'Non-Medico Legal'
+                                }
+                                if(val == 'tax_related'){
+                                    return 'Tax Related'
+                                }
+                            }
+                            //return val
+                           
+                        }
+
+                    },
+                    litiNonMedicoType: {
+                        displayName: 'Non-Medico Legal Type',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                                if(val=='contracts_related'){
+                                    return 'Contracts Related'
+                                }
+                                if(val == 'statutory_compliance'){
+                                    return 'Statutory Compliance'
+                                }
+                                if(val == 'land_matters'){
+                                    return 'Land Matters'
+                                }
+                                if(val == 'labour_related'){
+                                    return 'Labour Related'
+                                }
+                                if(val == 'pharmacy_licenses'){
+                                    return 'Pharmacy Licenses'
+                                }
+                            
+                            }
+                            //return val
+                           
+                        }
+
+                    },
+                    litiNoticeReceived: {
+                        displayName: 'Notice Received',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                                if(val=='Y')
+                                return 'Yes'
+
+                                if(val == 'N')
+                                return 'No'
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiNoticeFrom: {
+                        displayName: 'Notice From',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiNoticeAgainst: {
+                        displayName: 'Notice Against',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiOpposingLawyer: {
+                        displayName: 'Opposing Lawyer',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiContactAddress: {
+                        displayName: 'Contact Address',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiContactEmail: {
+                        displayName: 'Contact Email',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiCourt: {
+                        displayName: 'Court',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiCounselAppointed: {
+                        displayName: 'Counsel Appointed',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+
+                    litiCounselAddress: {
+                        displayName: 'Counsel Address',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiCounselEmail: {
+                        displayName: 'Counsel Email',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiCounselPhone: {
+                        displayName: 'Counsel Phone No.',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiCourtLocation: {
+                        displayName: 'Court Location',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    litiAmount: {
+                        displayName: 'Amount Under Litigation',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val+' INR';
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    ticketOpeningDate: {
+                        displayName: 'Opening Date',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    ticketClosingDate: {
+                        displayName: 'Closing Date',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    ticketClosingNote: {
+                        displayName: 'Closing Notes',
+                        headerStyle: styles.headerDark,
+                        cellStyle: styles.cellPink, // <- Cell style
+                        width: 220 , // <- width in pixels,
+                        cellFormat : function(val , row){
+                            //console.log(val.name);
+                            if(!val){
+                                return 'Nil';
+                            }else{
+                               return val;
+                            }
+                            //return val
+                           
+                        }
+                    },
+                    
+                    
                     
 
 
