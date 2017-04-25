@@ -737,7 +737,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            if(val){
+                            if(!val){
                                 return 'Nil';
                             }else{
                                 return val;
@@ -753,7 +753,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            if(val){
+                            if(!val){
                                 return 'Nil';
                             }else{
                                 return val;
@@ -769,7 +769,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            if(val){
+                            if(!val){
                                 return 'Nil';
                             }else{
                                 return val;
@@ -785,7 +785,7 @@ router.get('/mytickets/export' , function(req,res){
                         width: 220 , // <- width in pixels,
                         cellFormat : function(val , row){
                             //console.log(val.name);
-                            if(val){
+                            if(!val){
                                 return 'Nil';
                             }else{
                                 return val.legalType;
