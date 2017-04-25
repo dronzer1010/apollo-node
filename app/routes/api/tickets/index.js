@@ -267,7 +267,7 @@ router.put('/edit/:id' , function(req,res){
 
 //
 
-router.put('/nextdate/:id'  function(req,res){
+router.put('/nextdate/:id' , function(req,res){
     Ticket.update({_id:req.params.id},{$set:{
         replyByDate : req.body.nextDate
     }} , function(err , data){
