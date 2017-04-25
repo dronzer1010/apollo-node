@@ -1023,10 +1023,14 @@ router.get('/mytickets/export' , function(req,res){
                             if(!val){
                                 return 'Nil';
                             }else{
+                                if(val=='Y')
+                                return 'Yes'
+
+                                if(val == 'N')
+                                return 'No'
                                 if(val==""){
                                     return "Nil"
-                                }else
-                                return val;
+                                }
                             }
                             //return val
                            
