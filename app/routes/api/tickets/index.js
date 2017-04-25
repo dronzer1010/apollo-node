@@ -731,28 +731,30 @@ router.get('/mytickets/export' , function(req,res){
                         }
                     },
                     transactionalDetails: {
-                        displayName: 'Transactional Type',
-                        headerStyle: styles.headerDark,
-                        cellStyle: styles.cellPink, // <- Cell style
-                        width: 220 , // <- width in pixels,
-                        cellFormat : function(val , row){
-                            //console.log(val.name);
-                            return val.type
-                           
+                        type:{
+                            displayName: 'Transactional Type',
+                            headerStyle: styles.headerDark,
+                            cellStyle: styles.cellPink, // <- Cell style
+                            width: 220 , // <- width in pixels,
+                            cellFormat : function(val , row){
+                                //console.log(val.name);
+                                return val
+                            
+                            }
+                        },
+                        newOrExisting:{
+                            displayName: 'New / Existing',
+                            headerStyle: styles.headerDark,
+                            cellStyle: styles.cellPink, // <- Cell style
+                            width: 220 , // <- width in pixels,
+                            cellFormat : function(val , row){
+                                //console.log(val.name);
+                                return val
+                            
+                            }
                         }
                     },
-                    transactionalDetails: {
-                        displayName: 'New / Existing',
-                        headerStyle: styles.headerDark,
-                        cellStyle: styles.cellPink, // <- Cell style
-                        width: 220 , // <- width in pixels,
-                        cellFormat : function(val , row){
-                            //console.log(val.name);
-                            return val.newOrExisting
-                           
-                        }
-                    },
-                    
+                   
                     
 
 
