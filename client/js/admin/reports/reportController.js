@@ -6,6 +6,9 @@ $(function(){
 		var self = this;
 
 
+        $scope.dateFrom= new Date();
+        $scope.dateTo = $scope.dateFrom;
+        $scope.dateTo  = new Date($scope.dateTo.setMonth($scope.dateFrom.getMonth()+4));
 
         self.MedicoFrom = {
             amount : 0 ,

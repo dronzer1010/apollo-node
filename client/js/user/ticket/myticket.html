@@ -37,6 +37,7 @@
                                             <option value="-ticketPriority">Priority</option>
                                             <option value="-createdAt">Newest</option>
                                             <option value="createdAt" >None</option>
+                                            <option value="-replyByDate" >Reply By Date</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
@@ -62,7 +63,7 @@
                                 <th>Status</th>
                                 
                             </tr>
-                            <tr ng-repeat="ticket  in ctrl.tickets | filter:searchText||orderBy:orderList| offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
+                            <tr ng-repeat="ticket  in ctrl.tickets | filter:searchText|orderBy:orderList| offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
                                 <td>{{ctrl.tickets.indexOf(ticket) + 1}}</td>
                                 <td>{{ticket.firstName +' '+ticket.lastName}}</td>
                                 <td>{{ticket.designation.short_name}}</td>

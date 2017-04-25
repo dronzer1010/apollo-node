@@ -25,14 +25,12 @@
                                         <div class="col-md-4">
                                             <label>From :</label>
                                             <datepicker  date-format="longDate">
-                                                <input class="form-control" ng-model="ctrl.dateFrom" type="text"/>
+                                                <input class="form-control" ng-model="dateFrom" type="text"/>
                                             </datepicker>
                                         </div>
                                         <div class="col-md-4">
                                             <label>To :</label>
-                                            <datepicker  date-format="longDate">
-                                                <input class="form-control" ng-model="ctrl.dateTo" type="text"/>
-                                            </datepicker>
+                                            <input ng-model="dateTo" class="form-control"/>
                                         </div>
                                         <div class= "col-md-2 pull-right">
                                             <button class="btn btn-primary" ng-click="ctrl.fetchData(ctrl.dateFrom , ctrl.dateTo)">Fetch Data</button>
