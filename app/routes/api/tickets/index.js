@@ -752,22 +752,7 @@ router.get('/mytickets/export' , function(req,res){
                            
                         }
                     },
-                    transactionalDetails: {
-                        displayName: 'Document Type',
-                        headerStyle: styles.headerDark,
-                        cellStyle: styles.cellPink, // <- Cell style
-                        width: 220 , // <- width in pixels,
-                        cellFormat : function(val , row){
-                            //console.log(val.name);
-                            if(val.documentType){
-                                return val.documentType.legalType;
-                            }else{
-                                return 'Nil'
-                            }
-                            
-                           
-                        }
-                    },
+                    
                     
 
 
