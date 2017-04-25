@@ -165,6 +165,28 @@ $(function(){
 					);
 			},
 
+			updateNextDate : function(data , id){
+				var config =	{
+						method: 'PUT',
+						url: url+'/api/tickets/nextdate/'+id,
+						data : data,
+						headers: {
+							authorization : $rootScope.user.token
+						},
+					
+					};
+				return $http(config)
+					.then(
+							function(response){
+								return response.data;
+							}, 
+							function(errResponse){
+								console.error('Error while updating next date');
+								return $q.reject(errResponse);
+							}
+					);
+			},
+
 
 			pickTicket: function(id){
 					var config =	{

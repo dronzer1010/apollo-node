@@ -405,6 +405,52 @@ var deferred = $q.defer();
                 };
 
 
+
+
+                /**
+                 * Update Next Date
+                 */
+                self.updateNextDate = function(parent ,ticketId ){
+
+                    console.log(ticketId);
+                    self.modalInstance = $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'nextDate.html',
+                        controller : function($uibModalInstance ,ticketService , $scope ,$state){
+                            var self = this;
+                            self.nextDate="";
+                            
+                            self.submit=function(date){
+                                var data={};
+                                data.nextDate = date;
+                                ticketService.updateNextDate(ticketId ,data).then(function(response){
+                                    $state.reload();
+                                }, function(errResponse){
+										console.log('error updating next date');
+									});
+                            };
+                            self.cancel = function(){
+                                $uibModalInstance.dismiss('cancel');
+                            }; 
+                                
+                            
+                        },
+                        controllerAs :'updateCtrl',
+                        scope : $scope,
+                        size: 'md',
+                        appendTo: angular.element($document[0].querySelector(parent)),
+                        resolve: {
+                            
+                        }
+                    });
+                    //add
+
+                };
+
+
+
                 /**
                  *  Complete Ticket Model
                  */

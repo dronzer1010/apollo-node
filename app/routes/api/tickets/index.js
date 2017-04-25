@@ -265,7 +265,27 @@ router.put('/edit/:id' , function(req,res){
 });
 
 
+//
 
+router.put('/nextdate/:id'  function(req,res){
+    Ticket.update({_id:req.params.id},{$set:{
+        replyByDate : req.body.nextDate
+    }} , function(err , data){
+        if(!err){
+            Event.update({ticketRef:req.params.id},{$set:{
+                start : req.body.nextDate
+            }} , function(err , data){
+                if(!err){
+                    res.status(200).send({success :true , msg : "Next Date Updated"}); 
+                }else{
+                    res.status(400).send({success :false , msg : "Update Failed" , err : err});
+                }
+            });
+        }else{
+                res.status(400).send({success :false , msg : "Update Failed" , err : err});
+        }
+    });
+});
 //route to get all tickets
 
 router.get('/',function(req,res){
