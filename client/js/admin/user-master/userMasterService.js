@@ -19,6 +19,7 @@ $(function(){
 			        },
 
 					fetchAllDesignationUsers: function(designation) {
+						console.log(designation);
 			            return $http.get(url+'/api/users?des='+designation)
 			            .then(
 			                    function(response){
