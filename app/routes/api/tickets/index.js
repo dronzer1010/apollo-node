@@ -768,7 +768,7 @@ router.get('/mytickets/export' , function(req,res){
                 .exec( function(err,docs){
                 if(!err){
                     var data_docs=[];
-                    docs.forEach(doc){
+                    docs.forEach(function(doc){
                         var data={};
                         data._id = doc._id;
                         data.firstName = doc.firstName;
@@ -782,7 +782,7 @@ router.get('/mytickets/export' , function(req,res){
                         data.ticketType = doc.ticketType;
 
                         data_docs.push(doc);
-                    };
+                    });
 
                     var report = Excel.buildExport(
                         [ // <- Notice that this is an array. Pass multiple sheets to create multi sheet report
