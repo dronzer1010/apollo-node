@@ -774,7 +774,7 @@ router.get('/mytickets/export' , function(req,res){
                         data.firstName = doc.firstName;
                         data.lastName =  doc.lastName;
                         data.email = doc.email;
-                        data.location = doc.locaion.name+' , '+doc.location.division;
+                        data.location = doc.location.name+' , '+doc.location.division;
                         data.designation = doc.designation.designation;
                         data.ticketPriority = doc.ticketPriority;
                         data.ticketStatus = doc.ticketStatus;
