@@ -24,7 +24,7 @@ aws.config.update({
 
 
 /** Configure S3 bucket */
-var s3 = new aws.S3();
+var s3 = new aws.S3({signatureVersion: 'v4'});
 
 /*
 var storage =   multer.diskStorage({
