@@ -18,8 +18,8 @@ var Document = require(__base + 'app/models/documentMaster');
 
 /** Configure AWS */
 aws.config.update({
-    secretAccessKey:config.a_c_k_e_y,
-    accessKeyId: config.s_k_e_y, 
+    secretAccessKey:config.s_k_e_y,
+    accessKeyId: config.a_c_k_e_y, 
 });
 
 
