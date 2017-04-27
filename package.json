@@ -9,6 +9,7 @@
   "author": "Dronzer1010",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.46.0",
     "bcrypt": "^1.0.0",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
@@ -19,6 +20,7 @@
     "morgan": "^1.7.0",
     "msexcel-builder": "0.0.2",
     "multer": "^1.2.0",
+    "multer-s3": "^2.7.0",
     "node-excel-export": "^1.2.0",
     "nodemailer": "^2.7.0",
     "nodemailer-mailgun-transport": "^1.2.4",

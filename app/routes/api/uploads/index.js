@@ -1,11 +1,32 @@
 var express  = require('express');
 var router   = express.Router();
 var multer   = require('multer');
+var config  = require(__base + 'app/config/database');
+//AWS SDK 
+var aws =  require('aws-sdk');
+//Multer for S3
+var multerS3 = require('multer-s3') 
+
 var path = require('path');
 
 var Task    = require(__base + 'app/models/taskMaster');
 var Document = require(__base + 'app/models/documentMaster');
 
+
+
+
+
+/** Configure AWS */
+aws.config.update({
+    secretAccessKey:config.a_c_k_e_y,
+    accessKeyId: config.s_k_e_y, 
+});
+
+
+/** Configure S3 bucket */
+var s3 = new aws.S3();
+
+/*
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, path.join(__base, '/app/uploads'));
@@ -17,6 +38,24 @@ var storage =   multer.diskStorage({
 
 var upload = multer({ storage : storage}).single('document');
 
+*/
+
+var upload =   multer({
+
+    storage: multerS3({
+        s3: s3,
+        bucket: 'docload',
+       
+        key: function (req, file, cb) {
+            console.log(file);
+            cb(null, file.fieldname + '-' + Date.now()+path.extname(file.originalname)); //use Date.now() for unique file keys
+        }
+    })
+
+}).single('document');
+
+
+
 router.post('/' , function(req,res ,next){
     upload(req,res,function(err) {
         if(err) {
@@ -27,7 +66,7 @@ router.post('/' , function(req,res ,next){
                     console.log(req.file);
                      res.status(200).send({
                       success : true ,
-                      path : '/docs/'+req.file.filename ,
+                      path : req.file.location,
                       name : req.file.originalname
                 });
         }
@@ -67,7 +106,7 @@ router.post('/task/:id' , function(req,res ,next){
                         documentLocation : task.taskHandlerLocation,
                         documentOrigin : 'internal',
                         documentLegalTypeId: null,
-                        documentUrl : '/docs/'+req.file.filename,
+                        documentUrl : req.file.location,
                         notes:null,
                         approved : false,
                         additionalDetails :[],
@@ -82,7 +121,7 @@ router.post('/task/:id' , function(req,res ,next){
                           if(!err){
                             res.status(200).send({
                                       success : true ,
-                                      path : '/docs/'+req.file.filename,
+                                      path : req.file.location,
                                       name : req.file.originalname
                                 });
                           }else{
