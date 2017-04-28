@@ -30,6 +30,7 @@ router.post('/' , function(req,res){
             var temp ={};
             console.log(req.body.documents[i]+" ---- "+req.body.fileName[i]);
             var name_arr = req.body.fileName[i].split('**');
+            console.log(name_arr);
             temp.url=req.body.documents[i];
             temp.name = name_arr[0];
             temp_key  = name_arr[1];
