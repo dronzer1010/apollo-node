@@ -8,7 +8,7 @@ var config  = require(__base + 'app/config/database');
 //AWS SDK 
 var aws =  require('aws-sdk');
 
-/** Configure AWS */
+/** Configure AWS *///
 aws.config.update({
     secretAccessKey:config.s_k_e_y,
     accessKeyId: config.a_c_k_e_y, 
