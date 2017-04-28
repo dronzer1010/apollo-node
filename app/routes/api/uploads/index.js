@@ -67,7 +67,7 @@ router.post('/' , function(req,res ,next){
                      res.status(200).send({
                       success : true ,
                       path : req.file.location,
-                      name : req.file.originalname
+                      name : req.file.originalname+'**'+req.file.key
                 });
         }
     });
@@ -92,6 +92,7 @@ router.post('/task/:id' , function(req,res ,next){
              console.log(task.ticketId);
              var tempDoc = new Document({
                         documentName:req.file.originalname,
+                        documentKey : req.file.key,
                         ticketId : task.ticketId,
                         taskId : task._id,
                         nameOfUser : task.ticketId.firstName,
@@ -122,7 +123,7 @@ router.post('/task/:id' , function(req,res ,next){
                             res.status(200).send({
                                       success : true ,
                                       path : req.file.location,
-                                      name : req.file.originalname
+                                      name : req.file.originalname+'**'+req.file.key
                                 });
                           }else{
                               res.status(400).send({success:false , msg : "Error Uploading File" , err : err});

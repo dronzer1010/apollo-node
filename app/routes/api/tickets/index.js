@@ -29,8 +29,10 @@ router.post('/' , function(req,res){
         for(var i=0;i<req.body.documents.length;i++){
             var temp ={};
             console.log(req.body.documents[i]+" ---- "+req.body.fileName[i]);
+            var name_arr = req.body.fileName[i].split('**');
             temp.url=req.body.documents[i];
-            temp.name = req.body.fileName[i];
+            temp.name = name_arr[0];
+            temp_key  = name_arr[1];
             attachedDoc.push(temp);
         }
 
@@ -109,6 +111,7 @@ router.post('/' , function(req,res){
 
                     var tempDoc = new Document({
                         documentName:item.name,
+                        documentKey:item.key,
                         ticketId : data._id,
                         taskId : null,
                         nameOfUser : data.firstName+' '+data.lastName,

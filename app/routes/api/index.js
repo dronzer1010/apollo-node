@@ -19,6 +19,7 @@ router.use('/notes',require('./notes'));
 router.use('/tasks',require('./tasks'));
 router.use('/events',require('./events'));
 router.use('/document-master',require('./documentMasters'));
+router.use('/doc' , require('./doc'));
 
 router.get('/' , function(req,res){
 	res.send('api routes here');

@@ -9,6 +9,10 @@ var DocumentMaster = new Schema({
         type : String,
         required : true
     },
+    documentKey:{
+       type : String,
+        required : true 
+    },
     ticketId :{
          type: Schema.Types.ObjectId, 
          ref: 'Tickets',
