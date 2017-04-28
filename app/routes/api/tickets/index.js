@@ -33,7 +33,7 @@ router.post('/' , function(req,res){
             console.log(name_arr);
             temp.url=req.body.documents[i];
             temp.name = name_arr[0];
-            temp_key  = name_arr[1];
+            temp.key  = name_arr[1];
             attachedDoc.push(temp);
         }
 
