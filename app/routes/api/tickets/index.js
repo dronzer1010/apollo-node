@@ -16,7 +16,20 @@ var helper = require('sendgrid').mail;
 var fs = require('fs');
 
 var Excel = require('node-excel-export');
+var aws = require('aws-sdk');
 
+
+
+
+
+/** Configure AWS *///
+aws.config.update({
+    secretAccessKey:config.s_k_e_y,
+    accessKeyId: config.a_c_k_e_y, 
+});
+
+// Instantiate SES.
+var ses = new aws.SES({region:'us-west-2'});
 
 router.post('/' , function(req,res){
 
@@ -161,6 +174,40 @@ router.post('/' , function(req,res){
                             if(!err){
                                 Ticket.update({_id:data._id},{$set : {messageThread :thread._id}},function(err,tickt){
                                     if(!err){
+
+
+                                            var s_email = 'support@ahel-legal.in';
+                                            var t_mail = req.body.email;
+                                            var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
+                                            ses_mail = ses_mail + "To: " + t_mail + "\n";
+                                            ses_mail = ses_mail + "Subject: Ticket Submission Successful\n";
+                                            ses_mail = ses_mail + "MIME-Version: 1.0\n";
+                                            ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
+                                            ses_mail = ses_mail + 'Hello '+req.body.firstName+' , Your ticket has been successfuly submitted . Your Ticket id is '+data._id+"\n\n";
+                                            ses_mail = ses_mail + "--NextPart--";
+                                            ses_mail = ses_mail + "Content-Type: text/plain;\n";
+
+                                            
+                                            var params = {
+                                                RawMessage: { Data: new Buffer(ses_mail) },
+                                                Destinations: [ t_mail ],
+                                                Source: "'Apollo Legal System' <" + s_email + ">'"
+                                            };
+                                            
+                                            ses.sendRawEmail(params, function(err, data) {
+                                                if(err) {
+                                                    res.status(200).send({success :true , data : data , err: err});
+                                                } 
+                                                else {
+                                                    res.status(200).send({success :true , data : data});
+                                                }           
+                                            });
+
+
+                                            /*
+
                                             var from_email = new helper.Email('sravik1010@gmail.com');
                                             var to_email = new helper.Email(req.body.email);
                                             var subject = 'Ticket Submission Successful';
@@ -180,7 +227,7 @@ router.post('/' , function(req,res){
                                         });
                                     
 
-                                        
+                                        */
                                     }else{
                                     res.status(400).send({success:false , msg : err}); 
                                     }

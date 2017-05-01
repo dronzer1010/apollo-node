@@ -24,16 +24,37 @@ var s3 = new aws.S3({signatureVersion: 'v4'});
 //Route to get all designations
 
 router.get('/:id' , function(req,res){
+
 	var fileKey = req.params.id;
-	var options = {
+    var options = {
         Bucket    : 'docload',
         Key    : fileKey,
     };
-	res.attachment(fileKey);
+    Document.findOne({documentKey : fileKey} , function(err , document){
+        if(!err){
+            if(doc){
+                if(!doc.approved){
+                    //Document Not approved
+                    res.attachment(fileKey);
 
-    var fileStream = s3.getObject(options).createReadStream();
+                    var fileStream = s3.getObject(options).createReadStream();
 	
-    fileStream.pipe(res);
+                    fileStream.pipe(res);
+
+                }else{
+                    //Document is approved
+
+                }
+            }else{
+                res.status(400).send({success:false , error : err ,msg : "Document Do Not Exist" });
+            }
+        }else{
+            res.status(400).send({success:false , msg : err});
+        }
+    });
+
+	
+	
 });
 
 

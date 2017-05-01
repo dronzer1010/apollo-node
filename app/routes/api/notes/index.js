@@ -1,15 +1,22 @@
 var express  = require('express');
 var mongoose = require('mongoose');
 var router   = express.Router();
-
+var aws = require('aws-sdk');
 //Get Required Model
 
 var Notes    = require(__base + 'app/models/notesMaster');
 var Task    = require(__base + 'app/models/taskMaster');
 var config      = require(__base + 'app/config/database');
 
+/** Configure AWS *///
+aws.config.update({
+    secretAccessKey:config.s_k_e_y,
+    accessKeyId: config.a_c_k_e_y, 
+});
 
 
+// Instantiate SES.
+var ses = new aws.SES({region:'us-west-2'});
 
 
 //Route to get messages by ticketId
@@ -64,5 +71,40 @@ router.post('/' , function(req, res){
 });
 
 
+
+
+
+
+// Sending RAW email including an attachment.
+router.post('/send', function (req, res) {
+    var email = "support@ahel-legal.in";
+    var t_mail = 'sravik1010@gmail.com';
+    var ses_mail = "From: 'AWS Tutorial Series' <" + email + ">\n";
+    ses_mail = ses_mail + "To: " + t_mail + "\n";
+    ses_mail = ses_mail + "Subject: AWS SES Attachment Example\n";
+    ses_mail = ses_mail + "MIME-Version: 1.0\n";
+    ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
+    ses_mail = ses_mail + "--NextPart\n";
+    ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
+    ses_mail = ses_mail + "This is the body of the email.\n\n";
+    ses_mail = ses_mail + "--NextPart--";
+    ses_mail = ses_mail + "Content-Type: text/plain;\n";
+
+    
+    var params = {
+        RawMessage: { Data: new Buffer(ses_mail) },
+        Destinations: [ t_mail ],
+        Source: "'AWS Tutorial Series' <" + email + ">'"
+    };
+    
+    ses.sendRawEmail(params, function(err, data) {
+        if(err) {
+            res.send(err);
+        } 
+        else {
+            res.send(data);
+        }           
+    });
+});
 
 module.exports = router;
