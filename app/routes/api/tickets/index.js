@@ -549,6 +549,42 @@ router.post('/comanagers/:id' , function(req,res){
         Ticket.update({_id:req.params.id},{$push :{ticketCo_Owners:req.body.comanager._id}},function(err,data){
             if(!err){
                 var user=req.body.comanager;
+                var s_email = 'support@ahel-legal.in';
+                var t_mail = user.email;
+                var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
+                ses_mail = ses_mail + "To: " + t_mail + "\n";
+                ses_mail = ses_mail + "Subject: Added as Co-Manager\n";
+                ses_mail = ses_mail + "MIME-Version: 1.0\n";
+                ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
+                ses_mail = ses_mail + "--NextPart\n";
+                ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
+                ses_mail = ses_mail + 'Hello '+user.firstName+" "+user.lastName+' , You have been made Co-manager to a ticket . Please Login and check ticket in "My Tickets Section" .'+"\n\n";
+                ses_mail = ses_mail + "--NextPart\n";
+                ses_mail = ses_mail + "Content-Type: text/plain;\n";
+
+                                            
+                var params = {
+                        RawMessage: { Data: new Buffer(ses_mail) },
+                        Destinations: [ t_mail ],
+                        Source: "'Apollo Legal System' <" + s_email + ">'"
+                    };
+                                            
+                ses.sendRawEmail(params, function(err, data) {
+                                                if(err) {
+                                                    res.status(200).send({success : true , msg : "Co Manager Created" , err:err}); 
+                                                } 
+                                                else {
+                                                    res.status(200).send({success : true , msg : "Co Manager Created"}); 
+                                                }           
+                                            });
+
+
+
+
+
+
+             /*                                   
+                var user=req.body.comanager;
                 var from_email = new helper.Email('sravik1010@gmail.com');
                 var to_email = new helper.Email(user.email);
                 var subject = 'Added as Co-Manager';
@@ -566,7 +602,7 @@ router.post('/comanagers/:id' , function(req,res){
         
                     res.status(200).send({success : true , msg : "Co Manager Created"});   
             });
-                
+                */
             }else{
                 res.status(400).send({success : false , msg : err});
             }

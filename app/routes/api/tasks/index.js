@@ -12,7 +12,20 @@ var config      = require(__base + 'app/config/database');
 var helper = require('sendgrid').mail;
 
 
+var aws = require('aws-sdk');
 
+
+
+
+
+/** Configure AWS *///
+aws.config.update({
+    secretAccessKey:config.s_k_e_y,
+    accessKeyId: config.a_c_k_e_y, 
+});
+
+// Instantiate SES.
+var ses = new aws.SES({region:'us-west-2'});
 
 //Route to create task as well as send email
 
@@ -61,6 +74,40 @@ router.post('/' , function(req, res){
                                         Task.update({_id:task._id},{$set:{notesThread:thread._id}},function(err,newTask){
                                             if(!err){
 
+
+                                                var s_email = 'support@ahel-legal.in';
+                                            var t_mail = req.body.handlerEmail;
+                                            var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
+                                            ses_mail = ses_mail + "To: " + t_mail + "\n";
+                                            ses_mail = ses_mail + "Subject: Task Assigned\n";
+                                            ses_mail = ses_mail + "MIME-Version: 1.0\n";
+                                            ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
+                                            ses_mail = ses_mail + 'Hello '+req.body.handlerName+' , You have been assigned a task named "'+req.body.name+'" . You can access task through this link : http://apollo-node.herokuapp.com/#/task-detail/'+task._id+"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/plain;\n";
+
+                                            
+                                            var params = {
+                                                RawMessage: { Data: new Buffer(ses_mail) },
+                                                Destinations: [ t_mail ],
+                                                Source: "'Apollo Legal System' <" + s_email + ">'"
+                                            };
+                                            
+                                            ses.sendRawEmail(params, function(err, data) {
+                                                if(err) {
+                                                    res.status(200).send({success :true , data : data , err: err});
+                                                } 
+                                                else {
+                                                    res.status(200).send({success :true , data : data});
+                                                }           
+                                            });
+
+
+
+                                                /*
+
                                                 var from_email = new helper.Email('sravik1010@gmail.com');
                                                 var to_email = new helper.Email(req.body.handlerEmail);
                                                 var subject = 'Task Assigned';
@@ -78,7 +125,7 @@ router.post('/' , function(req, res){
                                                     res.status(200).send({success :true , data : data});
                                                     //res.status(200).send({success : true , msg : "Co Manager Created"});   
                                             });
-
+*/
                                                 
                                             }else{
                                                 res.status(400).json({success : false , msg : err});
