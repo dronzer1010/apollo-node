@@ -186,7 +186,7 @@ router.post('/' , function(req,res){
                                             ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
                                             ses_mail = ses_mail + 'Hello '+req.body.firstName+' , Your ticket has been successfuly submitted . Your Ticket id is '+data._id+"\n\n";
-                                            ses_mail = ses_mail + "--NextPart--";
+                                            ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/plain;\n";
 
                                             
