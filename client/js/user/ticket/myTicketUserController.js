@@ -109,16 +109,23 @@ var deferred = $q.defer();
                                     responseType: "arraybuffer"
                                     }).then(
                                     function (data, status, headers) {
-                                        console.log(data.data);
+                                        //console.log(data.config.data.key);
                                     
-                                        var blob = new Blob([data.data], { type: 'application/vnd.openxmlformats' });
+                                        var blob = new Blob([data.data]);
                                         var currDate = new Date();
-                                        var fileName = "Tickets_"+currDate+'.pdf';
-                                        FileSaver.saveAs(blob, fileName);
-                                        deferred.resolve(fileName);                    
+                                        var fileName = data.config.data.key;
+                                        FileSaver.saveAs(blob,fileName);
+                                        deferred.resolve(fileName);  
+
                                     }, function (data, status) {
-                                        var e = /* error */
-                                        deferred.reject(e);
+                                        //console.log(data);
+                                        toaster.pop({
+                                                type: 'error',
+                                                title: 'Error',
+                                                body: data.msg,
+                                                timeout: 2000
+                                    });
+                                        deferred.reject(data.msg);
                                     });
                                 return deferred.promise; 
                 };
