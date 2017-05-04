@@ -9,6 +9,35 @@ $(function(){
                 
                 var self =  this;
                 var eventDate , currDate;
+
+
+                $scope.export_cal = function(){
+                    html2canvas(document.getElementById('export-calendar'), {
+            onrendered: function (canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
+                    content: [{
+                        image: data,
+                        width: 500,
+                    }],
+                    // a string or { width: number, height: number }
+                pageSize: 'A5',
+
+  // by default we use portrait, you can change it to landscape if you wish
+                pageOrientation: 'landscape',
+
+  // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
+                //pageMargins: [ 40, 60, 40, 60 ],
+                };
+                var curr = new Date();
+                var name = "Calendar"+curr+'.pdf';
+                pdfMake.createPdf(docDefinition).download(name);
+            }
+        });
+                };     
+
+
+
                 self.fetchAllEvents = function(){
                     ticketService.getAllEvents()
                                 .then(function(events){

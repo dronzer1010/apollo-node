@@ -24,6 +24,7 @@
     "angular-animate": "1.5.9",
     "angular-moment": "^1.0.1",
     "angular-ui-calendar": "^1.0.2",
-    "angularjs-datepicker": "^2.1.15"
+    "angularjs-datepicker": "^2.1.15",
+    "pdfmake": "^0.1.28"
   }
 }
