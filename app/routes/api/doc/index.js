@@ -35,7 +35,7 @@ router.post('/' , function(req,res){
         if(!err){
             if(document){
                 if(!document.approved){
-                    //Document Not approved
+                    //Document Not approveds
                     res.attachment(fileKey);
 
                     var fileStream = s3.getObject(options).createReadStream();
