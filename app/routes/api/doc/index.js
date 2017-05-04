@@ -1,6 +1,7 @@
 var express  = require('express');
 var mongoose = require('mongoose');
 var fs = require('fs');
+var jwt      = require('jwt-simple');
 var router   = express.Router();
 
 var Document = require(__base + 'app/models/documentMaster');

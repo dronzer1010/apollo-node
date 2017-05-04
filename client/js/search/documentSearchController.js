@@ -1,7 +1,7 @@
 $(function(){
 
     angular.module('apolloApp')
-            .controller('DocumentSearchController',['$scope','$http','documentTemplateFieldService','$state','$stateParams','$uibModal','$document','toaster','$timeout',function($scope,$http,documentTemplateFieldService,$state,$stateParams,$uibModal,$document,toaster,$timeout ){
+            .controller('DocumentSearchController',['$scope','$rootScope','$http','documentTemplateFieldService','$state','$stateParams','$uibModal','$document','toaster','$timeout',function($scope,$rootScope,$http,documentTemplateFieldService,$state,$stateParams,$uibModal,$document,toaster,$timeout ){
 
                 var self = this ;
                $scope.documents=[];
@@ -29,7 +29,11 @@ $(function(){
                                         headers: {
                                         
                                         authorization : $rootScope.user.token
-                                        },})
+                                        },}).then(function(data){
+                                            console.log(data);
+                                        } , function(err){
+                                            console.lof(err);
+                                        })
                 }
 
             }]);
