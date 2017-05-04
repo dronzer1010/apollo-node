@@ -71,7 +71,7 @@ router.post('/request' , function(req,res){
             var options = {
                 Bucket    : 'docload',
                 Key    : fileKey,
-                Expires: 10
+                
             };
             Document.findOne({documentKey : fileKey} , function(err , document){
                 if(!err){
