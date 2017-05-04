@@ -17,7 +17,7 @@ aws.config.update({
 
 
 /** Configure S3 bucket */
-var s3 = new aws.S3({signatureVersion: 'v4'});
+var s3 = new aws.S3({signatureVersion: 'v4',region:'ap-south-1'});
 
 // Instantiate SES.
 var ses = new aws.SES({region:'us-west-2'});
