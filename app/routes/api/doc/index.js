@@ -23,9 +23,10 @@ var s3 = new aws.S3({signatureVersion: 'v4'});
 
 //Route to get all designations
 
-router.get('/:id' , function(req,res){
+router.post('/' , function(req,res){
 
-	var fileKey = req.params.id;
+	var fileKey = req.body.key;
+    
     var options = {
         Bucket    : 'docload',
         Key    : fileKey,

@@ -96,9 +96,12 @@ var deferred = $q.defer();
 
                 self.doc_download = function(id){
                                     var deferred = $q.defer();
+                                    var data = {};
+                                    data.key = id;
                                     $http({
                                         url:"https://apollo-node.herokuapp.com/api/doc/"+id,
-                                        method: "GET",
+                                        method: "POST",
+                                        data : data,
                                         headers: {
                                         
                                         authorization : $rootScope.user.token
