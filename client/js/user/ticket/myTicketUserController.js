@@ -99,7 +99,7 @@ var deferred = $q.defer();
                                     var data = {};
                                     data.key = id;
                                     $http({
-                                        url:"https://apollo-node.herokuapp.com/api/doc/"+id,
+                                        url:"https://apollo-node.herokuapp.com/api/doc",
                                         method: "POST",
                                         data : data,
                                         headers: {
