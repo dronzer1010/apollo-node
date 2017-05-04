@@ -19,7 +19,7 @@
                                     <div ng-if="documents.length!=0" ng-class="($index%2==0)?'search_element_1':'search_element_2'" ng-repeat="document in documents">
                                         <h4 class="search-item-heading">{{document.documentName}}</h4>
                                         <p><span ng-repeat="detail in document.additionalDetails"><span class="head-content">{{detail.fieldName}}:</span><span class="span-content">{{detail.fieldValue}}</span></span></p>
-                                        <button class="btn btn-sm btn-success">Request Document</button>
+                                        <button class="btn btn-sm btn-success" ng-click="doc_request(document.documentKey)">Request Document</button>
                                     </div>
                                 </div>
                            	                           	

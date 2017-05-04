@@ -118,11 +118,15 @@ var deferred = $q.defer();
                                         deferred.resolve(fileName);  
 
                                     }, function (data, status) {
-                                        //console.log(data);
+
+                                        //console.log(data.data);
+                                        var decodedString = String.fromCharCode.apply(null, new Uint8Array(data.data));
+                                        var obj = JSON.parse(decodedString);
+                                        //console.log(decodedString);    
                                         toaster.pop({
                                                 type: 'error',
                                                 title: 'Error',
-                                                body: data.msg,
+                                                body: obj.msg,
                                                 timeout: 2000
                                     });
                                         deferred.reject(data.msg);

@@ -1,7 +1,7 @@
 $(function(){
 
     angular.module('apolloApp')
-            .controller('DocumentSearchController',['$scope','documentTemplateFieldService','$state','$stateParams','$uibModal','$document','toaster','$timeout',function($scope,documentTemplateFieldService,$state,$stateParams,$uibModal,$document,toaster,$timeout ){
+            .controller('DocumentSearchController',['$scope','$http','documentTemplateFieldService','$state','$stateParams','$uibModal','$document','toaster','$timeout',function($scope,$http,documentTemplateFieldService,$state,$stateParams,$uibModal,$document,toaster,$timeout ){
 
                 var self = this ;
                $scope.documents=[];
@@ -18,6 +18,18 @@ $(function(){
                     
                 }else{
                     
+                }
+
+                $scope.doc_request = function(key){
+                    var data={};
+                    data.key = key;
+                    $http({url:"https://apollo-node.herokuapp.com/api/doc/request",
+                                        method: "POST",
+                                        data : data,
+                                        headers: {
+                                        
+                                        authorization : $rootScope.user.token
+                                        },})
                 }
 
             }]);
