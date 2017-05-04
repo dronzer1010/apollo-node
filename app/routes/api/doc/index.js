@@ -76,7 +76,7 @@ router.post('/request' , function(req,res){
             Document.findOne({documentKey : fileKey} , function(err , document){
                 if(!err){
                     if(document){
-                        s3.getSignedUrl('getObject', params, function (err, url) {
+                        s3.getSignedUrl('getObject', options, function (err, url) {
                             if(!err){
                                res.status(400).send({success:false , error : err ,msg : "Error Generating URL" }); 
                             }else{
