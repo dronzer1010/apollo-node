@@ -64,6 +64,7 @@ router.post('/' , function(req,res){
 
 router.post('/request' , function(req,res){
     var token = getToken(req.headers);
+    var fileKey = req.body.key;
     if(token){
         var decoded = jwt.decode(token, config.secret);
         if(decoded.username){
