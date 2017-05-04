@@ -77,7 +77,7 @@ router.post('/request' , function(req,res){
                 if(!err){
                     if(document){
                         s3.getSignedUrl('getObject', options, function (err, url) {
-                            if(!err){
+                            if(err){
                                res.status(400).send({success:false , error : err ,msg : "Error Generating URL" }); 
                             }else{
                                             var s_email = 'support@ahel-legal.in';
