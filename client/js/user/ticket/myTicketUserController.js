@@ -92,7 +92,33 @@ var deferred = $q.defer();
                 };
 
 
-                
+                /**Document Download functionality */
+
+                self.doc_download = function(id){
+                                    var deferred = $q.defer();
+                                    $http({
+                                        url:"https://apollo-node.herokuapp.com/api/doc/"+id,
+                                        method: "GET",
+                                        headers: {
+                                        
+                                        authorization : $rootScope.user.token
+                                        },
+                                    responseType: "arraybuffer"
+                                    }).then(
+                                    function (data, status, headers) {
+                                        console.log(data.data);
+                                    
+                                        var blob = new Blob([data.data], { type: 'application/vnd.openxmlformats' });
+                                        var currDate = new Date();
+                                        var fileName = "Tickets_"+currDate+'.pdf';
+                                        FileSaver.saveAs(blob, fileName);
+                                        deferred.resolve(fileName);                    
+                                    }, function (data, status) {
+                                        var e = /* error */
+                                        deferred.reject(e);
+                                    });
+                                return deferred.promise; 
+                };
 
                 self.fetchAllTickets();
 

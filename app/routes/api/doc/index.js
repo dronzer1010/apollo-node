@@ -32,8 +32,8 @@ router.get('/:id' , function(req,res){
     };
     Document.findOne({documentKey : fileKey} , function(err , document){
         if(!err){
-            if(doc){
-                if(!doc.approved){
+            if(document){
+                if(!document.approved){
                     //Document Not approved
                     res.attachment(fileKey);
 
@@ -43,7 +43,7 @@ router.get('/:id' , function(req,res){
 
                 }else{
                     //Document is approved
-
+                    res.status(400).send({success:false , error : err ,msg : "Document is archived , Request Needed." });
                 }
             }else{
                 res.status(400).send({success:false , error : err ,msg : "Document Do Not Exist" });
