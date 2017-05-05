@@ -1685,7 +1685,9 @@ var getToken = function (headers) {
 
 /**Ticket ron Jobs */
 new CronJob('00 00 11 * * 0-6', function() {
-    
+    console.log("********************************************************");
+    console.log("Running Cron");
+    console.log("********************************************************"); 
     var s_email = 'support@ahel-legal.in';
                                             var t_mail = 'sub.krishna@gmail.com';
                                             var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
