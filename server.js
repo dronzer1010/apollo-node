@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var debug = require('debug')('apollo:server');
+var CronJob = require('cron').CronJob;
 var app = express();
 global.__base = __dirname + '/';
 
@@ -116,3 +117,4 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+

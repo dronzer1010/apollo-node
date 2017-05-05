@@ -12,7 +12,7 @@ var mailer   = require('nodemailer');
 var mg       = require('nodemailer-mailgun-transport');
 var config = require(__base + 'app/config/database');
 var helper = require('sendgrid').mail;
-
+var CronJob = require('cron').CronJob;
 var fs = require('fs');
 
 var Excel = require('node-excel-export');
@@ -1683,6 +1683,38 @@ var getToken = function (headers) {
 
 
 
+/**Ticket ron Jobs */
+new CronJob('00 00 11 * * 0-6', function() {
+    
+    var s_email = 'support@ahel-legal.in';
+                                            var t_mail = 'sub.krishna@gmail.com';
+                                            var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
+                                            ses_mail = ses_mail + "To: " + t_mail + "\n";
+                                            ses_mail = ses_mail + "Subject: CRON Job Test\n";
+                                            ses_mail = ses_mail + "MIME-Version: 1.0\n";
+                                            ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
+                                            ses_mail = ses_mail + "Hello , This is sample cron job test , sould activate on 11AM everyday, IST.\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/plain;\n";
 
+                                            
+                                            var params = {
+                                                RawMessage: { Data: new Buffer(ses_mail) },
+                                                Destinations: [ t_mail ],
+                                                Source: "'Apollo Legal System' <" + s_email + ">'"
+                                            };
+                                            
+                                            ses.sendRawEmail(params, function(err, data) {
+                                                if(err) {
+                                                    console.log(err);
+                                                } 
+                                                else {
+                                                    console.log(data);
+                                                }           
+                                            });
+
+}, null, true, 'Asia/Kolkata');
 
 module.exports = router;

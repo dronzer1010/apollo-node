@@ -1,7 +1,7 @@
 var express  = require('express');
 var mongoose = require('mongoose');
 var router   = express.Router();
-
+var CronJob = require('cron').CronJob;
 //Get Required Model
 
 var Designation = require(__base + 'app/models/designationMaster');
@@ -70,5 +70,9 @@ router.delete('/:id' , function(req,res){
 			}
 	});
 });
+
+
+
+
 
 module.exports = router;
