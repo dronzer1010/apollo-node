@@ -1662,7 +1662,46 @@ router.post('/report' , function(req,res){
     
 });
 
+router.get('/some' , function(req,res){
+    var date = new Date(req.query.date);
+    console.log(date.getDate()+" / "+date.getMonth()+' / '+date.getFullYear());
+    Ticket.aggregate([
+        {
+            $match:{
+                ticketStatus : 'open'
+            }
+        },
+        {
+            $project:{
+                year: { $year: "$replyByDate" },
+                month: { $month: "$replyByDate" },
+                day: { $dayOfMonth: "$replyByDate" },
+                ticketOwner :1,
+                ticketCo_Owners :1
+            }
+        },{
+            $match:{
+                year:date.getFullYear() ,
+                month: date.getMonth()+1,
+                day: date.getDate()
+            }
+        }
 
+    ],function(err,data){
+        if(!err){
+                res.status(200).send({
+                    success : true ,
+                    data : data
+
+                });
+            }else{
+                res.status(400).send({
+                    success : false ,
+                    err : err
+                });
+            }
+    });
+});
 
 /**
  *  Generic token parsing function
@@ -1684,20 +1723,49 @@ var getToken = function (headers) {
 
 
 /**Ticket ron Jobs */
-new CronJob('00 00 11 * * 0-6', function() {
-    console.log("********************************************************");
-    console.log("Running Cron");
-    console.log("********************************************************"); 
-    var s_email = 'support@ahel-legal.in';
-                                            var t_mail = 'sub.krishna@gmail.com';
+new CronJob('00 30 09 * * 0-6', function() {
+   var currDate = new Date();
+
+   var monthAheadDate = currDate.setMonth(currDate.getMonth()+1);
+   Ticket.aggregate([
+        {
+            $match:{
+                ticketStatus : 'open',
+                isPicked : true
+            }
+        },
+        {
+            $project:{
+                year: { $year: "$replyByDate" },
+                month: { $month: "$replyByDate" },
+                day: { $dayOfMonth: "$replyByDate" },
+                ticketOwner :1,
+                ticketCo_Owners :1,
+                ticketNotes : 1
+            }
+        },{
+            $match:{
+                year:monthAheadDate.getFullYear() ,
+                month: monthAheadDate.getMonth()+1,
+                day: monthAheadDate.getDate()
+            }
+        }
+
+    ],function(err,data){
+        if(!err){
+               data.forEach(function(ticket){
+                   User.findOne({_id:ticket.ticketOwner},function(err,user){
+                       if(!err){
+                            var s_email = 'support@ahel-legal.in';
+                                            var t_mail = user.email;
                                             var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
                                             ses_mail = ses_mail + "To: " + t_mail + "\n";
-                                            ses_mail = ses_mail + "Subject: CRON Job Test\n";
+                                            ses_mail = ses_mail + "Subject: Pending Ticket (1 Month remaining)\n";
                                             ses_mail = ses_mail + "MIME-Version: 1.0\n";
                                             ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
                                             ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
-                                            ses_mail = ses_mail + "Hello , This is sample cron job test , sould activate on 11AM everyday, IST.\n\n";
+                                            ses_mail = ses_mail + 'Hello '+user.firstName+' ,\n Your ticket is pending  . Your Ticket id is '+data._id+'\n , Ticket Notes : '+data.ticketNotes+"\n\n";
                                             ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/plain;\n";
 
@@ -1710,12 +1778,19 @@ new CronJob('00 00 11 * * 0-6', function() {
                                             
                                             ses.sendRawEmail(params, function(err, data) {
                                                 if(err) {
-                                                    console.log(err);
+                                                    res.status(200).send({success :true , data : data , err: err});
                                                 } 
                                                 else {
-                                                    console.log(data);
+                                                    res.status(200).send({success :true , data : data});
                                                 }           
-                                            });
+                                            });   
+                       }
+                   });
+               }); 
+            }else{
+               
+            }
+    });
 
 }, null, true, 'Asia/Kolkata');
 
