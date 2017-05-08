@@ -1588,7 +1588,7 @@ router.post('/report' , function(req,res){
             },
             {
                 $group :{
-                    _id : "litigationalDetails.litigationNonMedicoType" ,
+                    _id : "_id" ,
                     amount : {
                         $sum : "$litigationalDetails.amount" ,
 
@@ -1628,7 +1628,7 @@ router.post('/report' , function(req,res){
             },
             {
                 $group :{
-                    _id : "litigationalDetails.litigationNonMedicoType" ,
+                    _id : "_id" ,
                     amount : {
                         $sum : "$litigationalDetails.amount" ,
 
