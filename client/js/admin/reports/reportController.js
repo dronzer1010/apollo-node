@@ -7,9 +7,13 @@ $(function(){
 
 
         $scope.dateFrom= new Date();
-        $scope.dateTo = $scope.dateFrom;
-        $scope.dateTo  = new Date($scope.dateTo.setMonth($scope.dateFrom.getMonth()+4));
-
+        $scope.dateTo = angular.copy($scope.dateFrom);
+        $scope.dateToo  = new Date($scope.dateTo.setMonth($scope.dateTo.getMonth()+4));
+        $scope.dateChange = function(date){
+            var dateChanged = new Date(date);
+            
+            $scope.dateToo  = new Date(dateChanged.setMonth(dateChanged.getMonth()+4));  
+        };
         self.MedicoFrom = {
             amount : 0 ,
             count : 0
@@ -49,6 +53,8 @@ $(function(){
             var fetchMedicoFrom = function(from){
                 if(!from){
                     from = new Date();
+                }else{
+                    from = new Date(from);
                 }
                 var data= {};
                 data.ticketType = "medico_legal";
@@ -77,7 +83,9 @@ $(function(){
 
             var fetchMedicoTo = function(to){
                 if(!to){
-                    from = new Date();
+                    to = new Date();
+                }else{
+                    to = new Date(to);
                 }
                 var data= {};
                 data.ticketType = "medico_legal";

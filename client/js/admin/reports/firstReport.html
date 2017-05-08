@@ -25,15 +25,15 @@
                                         <div class="col-md-4">
                                             <label>From :</label>
                                             <datepicker  date-format="longDate">
-                                                <input class="form-control" ng-model="dateFrom" type="text"/>
+                                                <input class="form-control" ng-model="dateFrom" ng-change="dateChange(dateFrom)" type="text"/>
                                             </datepicker>
                                         </div>
                                         <div class="col-md-4">
                                             <label>To :</label>
-                                            <input ng-model="dateTo" class="form-control"/>
+                                            <input ng-model="dateToo | date:'longDate'" class="form-control" ng-disabled="true"/>
                                         </div>
                                         <div class= "col-md-2 pull-right">
-                                            <button class="btn btn-primary" ng-click="ctrl.fetchData(ctrl.dateFrom , ctrl.dateTo)">Fetch Data</button>
+                                            <button class="btn btn-primary" ng-click="ctrl.fetchData(dateFrom , dateToo)">Fetch Data</button>
                                         </div>
                                     </div>
                                 </div>
@@ -51,9 +51,9 @@
                                        <tr>
                                            <td>Sl.</td>
                                            <td>Type</td>
-                                           <td colspan="2">As on {{ctrl.dateFrom}}</td>
+                                           <td colspan="2">As on {{dateFrom |date:'longDate'}}</td>
                                            <td colspan="2">During Quarter</td>
-                                           <td colspan="2">As on {{ctrl.dateTo}}</td>
+                                           <td colspan="2">As on {{dateToo|date:'longDate'}}</td>
                                            <td colspan="3">Degree Of Risk</td>
                                        </tr>
                                        <tr>

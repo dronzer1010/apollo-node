@@ -1462,7 +1462,7 @@ router.post('/report' , function(req,res){
                 },
                 {
                     $group :{
-                        _id : "_id" ,
+                        type : "litigationalDetails.litigationType" ,
                         amount : {
                             $sum : "$litigationalDetails.amount" ,
 
@@ -1505,7 +1505,7 @@ router.post('/report' , function(req,res){
                 },
                 {
                     $group :{
-                        _id : "_id" ,
+                        type : "litigationalDetails.litigationType" ,
                         amount : {
                             $sum : "$litigationalDetails.amount" ,
 
@@ -1541,7 +1541,7 @@ router.post('/report' , function(req,res){
                 },
                 {
                     $group :{
-                        _id : "_id" ,
+                        type : "litigationalDetails.litigationType" ,
                         amount : {
                             $sum : "$litigationalDetails.amount" ,
 
@@ -1588,7 +1588,7 @@ router.post('/report' , function(req,res){
             },
             {
                 $group :{
-                    _id : "_id" ,
+                    subtype : "litigationalDetails.litigationNonMedicoType" ,
                     amount : {
                         $sum : "$litigationalDetails.amount" ,
 
@@ -1628,7 +1628,7 @@ router.post('/report' , function(req,res){
             },
             {
                 $group :{
-                    _id : "_id" ,
+                    subtype : "litigationalDetails.litigationNonMedicoType" ,
                     amount : {
                         $sum : "$litigationalDetails.amount" ,
 
@@ -1723,10 +1723,10 @@ var getToken = function (headers) {
 
 
 /**Ticket ron Jobs */
-new CronJob('00 30 09 * * 0-6', function() {
+new CronJob('00 00 09 * * 0-6', function() {
    var currDate = new Date();
 
-   var monthAheadDate = currDate.setMonth(currDate.getMonth()+1);
+   var monthAheadDate = new Date(currDate.setMonth(currDate.getMonth()+1));
    Ticket.aggregate([
         {
             $match:{
@@ -1754,6 +1754,7 @@ new CronJob('00 30 09 * * 0-6', function() {
     ],function(err,data){
         if(!err){
                data.forEach(function(ticket){
+                   console.log(ticket);
                    User.findOne({_id:ticket.ticketOwner},function(err,user){
                        if(!err){
                             var s_email = 'support@ahel-legal.in';
@@ -1765,7 +1766,7 @@ new CronJob('00 30 09 * * 0-6', function() {
                                             ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
                                             ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
-                                            ses_mail = ses_mail + 'Hello '+user.firstName+' ,\n Your ticket is pending  . Your Ticket id is '+data._id+'\n , Ticket Notes : '+data.ticketNotes+"\n\n";
+                                            ses_mail = ses_mail + 'Hello '+user.firstName+' ,\n Your ticket is pending  . Your Ticket id is '+ticket._id+'\n , Ticket Notes : '+ticket.ticketNotes+"\n\n";
                                             ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/plain;\n";
 
@@ -1778,10 +1779,160 @@ new CronJob('00 30 09 * * 0-6', function() {
                                             
                                             ses.sendRawEmail(params, function(err, data) {
                                                 if(err) {
-                                                    res.status(200).send({success :true , data : data , err: err});
+                                                    console.log(err);
                                                 } 
                                                 else {
-                                                    res.status(200).send({success :true , data : data});
+                                                    console.log(data);
+                                                }           
+                                            });   
+                       }
+                   });
+               }); 
+            }else{
+               
+            }
+    });
+
+}, null, true, 'Asia/Kolkata');
+
+
+
+//!5 days
+new CronJob('00 00 09 * * 0-6', function() {
+   var currDate = new Date();
+
+   var monthAheadDate = new Date(currDate.setDate(currDate.getDate()+15));
+   Ticket.aggregate([
+        {
+            $match:{
+                ticketStatus : 'open',
+                isPicked : true
+            }
+        },
+        {
+            $project:{
+                year: { $year: "$replyByDate" },
+                month: { $month: "$replyByDate" },
+                day: { $dayOfMonth: "$replyByDate" },
+                ticketOwner :1,
+                ticketCo_Owners :1,
+                ticketNotes : 1
+            }
+        },{
+            $match:{
+                year:monthAheadDate.getFullYear() ,
+                month: monthAheadDate.getMonth()+1,
+                day: monthAheadDate.getDate()
+            }
+        }
+
+    ],function(err,data){
+        if(!err){
+               data.forEach(function(ticket){
+                   console.log(ticket);
+                   User.findOne({_id:ticket.ticketOwner},function(err,user){
+                       if(!err){
+                            var s_email = 'support@ahel-legal.in';
+                                            var t_mail = user.email;
+                                            var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
+                                            ses_mail = ses_mail + "To: " + t_mail + "\n";
+                                            ses_mail = ses_mail + "Subject: Pending Ticket (15 days remaining)\n";
+                                            ses_mail = ses_mail + "MIME-Version: 1.0\n";
+                                            ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
+                                            ses_mail = ses_mail + 'Hello '+user.firstName+' ,\n Your ticket is pending  . Your Ticket id is '+ticket._id+'\n , Ticket Notes : '+ticket.ticketNotes+"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/plain;\n";
+
+                                            
+                                            var params = {
+                                                RawMessage: { Data: new Buffer(ses_mail) },
+                                                Destinations: [ t_mail ],
+                                                Source: "'Apollo Legal System' <" + s_email + ">'"
+                                            };
+                                            
+                                            ses.sendRawEmail(params, function(err, data) {
+                                                if(err) {
+                                                    console.log(err);
+                                                } 
+                                                else {
+                                                    console.log(data);
+                                                }           
+                                            });   
+                       }
+                   });
+               }); 
+            }else{
+               
+            }
+    });
+
+}, null, true, 'Asia/Kolkata');
+
+
+
+/** 7 Days */
+new CronJob('00 00 09 * * 0-6', function() {
+   var currDate = new Date();
+
+   var monthAheadDate = new Date(currDate.setDate(currDate.getDate()+7));
+   Ticket.aggregate([
+        {
+            $match:{
+                ticketStatus : 'open',
+                isPicked : true
+            }
+        },
+        {
+            $project:{
+                year: { $year: "$replyByDate" },
+                month: { $month: "$replyByDate" },
+                day: { $dayOfMonth: "$replyByDate" },
+                ticketOwner :1,
+                ticketCo_Owners :1,
+                ticketNotes : 1
+            }
+        },{
+            $match:{
+                year:monthAheadDate.getFullYear() ,
+                month: monthAheadDate.getMonth()+1,
+                day: monthAheadDate.getDate()
+            }
+        }
+
+    ],function(err,data){
+        if(!err){
+               data.forEach(function(ticket){
+                   console.log(ticket);
+                   User.findOne({_id:ticket.ticketOwner},function(err,user){
+                       if(!err){
+                            var s_email = 'support@ahel-legal.in';
+                                            var t_mail = user.email;
+                                            var ses_mail = "From: 'Apollo Legal System' <" + s_email + ">\n";
+                                            ses_mail = ses_mail + "To: " + t_mail + "\n";
+                                            ses_mail = ses_mail + "Subject: Pending Ticket (7 days remaining)\n";
+                                            ses_mail = ses_mail + "MIME-Version: 1.0\n";
+                                            ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
+                                            ses_mail = ses_mail + 'Hello '+user.firstName+' ,\n Your ticket is pending  . Your Ticket id is '+ticket._id+'\n , Ticket Notes : '+ticket.ticketNotes+"\n\n";
+                                            ses_mail = ses_mail + "--NextPart\n";
+                                            ses_mail = ses_mail + "Content-Type: text/plain;\n";
+
+                                            
+                                            var params = {
+                                                RawMessage: { Data: new Buffer(ses_mail) },
+                                                Destinations: [ t_mail ],
+                                                Source: "'Apollo Legal System' <" + s_email + ">'"
+                                            };
+                                            
+                                            ses.sendRawEmail(params, function(err, data) {
+                                                if(err) {
+                                                    console.log(err);
+                                                } 
+                                                else {
+                                                    console.log(data);
                                                 }           
                                             });   
                        }
