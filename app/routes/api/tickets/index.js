@@ -1457,7 +1457,7 @@ router.post('/report' , function(req,res){
                     $match : {
                         ticketType : "litigationalType" ,
                         'litigationalDetails.litigationType' : "medico_legal",
-                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                        ticketOpeningDate : {$gte : new Date(q_year , q_month , q_day)},
                     }            
                 },
                 {
@@ -1536,7 +1536,7 @@ router.post('/report' , function(req,res){
                     $match : {
                         ticketType : "litigationalType" ,
                         'litigationalDetails.litigationType' : "tax_related",
-                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                        ticketOpeningDate : {$gte : new Date(q_year , q_month , q_day)},
                     }            
                 },
                 {
@@ -1623,7 +1623,7 @@ router.post('/report' , function(req,res){
                     ticketType : "litigationalType" ,
                     'litigationalDetails.litigationType' : "non_medico_legal",
                     'litigationalDetails.litigationNonMedicoType' : sub_type,
-                    ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                    ticketOpeningDate : {$gte : new Date(q_year , q_month , q_day)},
                 }            
             },
             {
