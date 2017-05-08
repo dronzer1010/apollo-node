@@ -49,7 +49,8 @@ $(function(){
              * for Medico Legal Cases
              */
 
-
+            console.log(from);
+            console.log(to);
             var fetchMedicoFrom = function(from){
                 if(!from){
                     from = new Date();

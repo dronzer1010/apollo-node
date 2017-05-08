@@ -1397,7 +1397,7 @@ router.post('/report' , function(req,res){
         var q_month = dateObj.getUTCMonth(); //months from 1-12
         var q_day = dateObj.getUTCDate();
         var q_year = dateObj.getUTCFullYear();
-
+        console.log(q_month+" "+q_day+" "+q_year);        
 
    }
 
