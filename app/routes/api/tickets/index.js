@@ -1462,7 +1462,7 @@ router.post('/report' , function(req,res){
                 },
                 {
                     $group :{
-                        type : "litigationalDetails.litigationType" ,
+                        _id : "litigationalDetails.litigationType" ,
                         amount : {
                             $sum : "$litigationalDetails.amount" ,
 
@@ -1505,7 +1505,7 @@ router.post('/report' , function(req,res){
                 },
                 {
                     $group :{
-                        type : "litigationalDetails.litigationType" ,
+                        _id : "litigationalDetails.litigationType" ,
                         amount : {
                             $sum : "$litigationalDetails.amount" ,
 
@@ -1541,7 +1541,7 @@ router.post('/report' , function(req,res){
                 },
                 {
                     $group :{
-                        type : "litigationalDetails.litigationType" ,
+                        _id : "litigationalDetails.litigationType" ,
                         amount : {
                             $sum : "$litigationalDetails.amount" ,
 
@@ -1588,7 +1588,7 @@ router.post('/report' , function(req,res){
             },
             {
                 $group :{
-                    subtype : "litigationalDetails.litigationNonMedicoType" ,
+                    _id : "litigationalDetails.litigationNonMedicoType" ,
                     amount : {
                         $sum : "$litigationalDetails.amount" ,
 
@@ -1628,7 +1628,7 @@ router.post('/report' , function(req,res){
             },
             {
                 $group :{
-                    subtype : "litigationalDetails.litigationNonMedicoType" ,
+                    _id : "litigationalDetails.litigationNonMedicoType" ,
                     amount : {
                         $sum : "$litigationalDetails.amount" ,
 
