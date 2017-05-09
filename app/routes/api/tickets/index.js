@@ -1622,13 +1622,13 @@ router.post('/report' , function(req,res){
                 $match : {
                     ticketType : "litigationalType" ,
                     'litigationalDetails.litigationType' : "non_medico_legal",
-                    'litigationalDetails.litigationNonMedicoType' : sub_type,
+                    //'litigationalDetails.litigationNonMedicoType' : sub_type,
                     ticketOpeningDate : {$gte : new Date(q_year , q_month , q_day)},
                 }            
             },
             {
                 $group :{
-                    _id : "_id" ,
+                    _id : "$litigationalDetails.litigationNonMedicoType" ,
                     amount : {
                         $sum : "$litigationalDetails.amount" ,
 
@@ -1640,6 +1640,7 @@ router.post('/report' , function(req,res){
             }
         ] , function(err , data){
             if(!err){
+                console.log(data);
                 res.status(200).send({
                     success : true ,
                     data : data
