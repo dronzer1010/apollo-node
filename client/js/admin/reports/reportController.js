@@ -125,6 +125,8 @@ $(function(){
             var fetchTaxFrom = function(from){
                 if(!from){
                     from = new Date();
+                }else{
+                    from = new Date(from);
                 }
                 var data= {};
                 data.ticketType = "tax_related";
@@ -153,7 +155,9 @@ $(function(){
 
             var fetchTaxTo = function(to){
                 if(!to){
-                    from = new Date();
+                    to = new Date();
+                }else{
+                    to = new Date(to);
                 }
                 var data= {};
                 data.ticketType = "tax_related";
@@ -188,6 +192,8 @@ $(function(){
             var fetchNonMedicoCRFrom = function(from){
                 if(!from){
                     from = new Date();
+                }else{
+                    from = new Date(from);
                 }
                 var data= {};
                 data.ticketType = "non_medico_legal";
@@ -217,7 +223,9 @@ $(function(){
 
             var fetchNonMedicoCRTo = function(to){
                 if(!to){
-                    from = new Date();
+                    to = new Date();
+                }else{
+                    to = new Date(to);
                 }
                 var data= {};
                 data.ticketType = "non_medico_legal";
