@@ -59,6 +59,31 @@ $(function(){
             amount : 0 ,
             count : 0
         };
+
+
+        self.q_NonMedicoCRFrom = {
+         
+            count : 0
+        };
+        self.q_NonMedicoLMFrom = {
+          
+            count : 0
+        };
+        self.q_NonMedicoSCFrom = {
+         
+            count : 0
+        };
+        self.q_NonMedicoLRFrom = {
+          
+            count : 0
+        };
+        self.q_NonMedicoPLFrom = {
+         
+            count : 0
+        };
+
+
+
         self.NonMedicoCRTo = {
             amount : 0 ,
             count : 0
@@ -83,7 +108,7 @@ $(function(){
         self.fetchData = function(from , to){
         
 
-
+        
             self.MedicoFrom = {
             amount : 0 ,
             count : 0
@@ -155,9 +180,10 @@ $(function(){
             /**
              * for Medico Legal Cases
              */
-
+            console.log(new Date());
             console.log(from);
             console.log(to);
+
             var fetchMedicoFrom = function(from){
                 if(!from){
                     from = new Date();
@@ -423,8 +449,74 @@ $(function(){
             };
 
 
+            /**
+             *      Data Quarter
+             *  
+             */
+            var fetchQuarterNonMedicoCRFrom = function(from , to){
+                if(!from){
+                    from = new Date();
+                }else{
+                    from = new Date(from);
+                }
+                var data= {};
+                data.ticketType = "non_medico_legal";
+                //data.subType = "contract_related";
+                data.queryDate = from;
+                data.q_type    = "quarter";
+                data.state   = "added";
+                data.dateTo    = new Date(to);
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            console.log("Hai");
+                                            self.q_NonMedicoCRFrom = {
+                                               
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoLMFrom = {
+                                               
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoSCFrom = {
+                                                
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoLRFrom = {
+                                                
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoPLFrom = {
+                                                
+                                                count : 0
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                            data.data.forEach(function(datum){
+                                                if(datum._id == 'contracts_related'){
+                                                    self.q_NonMedicoCRFrom = datum;
+                                                }else if(datum._id == 'land_matters'){
+                                                    self.q_NonMedicoLMFrom = datum;
+                                                }
+                                                else if(datum._id == 'labour_related'){
+                                                    self.q_NonMedicoLRFrom = datum;
+                                                }
+                                                else if(datum._id == 'statutory_compliance'){
+                                                    self.q_NonMedicoSCFrom = datum;
+                                                }
+                                                else if(datum._id == 'pharmacy_licenses'){
+                                                    self.q_NonMedicoPLFrom = datum;
+                                                }
+                                            });
+                                            // /self.NonMedicoCRFrom =  data.data[0];
+                                        }
+										
 
-
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
 
             /**
              *  Fetch data
@@ -436,7 +528,7 @@ $(function(){
             fetchTaxTo(to);
             fetchNonMedicoCRFrom(from)
             fetchNonMedicoCRTo(to);
-
+            fetchQuarterNonMedicoCRFrom(from);
 
 
 
