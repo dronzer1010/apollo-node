@@ -1383,7 +1383,7 @@ router.get('/mytickets/export' , function(req,res){
  */
 
 
-router.post('/report' , function(req,res){
+router.post('/report_1' , function(req,res){
 
 
     console.log(req.body);

@@ -14,6 +14,11 @@ $(function(){
             
             $scope.dateToo  = new Date(dateChanged.setMonth(dateChanged.getMonth()+4));  
         };
+
+        
+
+
+
         self.MedicoFrom = {
             amount : 0 ,
             count : 0
@@ -58,9 +63,95 @@ $(function(){
             amount : 0 ,
             count : 0
         };
+        self.NonMedicoLMTo = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoSCTo = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoLRTo = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoPLTo = {
+            amount : 0 ,
+            count : 0
+        };
 
         self.fetchData = function(from , to){
         
+
+
+            self.MedicoFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.MedicoTo = {
+            amount : 0 ,
+            count : 0
+        };
+
+
+        self.TaxFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.TaxTo = {
+            amount : 0 ,
+            count : 0
+        };
+
+
+
+            self.NonMedicoCRFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoLMFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoSCFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoLRFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoPLFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoCRTo = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoLMTo = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoSCTo = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoLRTo = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoPLTo = {
+            amount : 0 ,
+            count : 0
+        };
+
+
+
+
+
+
+
             /**
              * for Medico Legal Cases
              */
@@ -225,6 +316,22 @@ $(function(){
                                                 amount : 0 ,
                                                 count : 0
                                             };
+                                            self.NonMedicoLMFrom = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
+                                            self.NonMedicoSCFrom = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
+                                            self.NonMedicoLRFrom = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
+                                            self.NonMedicoPLFrom = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
                                         }else{
                                             //console.log(" NahiHai");
                                             data.data.forEach(function(datum){
@@ -232,6 +339,15 @@ $(function(){
                                                     self.NonMedicoCRFrom = datum;
                                                 }else if(datum._id == 'land_matters'){
                                                     self.NonMedicoLMFrom = datum;
+                                                }
+                                                else if(datum._id == 'labour_related'){
+                                                    self.NonMedicoLRFrom = datum;
+                                                }
+                                                else if(datum._id == 'statutory_compliance'){
+                                                    self.NonMedicoSCFrom = datum;
+                                                }
+                                                else if(datum._id == 'pharmacy_licenses'){
+                                                    self.NonMedicoPLFrom = datum;
                                                 }
                                             });
                                             // /self.NonMedicoCRFrom =  data.data[0];
@@ -252,7 +368,7 @@ $(function(){
                 }
                 var data= {};
                 data.ticketType = "non_medico_legal";
-                data.subType = "contract_related";
+                //data.subType = "contract_related";
                 data.queryDate = to;
 
             
@@ -264,9 +380,40 @@ $(function(){
                                                 amount : 0 ,
                                                 count : 0
                                             };
+                                            self.NonMedicoLMTo = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
+                                            self.NonMedicoSCTo = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
+                                            self.NonMedicoLRTo = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
+                                            self.NonMedicoPLTo = {
+                                                amount : 0 ,
+                                                count : 0
+                                            };
                                         }else{
                                             //console.log(" NahiHai");
-                                            self.NonMedicoCRTo = data.data[0];
+                                             data.data.forEach(function(datum){
+                                                if(datum._id == 'contracts_related'){
+                                                    self.NonMedicoCRTo = datum;
+                                                }else if(datum._id == 'land_matters'){
+                                                    self.NonMedicoLMTo = datum;
+                                                }
+                                                else if(datum._id == 'labour_related'){
+                                                    self.NonMedicoLRTo = datum;
+                                                }
+                                                else if(datum._id == 'statutory_compliance'){
+                                                    self.NonMedicoSCTo = datum;
+                                                }
+                                                else if(datum._id == 'pharmacy_licenses'){
+                                                    self.NonMedicoPLTo = datum;
+                                                }
+                                            });
                                         }
 										
 
@@ -295,5 +442,10 @@ $(function(){
 
         };
 		
+
+
+
+
+        self.fetchData($scope.dateFrom , $scope.dateToo);
 	}]);
 }());

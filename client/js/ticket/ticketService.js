@@ -325,7 +325,7 @@ $(function(){
 				 *  Report data Service
 				 */
 				getReportData: function(data){
-					return $http.post(url+'/api/tickets/report', data)
+					return $http.post(url+'/api/tickets/report_1', data)
 					.then(
 							function(response){
 								return response.data;
