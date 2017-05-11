@@ -38,6 +38,22 @@ $(function(){
             amount : 0 ,
             count : 0
         };
+        self.NonMedicoLMFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoSCFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoLRFrom = {
+            amount : 0 ,
+            count : 0
+        };
+        self.NonMedicoPLFrom = {
+            amount : 0 ,
+            count : 0
+        };
         self.NonMedicoCRTo = {
             amount : 0 ,
             count : 0
@@ -197,7 +213,7 @@ $(function(){
                 }
                 var data= {};
                 data.ticketType = "non_medico_legal";
-                data.subType = "contract_related";
+                //data.subType = "contract_related";
                 data.queryDate = from;
 
             
@@ -211,7 +227,14 @@ $(function(){
                                             };
                                         }else{
                                             //console.log(" NahiHai");
-                                            self.NonMedicoCRFrom =  data.data[0];
+                                            data.data.forEach(function(datum){
+                                                if(datum._id == 'contracts_related'){
+                                                    self.NonMedicoCRFrom = datum;
+                                                }else if(datum._id == 'land_matters'){
+                                                    self.NonMedicoLMFrom = datum;
+                                                }
+                                            });
+                                            // /self.NonMedicoCRFrom =  data.data[0];
                                         }
 										
 
