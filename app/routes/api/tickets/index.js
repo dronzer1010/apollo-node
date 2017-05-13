@@ -2233,42 +2233,56 @@ router.get('/some' , function(req,res){
     var date = new Date(req.query.date);
     console.log(date.getDate()+" / "+date.getMonth()+' / '+date.getFullYear());
     Ticket.aggregate([
-        {
-            $match:{
-                ticketStatus : 'open'
-            }
-        },
-        {
-            $project:{
-                year: { $year: "$replyByDate" },
-                month: { $month: "$replyByDate" },
-                day: { $dayOfMonth: "$replyByDate" },
-                ticketOwner :1,
-                ticketCo_Owners :1
-            }
-        },{
-            $match:{
-                year:date.getFullYear() ,
-                month: date.getMonth()+1,
-                day: date.getDate()
-            }
-        }
+       {
+           $match:{
+               ticketType:"litigationalType",
+               'litigationalDetails.litigationType' : "medico_legal"
+
+           }
+       },
+       {
+           $group : {
+               _id:"$location",
+               total : {
+                   $sum : "$litigationalDetails.amount"
+               },
+               count:{
+                   $sum:1
+               },
+               location : {
+                   $first : "$location"
+               }
+           }
+       },{
+           $project:{
+               location:"$location",
+               total:"$total",
+               count:"$count"
+           }
+       }
 
     ],function(err,data){
-        if(!err){
-                res.status(200).send({
-                    success : true ,
-                    data : data
-
-                });
+        console.log(data);
+        Ticket.populate(data , {path:"location"} , function(err , result){
+            if(!err){
+                console.log(result);
             }else{
-                res.status(400).send({
-                    success : false ,
-                    err : err
-                });
+                console.log(err);
             }
+        });
     });
 });
+
+
+router.get("/dep" , function(req,res){
+    Document.find({$text:{$search:req.query.q}},function(err,data){
+        if(!err){
+            res.send(data);
+        }
+    });
+});
+
+
 
 /**
  *  Generic token parsing function

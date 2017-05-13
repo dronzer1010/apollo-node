@@ -17,7 +17,7 @@ router.post('/search' , function(req,res){
 	if(req.body.query){
 		var q=req.body.query;
 		var query = new RegExp(q, "i");
-		Document.find({documentName : query ,  approved : true })
+		Document.find({$text:{$search:q} ,  approved : true })
 				
 				.exec(function(err , docs){
 			if(!err){
