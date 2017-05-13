@@ -332,3 +332,12 @@ i{
 .span-content{
     
 }
+
+.my-separator{
+    font-size: 13px;
+    font-weight: 600;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    display: block;
+
+}

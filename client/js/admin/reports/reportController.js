@@ -1,14 +1,34 @@
 $(function(){
 	'use strict' ;
-	var controllers = angular.module('apolloApp');
+	var app = angular.module('apolloApp');
+    app.factory('Excel',function($window){
+		var uri='data:application/vnd.ms-excel;base64,',
+			template='<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+			base64=function(s){return $window.btoa(unescape(encodeURIComponent(s)));},
+			format=function(s,c){return s.replace(/{(\w+)}/g,function(m,p){return c[p];})};
+		return {
+			tableToExcel:function(tableId,worksheetName){
+				var table=$(tableId),
+					ctx={worksheet:worksheetName,table:table.html()},
+					href=uri+base64(format(template,ctx)),
+                    data = base64(format(template,ctx));
 
-	controllers.controller('ReportController' , ['$scope', 'ticketService' ,function($scope,ticketService){
+
+                    var obj = {
+                        href : href,
+                        data : data
+                    };
+				return obj ;
+			}
+		};
+	})
+	.controller('ReportController' , ['$scope','Excel','Blob','FileSaver','$timeout', 'ticketService' ,function($scope,Excel,Blob,FileSaver,$timeout,ticketService){
 		var self = this;
 
 
         $scope.dateFrom= new Date();
         $scope.dateTo = angular.copy($scope.dateFrom);
-        $scope.dateToo  = new Date($scope.dateTo.setMonth($scope.dateTo.getMonth()+4));
+        $scope.dateToo  = new Date($scope.dateTo.setMonth($scope.dateTo.getMonth()+3));
         $scope.dateChange = function(date){
             var dateChanged = new Date(date);
             
@@ -146,8 +166,147 @@ $(function(){
             count : 0
         };
 
+
+
+
+
+
+        self.p_Medico = {
+            high : {
+                amount : 0 ,
+                count : 0,
+            },
+            medium : {
+                amount : 0,
+                count : 0,
+            },
+            low : {
+                amount : 0,
+                count: 0
+            }
+        };
+
+        self.p_Tax = {
+            high : {
+                amount : 0,
+                count :0
+            },
+            medium : {
+                amount :0,
+                count:0
+            },
+            low : {
+                amount :0,
+                count : 0
+            }
+        };
+        self.p_nonMedico = {
+            CR : {
+                high : {
+                    amount : 0 ,
+                    count : 0
+                },
+                medium : {
+                    amount :0 ,
+                    count : 0
+                },
+                low : {
+                    amount : 0 ,
+                    count :0
+                }
+            },
+            SC : {
+                high :{
+                    amount :0 ,
+                    count :0
+                },
+                medium : {
+                    amount :0 ,
+                    count :0 
+                },
+                low : {
+                    amount:0,
+                    count :0
+                }
+            },
+            LM : {
+                 high :{
+                    amount :0 ,
+                    count :0
+                },
+                medium : {
+                    amount :0 ,
+                    count :0 
+                },
+                low : {
+                    amount:0,
+                    count :0
+                }
+            },
+            LR : {
+                 high :{
+                    amount :0 ,
+                    count :0
+                },
+                medium : {
+                    amount :0 ,
+                    count :0 
+                },
+                low : {
+                    amount:0,
+                    count :0
+                }
+            },
+            PL : {
+                 high :{
+                    amount :0 ,
+                    count :0
+                },
+                medium : {
+                    amount :0 ,
+                    count :0 
+                },
+                low : {
+                    amount:0,
+                    count :0
+                }
+            }
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ *  function to fetch data
+ */
+
+
+
         self.fetchData = function(from , to){
         
+        self.p_Medico = {
+            high : {
+                amount : 0 ,
+                count : 0,
+            },
+            medium : {
+                amount : 0,
+                count : 0,
+            },
+            low : {
+                amount : 0,
+                count: 0
+            }
+        };
 
         self.q_NonMedicoCRTo = {
             
@@ -231,7 +390,20 @@ $(function(){
             count : 0
         };
 
-
+        self.p_Tax = {
+            high : {
+                amount : 0,
+                count :0
+            },
+            medium : {
+                amount :0,
+                count:0
+            },
+            low : {
+                amount :0,
+                count : 0
+            }
+        };
 
 
 
@@ -376,10 +548,263 @@ $(function(){
 					});
             };
 
+/**
+ * 
+ *  Risk Based Aggreagtion
+ * 
+ */
+
+        var p_fetchTaxTo = function(to){
+                if(!to){
+                    to = new Date();
+                }else{
+                    to = new Date(to);
+                }
+                var data= {};
+                data.ticketType = "tax_related";
+                data.queryDate = to;
+                data.q_type    = "priority";
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            //console.log("Hai");
+                                            self.p_Tax = {
+                                                high :{
+                                                    amount :0,
+                                                    count: 0
+                                                },
+                                                medium : {
+                                                    amount: 0,
+                                                    count: 0
+                                                },
+                                                low : {
+                                                    amount : 0,
+                                                    count : 0
+                                                }
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                           data.data.forEach(function(datum){
+                                               if(datum._id == "2"){
+                                                  self.p_Tax.high = datum; 
+                                               }else if(datum._id == "1"){
+                                                   self.p_Tax.medium = datum;
+                                               }else if(datum._id == "0"){
+                                                   self.p_Tax.low = datum;
+                                               }
+                                           });
+                                        }
+										
+
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };  
 
 
 
+            var p_fetchMedicoTo = function(to){
+                if(!to){
+                    to = new Date();
+                }else{
+                    to = new Date(to);
+                }
+                var data= {};
+                data.ticketType = "medico_legal";
+                data.queryDate = to;
+                data.q_type    = "priority";
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            //console.log("Hai");
+                                            self.p_Medico = {
+                                                high :{
+                                                    amount :0,
+                                                    count: 0
+                                                },
+                                                medium : {
+                                                    amount: 0,
+                                                    count: 0
+                                                },
+                                                low : {
+                                                    amount : 0,
+                                                    count : 0
+                                                }
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                           data.data.forEach(function(datum){
+                                               if(datum._id == "2"){
+                                                  self.p_Medico.high = datum; 
+                                               }else if(datum._id == "1"){
+                                                   self.p_Medico.medium = datum;
+                                               }else if(datum._id == "0"){
+                                                   self.p_Medico.low = datum;
+                                               }
+                                           });
+                                        }
+										
 
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
+
+
+
+        var p_fetchNonMedicoTo = function(to){
+                if(!to){
+                    to = new Date();
+                }else{
+                    to = new Date(to);
+                }
+                var data= {};
+                data.ticketType = "non_medico_legal";
+                data.queryDate = to;
+                data.q_type    = "priority";
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            //console.log("Hai");
+                                            self.p_nonMedico = {
+                                                CR : {
+                                                    high : {
+                                                        amount : 0 ,
+                                                        count : 0
+                                                    },
+                                                    medium : {
+                                                        amount :0 ,
+                                                        count : 0
+                                                    },
+                                                    low : {
+                                                        amount : 0 ,
+                                                        count :0
+                                                    }
+                                                },
+                                                SC : {
+                                                    high :{
+                                                        amount :0 ,
+                                                        count :0
+                                                    },
+                                                    medium : {
+                                                        amount :0 ,
+                                                        count :0 
+                                                    },
+                                                    low : {
+                                                        amount:0,
+                                                        count :0
+                                                    }
+                                                },
+                                                LM : {
+                                                    high :{
+                                                        amount :0 ,
+                                                        count :0
+                                                    },
+                                                    medium : {
+                                                        amount :0 ,
+                                                        count :0 
+                                                    },
+                                                    low : {
+                                                        amount:0,
+                                                        count :0
+                                                    }
+                                                },
+                                                LR : {
+                                                    high :{
+                                                        amount :0 ,
+                                                        count :0
+                                                    },
+                                                    medium : {
+                                                        amount :0 ,
+                                                        count :0 
+                                                    },
+                                                    low : {
+                                                        amount:0,
+                                                        count :0
+                                                    }
+                                                },
+                                                PL : {
+                                                    high :{
+                                                        amount :0 ,
+                                                        count :0
+                                                    },
+                                                    medium : {
+                                                        amount :0 ,
+                                                        count :0 
+                                                    },
+                                                    low : {
+                                                        amount:0,
+                                                        count :0
+                                                    }
+                                                }
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                            console.log(data.data);
+                                            
+                                           data.data.forEach(function(datum){
+
+                                               if(datum._id.non_medico_type=="land_matters"){
+                                                   if(datum._id.priority == "2"){
+                                                        self.p_nonMedico.LM.high = datum; 
+                                                    }else if(datum._id.priority == "1"){
+                                                        self.p_nonMedico.LM.medium = datum;
+                                                    }else if(datum._id.priority == "0"){
+                                                        self.p_nonMedico.LM.low = datum;
+                                                    }
+                                               }else if(datum._id.non_medico_type == "statutory_compliance"){
+                                                    if(datum._id.priority == "2"){
+                                                        self.p_nonMedico.SC.high = datum; 
+                                                    }else if(datum._id.priority == "1"){
+                                                        self.p_nonMedico.SC.medium = datum;
+                                                    }else if(datum._id.priority == "0"){
+                                                        self.p_nonMedico.SC.low = datum;
+                                                    } 
+                                               }else if(datum._id.non_medico_type == "labour_related"){
+                                                    if(datum._id.priority == "2"){
+                                                        self.p_nonMedico.LR.high = datum; 
+                                                    }else if(datum._id.priority == "1"){
+                                                        self.p_nonMedico.LR.medium = datum;
+                                                    }else if(datum._id.priority == "0"){
+                                                        self.p_nonMedico.LR.low = datum;
+                                                    } 
+                                               }else if(datum._id.non_medico_type == "contracts_related"){
+                                                    if(datum._id.priority == "2"){
+                                                        self.p_nonMedico.CR.high = datum; 
+                                                    }else if(datum._id.priority == "1"){
+                                                        self.p_nonMedico.CR.medium = datum;
+                                                    }else if(datum._id.priority == "0"){
+                                                        self.p_nonMedico.CR.low = datum;
+                                                    } 
+                                               }else if(datum._id.non_medico_type == "pharmacy_licenses"){
+                                                    if(datum._id.priority == "2"){
+                                                        self.p_nonMedico.PL.high = datum; 
+                                                    }else if(datum._id.priority == "1"){
+                                                        self.p_nonMedico.PL.medium = datum;
+                                                    }else if(datum._id.priority == "0"){
+                                                        self.p_nonMedico.PL.low = datum;
+                                                    } 
+                                               }
+
+
+                                               
+                                           });
+                                        }
+										
+
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
+
+/**
+ * 
+ * Risk Based Aggreagtion ends
+ * 
+ */
 
 
             var fetchNonMedicoCRFrom = function(from){
@@ -782,10 +1207,10 @@ $(function(){
                                             //console.log(" NahiHai");
                                             self.q_MedicoTo =  data.data[0];
                                         }
-										
 
 									},function(errResponse){
 										console.log('error fetching Medico Reports');
+										
 					});
             };
 
@@ -806,13 +1231,30 @@ $(function(){
             fetchQuarterTaxTo(from , to);
             fetchQuarterMedicoFrom(from ,to);
             fetchQuarterMedicoTo(from ,to);
+            p_fetchTaxTo(to);
+            p_fetchMedicoTo(to);
+            p_fetchNonMedicoTo(to);
 
         };
 		
 
 
+        /**
+         *  Function To Export Table as Excel File
+         */
 
-
+         $scope.exportToExcel=function(tableId){ // ex: '#my-table'
+			 var exportHref=Excel.tableToExcel('#report1','Report');
+            console.log(exportHref);
+            var blob = new Blob([exportHref.data], { type: 'application/vnd.openxmlformats' });
+            var currDate = new Date();
+            var fileName = "Report_"+currDate+'.xlsx';
+            //FileSaver.saveAs(blob, fileName);
+			$timeout(function(){location.href=exportHref.href;},10000); // trigger download
+		}
         self.fetchData($scope.dateFrom , $scope.dateToo);
+
+
+
 	}]);
 }());

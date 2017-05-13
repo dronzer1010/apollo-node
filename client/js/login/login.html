@@ -1,11 +1,11 @@
  <div class="container">
  <div class="row" style="padding:20px">
      <div class="col-md-3 pull-right">
-         <a ui-sref="create-ticket" class="btn btn-default">Create Ticket</a>
+         
      </div>
  </div>
  <div class="">
-
+     <img src="img/logo.png" style="margin-left:auto;display:block;margin-right:auto;" />
      <h1 style="margin-top:20px; margin-bottom:50px;text-align:center">Apollo Legal Workflow</h1>
 
      <div class="row" ng-controller="LoginController as ctrl">
@@ -22,7 +22,14 @@
                      <span ng-show="loginForm.password.$dirty && loginForm.password.$error.required" class="help-block">Password is required</span>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-danger" ng-disabled="loginForm.$invalid" type="submit">Login</button>
+                    <div class="row">
+                        <div class="col-md-4"><button class="btn btn-danger " ng-disabled="loginForm.$invalid" type="submit">Login</button></div>
+                        
+                    
+                    <div class="col-md-2"><span class="my-separator">OR</span></div>
+                    <div class="col-md-6"><a ui-sref="create-ticket" class="btn btn-default ">Create Ticket</a></div>
+                    
+                    </div>
                 </div>
             </form>
         </div>
