@@ -1673,7 +1673,7 @@ router.post('/report_1' , function(req,res){
    }
    }else{
 
-
+       if(q_type=="quarter"){
 
        /**
         *  Query for cases added in Quarter and cases disposed
@@ -1954,6 +1954,20 @@ router.post('/report_1' , function(req,res){
 
 
    }
+       }else{
+           /**
+            * Aggregate for Priority
+            */
+
+
+
+            if(q_type=='priority'){
+
+            }
+
+
+       }
+
    }
 
 

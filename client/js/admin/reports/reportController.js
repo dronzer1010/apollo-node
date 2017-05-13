@@ -124,10 +124,51 @@ $(function(){
             count : 0
         };
 
+
+        self.q_NonMedicoCRTo = {
+            
+            count : 0
+        };
+        self.q_NonMedicoLMTo = {
+            
+            count : 0
+        };
+        self.q_NonMedicoSCTo = {
+           
+            count : 0
+        };
+        self.q_NonMedicoLRTo = {
+          
+            count : 0
+        };
+        self.q_NonMedicoPLTo = {
+           
+            count : 0
+        };
+
         self.fetchData = function(from , to){
         
 
-        
+        self.q_NonMedicoCRTo = {
+            
+            count : 0
+        };
+        self.q_NonMedicoLMTo = {
+            
+            count : 0
+        };
+        self.q_NonMedicoSCTo = {
+           
+            count : 0
+        };
+        self.q_NonMedicoLRTo = {
+          
+            count : 0
+        };
+        self.q_NonMedicoPLTo = {
+           
+            count : 0
+        };
             self.MedicoFrom = {
             amount : 0 ,
             count : 0
@@ -540,6 +581,76 @@ $(function(){
 
 
 
+
+
+            var fetchQuarterNonMedicoCRTo = function(from , to){
+                if(!from){
+                    from = new Date();
+                }else{
+                    from = new Date(from);
+                }
+                var data= {};
+                data.ticketType = "non_medico_legal";
+                //data.subType = "contract_related";
+                data.queryDate = from;
+                data.q_type    = "quarter";
+                data.state   = "disposed";
+                data.dateTo    = new Date(to);
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            console.log("Hai");
+                                            self.q_NonMedicoCRTo = {
+                                               
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoLMTo = {
+                                               
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoSCTo = {
+                                                
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoLRTo = {
+                                                
+                                                count : 0
+                                            };
+                                            self.q_NonMedicoPLTo = {
+                                                
+                                                count : 0
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                            data.data.forEach(function(datum){
+                                                if(datum._id == 'contracts_related'){
+                                                    self.q_NonMedicoCRTo = datum;
+                                                }else if(datum._id == 'land_matters'){
+                                                    self.q_NonMedicoLMTo = datum;
+                                                }
+                                                else if(datum._id == 'labour_related'){
+                                                    self.q_NonMedicoLRTo = datum;
+                                                }
+                                                else if(datum._id == 'statutory_compliance'){
+                                                    self.q_NonMedicoSCTo = datum;
+                                                }
+                                                else if(datum._id == 'pharmacy_licenses'){
+                                                    self.q_NonMedicoPLTo = datum;
+                                                }
+                                            });
+                                            // /self.NonMedicoCRFrom =  data.data[0];
+                                        }
+										
+
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
+
+
+
+
             var fetchQuarterTaxFrom = function(from,to){
                 if(!to){
                     to = new Date();
@@ -565,6 +676,42 @@ $(function(){
                                         }else{
                                             //console.log(" NahiHai");
                                             self.q_TaxFrom = data.data[0];
+                                        }
+										
+
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
+
+
+
+
+            var fetchQuarterTaxTo = function(from,to){
+                if(!to){
+                    to = new Date();
+                }else{
+                    to = new Date(to);
+                }
+                var data= {};
+                data.ticketType = "tax_related";
+                data.queryDate = new Date(from);
+                data.q_type    = "quarter";
+                data.state   = "disposed";
+                data.dateTo    = to;
+
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            //console.log("Hai");
+                                            self.q_TaxTo = {
+                                               
+                                                count : 0
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                            self.q_TaxTo = data.data[0];
                                         }
 										
 
@@ -609,6 +756,39 @@ $(function(){
 					});
             };
 
+            var fetchQuarterMedicoTo = function(from , to){
+                if(!from){
+                    from = new Date();
+                }else{
+                    from = new Date(from);
+                }
+                var data= {};
+                data.ticketType = "medico_legal";
+                data.queryDate = from;
+                 data.q_type    = "quarter";
+                data.state   = "disposed";
+                data.dateTo    = new Date(to);
+
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            console.log("Hai");
+                                            self.q_MedicoTo = {
+                                              
+                                                count : 0
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                            self.q_MedicoTo =  data.data[0];
+                                        }
+										
+
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
+
 
             /**
              *  Fetch data
@@ -621,8 +801,11 @@ $(function(){
             fetchNonMedicoCRFrom(from)
             fetchNonMedicoCRTo(to);
             fetchQuarterNonMedicoCRFrom(from , to);
+            fetchQuarterNonMedicoCRTo(from , to);
             fetchQuarterTaxFrom(from , to);
+            fetchQuarterTaxTo(from , to);
             fetchQuarterMedicoFrom(from ,to);
+            fetchQuarterMedicoTo(from ,to);
 
         };
 		
