@@ -11,7 +11,7 @@ var Document = require(__base + 'app/models/documentMaster');
 
 
 
-
+//Full Text Search
 
 router.post('/search' , function(req,res){
 	if(req.body.query){
