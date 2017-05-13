@@ -1963,6 +1963,260 @@ router.post('/report_1' , function(req,res){
 
             if(q_type=='priority'){
 
+                        
+       if(type == "medico_legal"){
+           if(!q_date){
+               Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "medico_legal"
+                    }            
+                },
+                {
+                    $group :{
+                        _id : "$ticketPriority" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+           }else{
+
+
+
+
+               Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "medico_legal",
+                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                    }            
+                },
+                {
+                    $group :{
+                        _id : "$ticketPriority" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+           }
+       }
+//Medico Legal Ends Here
+       else if(type == "tax_related"){
+
+           /**
+            * Type Tax Related
+            */
+            if(!q_date){
+                 Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "tax_related",
+                        
+                    }            
+                },
+                {
+                    $group :{
+                        _id : "$ticketPriority" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+
+            }else{
+                 Ticket.aggregate([
+                {
+                    $match : {
+                        ticketType : "litigationalType" ,
+                        'litigationalDetails.litigationType' : "tax_related",
+                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                    }            
+                },
+                {
+                    $group :{
+                        _id : "$ticketPriority" ,
+                        amount : {
+                            $sum : "$litigationalDetails.amount" ,
+
+                        },
+                        count : {
+                            $sum : 1
+                        }
+                    }
+                }
+            ] , function(err , data){
+                if(!err){
+                    res.status(200).send({
+                        success : true ,
+                        data : data
+
+                    });
+                }else{
+                    res.status(400).send({
+                        success : false ,
+                        err : err
+                    });
+                }
+            });
+
+            }
+
+            /**
+             * End Tax related
+             */
+       }
+       //Non Medico Legal Starts From Here
+       else if(type== "non_medico_legal"){
+           if(!q_date){
+               var sub_type = (req.body.subType)?req.body.subType : "contracts_related";
+           //console.log(sub_type);
+           Ticket.aggregate([
+            {
+                $match : {
+                    ticketType : "litigationalType" ,
+                    'litigationalDetails.litigationType' : "non_medico_legal",
+                    
+                    
+                }            
+            },
+            {
+                $group :{
+                    _id : {
+                        priority : "$ticketPriority",
+                        non_medico_type : '$litigationalDetails.litigationNonMedicoType'
+                    } ,
+                    amount : {
+                        $sum : "$litigationalDetails.amount" ,
+
+                    },
+                    count : {
+                        $sum : 1
+                    }
+                }
+            }
+        ] , function(err , data){
+            if(!err){
+                res.status(200).send({
+                    success : true ,
+                    data : data
+
+                });
+            }else{
+                res.status(400).send({
+                    success : false ,
+                    err : err
+                });
+            }
+        });
+           }else{
+               var sub_type = (req.body.subType)?req.body.subType : "contracts_related";
+           console.log(sub_type);
+           console.log(q_year+" / "+q_month+" / "+q_day);
+           console.log(new Date(q_year , q_month , q_day));
+           Ticket.aggregate([
+            {
+                $match : {
+                    ticketType : "litigationalType" ,
+                    'litigationalDetails.litigationType' : "non_medico_legal",
+                    //'litigationalDetails.litigationNonMedicoType' : sub_type,
+                    ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                }            
+            },
+            {
+                $group :{
+                    _id :{
+                        priority : "$ticketPriority",
+                        non_medico_type : "$litigationalDetails.litigationNonMedicoType"
+                    }  ,
+                    amount : {
+                        $sum : "$litigationalDetails.amount" ,
+
+                    },
+                    count : {
+                        $sum : 1
+                    }
+                }
+            }
+        ] , function(err , data){
+            if(!err){
+                console.log(data);
+                res.status(200).send({
+                    success : true ,
+                    data : data
+
+                });
+            }else{
+                res.status(400).send({
+                    success : false ,
+                    err : err
+                });
+            }
+        });
+           }
+       }                
+
+
+
+
             }
 
 
