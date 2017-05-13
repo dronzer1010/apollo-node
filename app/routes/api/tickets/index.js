@@ -1672,6 +1672,13 @@ router.post('/report_1' , function(req,res){
 
    }
    }else{
+
+
+
+       /**
+        *  Query for cases added in Quarter and cases disposed
+        */
+
        //Q_type Defined
                  if(!type ){
 
@@ -1721,12 +1728,19 @@ router.post('/report_1' , function(req,res){
                 }
             });
                }else{
+
+
+                   /**
+                    *  Query Type is cases disposed
+                    */
+
+
                       Ticket.aggregate([
                 {
                     $match : {
                         ticketType : "litigationalType" ,
                         'litigationalDetails.litigationType' : "medico_legal",
-                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                        ticketClosingDate : {$gte : new Date(q_year , q_month , q_day),$lte : new Date(q_year_t , q_month_t , q_day_t)},
                     }            
                 },
                 {
@@ -1801,12 +1815,19 @@ router.post('/report_1' , function(req,res){
                 }
             });
                  }else{
+
+
+                     /**
+                      * Is query type is cases disposed
+                      */
+
+
                      Ticket.aggregate([
                 {
                     $match : {
                         ticketType : "litigationalType" ,
                         'litigationalDetails.litigationType' : "tax_related",
-                        ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                        ticketClosingDate : {$gte : new Date(q_year , q_month , q_day),$lte : new Date(q_year_t , q_month_t , q_day_t)},
                     }            
                 },
                 {
@@ -1886,13 +1907,19 @@ router.post('/report_1' , function(req,res){
             }
         });
            }else{
+
+
+               /**
+                * Cases disposed
+                */
+
                   Ticket.aggregate([
             {
                 $match : {
                     ticketType : "litigationalType" ,
                     'litigationalDetails.litigationType' : "non_medico_legal",
                     //'litigationalDetails.litigationNonMedicoType' : sub_type,
-                    ticketOpeningDate : {$lte : new Date(q_year , q_month , q_day)},
+                    ticketClosingDate : {$gte : new Date(q_year , q_month , q_day),$lte : new Date(q_year_t , q_month_t , q_day_t)},
                 }            
             },
             {

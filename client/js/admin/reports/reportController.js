@@ -38,6 +38,25 @@ $(function(){
             count : 0
         };
 
+        self.q_MedicoFrom = {
+           
+            count : 0
+        };
+        self.q_MedicoTo = {
+            
+            count : 0
+        };
+
+
+        self.q_TaxFrom = {
+            
+            count : 0
+        };
+        self.q_TaxTo = {
+           
+            count : 0
+        };
+
 
         self.NonMedicoCRFrom = {
             amount : 0 ,
@@ -518,6 +537,79 @@ $(function(){
 					});
             };
 
+
+
+
+            var fetchQuarterTaxFrom = function(from,to){
+                if(!to){
+                    to = new Date();
+                }else{
+                    to = new Date(to);
+                }
+                var data= {};
+                data.ticketType = "tax_related";
+                data.queryDate = new Date(from);
+                data.q_type    = "quarter";
+                data.state   = "added";
+                data.dateTo    = to;
+
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            //console.log("Hai");
+                                            self.q_TaxFrom = {
+                                               
+                                                count : 0
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                            self.q_TaxFrom = data.data[0];
+                                        }
+										
+
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
+
+
+
+
+            var fetchQuarterMedicoFrom = function(from , to){
+                if(!from){
+                    from = new Date();
+                }else{
+                    from = new Date(from);
+                }
+                var data= {};
+                data.ticketType = "medico_legal";
+                data.queryDate = from;
+                 data.q_type    = "quarter";
+                data.state   = "added";
+                data.dateTo    = new Date(to);
+
+            
+                ticketService.getReportData(data).then(function(data){
+                                        console.log(data);
+                                        if(data.data.length==0){
+                                            console.log("Hai");
+                                            self.q_MedicoFrom = {
+                                              
+                                                count : 0
+                                            };
+                                        }else{
+                                            //console.log(" NahiHai");
+                                            self.q_MedicoFrom =  data.data[0];
+                                        }
+										
+
+									},function(errResponse){
+										console.log('error fetching Medico Reports');
+					});
+            };
+
+
             /**
              *  Fetch data
              */
@@ -528,9 +620,9 @@ $(function(){
             fetchTaxTo(to);
             fetchNonMedicoCRFrom(from)
             fetchNonMedicoCRTo(to);
-            fetchQuarterNonMedicoCRFrom(from);
-
-
+            fetchQuarterNonMedicoCRFrom(from , to);
+            fetchQuarterTaxFrom(from , to);
+            fetchQuarterMedicoFrom(from ,to);
 
         };
 		
