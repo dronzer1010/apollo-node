@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('MarkedTicketUserController',['$scope','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope , $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
+            .controller('MarkedTicketUserController',['$scope','FileSaver','Blob','$q','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope ,FileSaver,Blob,$q, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []

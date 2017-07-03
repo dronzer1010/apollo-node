@@ -3,7 +3,7 @@ $(function(){
 	'use strict';
  	var appService = angular.module('apolloApp');
 	appService.factory('locationMasterService', ['$http', '$q', function($http, $q){
-	 	var url= 'https://apollo-node.herokuapp.com';
+	 	var url= 'http://www.ahel-legal.in';
 	    return {
 	         
 	    fetchAllLocations: function() {

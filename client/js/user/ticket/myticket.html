@@ -63,6 +63,7 @@
                                 <th>Status</th>
                                 
                             </tr>
+                            
                             <tr ng-repeat="ticket  in ctrl.tickets | filter:searchText|orderBy:orderList| offset: (currentPage - 1) * itemsPerPage | limitTo:itemsPerPage">
                                 <td>{{ctrl.tickets.indexOf(ticket) + 1}}</td>
                                 <td>{{ticket.firstName +' '+ticket.lastName}}</td>

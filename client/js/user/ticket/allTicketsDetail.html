@@ -111,11 +111,13 @@
                                             <tr>
                                                 <th>No.</th>
                                                 <th>Document</th>
+                                                <th>Download</th>
                                                 
                                             </tr>
                                             <tr ng-if="attachedDocuments.length!=0" ng-repeat="document in attachedDocuments">
                                                 <td>{{attachedDocuments.indexOf(document) + 1}}</td>
-                                                <td><a href="{{document.documentUrl}}" target="_blank">{{document.documentName}}</a></td>
+                                                <td><span>{{document.documentName}}</span></td>
+                                                <td><button class="btn btn-sm btn-success" ng-click="ctrl.doc_download(document.documentKey)" ng-disabled="document.approved">Download</button></td>
                                                 
                                             </tr>
                                             <tr ng-if="attachedDocuments.length==0">

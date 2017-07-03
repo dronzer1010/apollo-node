@@ -23,7 +23,7 @@ $(function(){
                 $scope.doc_request = function(key){
                     var data={};
                     data.key = key;
-                    $http({url:"https://apollo-node.herokuapp.com/api/doc/request",
+                    $http({url:"http://www.ahel-legal.in/api/doc/request",
                                         method: "POST",
                                         data : data,
                                         headers: {

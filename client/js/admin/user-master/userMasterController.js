@@ -78,7 +78,7 @@ $(function(){
 			              }else{
 			              	 console.log('Saving  Location', self.user);
 							 if(self.user.password == ''){
-								 //self.user.password = self.user.lastPassword;
+								 self.user.password = self.user.lastPassword;
 							 }
 			                 self.updateUser(self.user, self.user._id);
 			                 console.log('User updated with id ', self.user._id);

@@ -19,7 +19,7 @@ router.get('/' , function(req,res){
 		var decoded = jwt.decode(token, config.secret);
 		
 		if(decoded.userType=='legalteam_member'){
-			Event.find({eventOwner:decoded._id})
+			Event.find({eventOwner:decoded._id, status:'open'})
 			   .exec(function(err , data){
 			   		if(!err){
 			   			res.status(200).json({success : true , data : data});
@@ -28,7 +28,7 @@ router.get('/' , function(req,res){
 			   		}
 			});
 		}else{
-			Event.find({})
+			Event.find({status:'open'})
 			   .exec(function(err , data){
 			   		if(!err){
 			   			res.status(200).json({success : true , data : data});

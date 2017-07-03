@@ -5,7 +5,7 @@ $(function(){
                     return input.slice(start);
                 };
             })
-            .controller('AllTicketController',['$scope','$interval','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope ,$interval, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
+            .controller('AllTicketController',['$scope','FileSaver','Blob','$q','$interval','$rootScope','$stateParams','moment','$cookieStore','toaster','ticketService','messageService',function($scope ,FileSaver,Blob,$q,$interval, $rootScope,$stateParams,moment,$cookieStore,toaster,ticketService,messageService){
                 var self =  this;
 
                    $scope.filteredTickets = []
@@ -32,7 +32,47 @@ $(function(){
 
                 self.fetchAllTickets();
 
-                
+                                /**Document Download functionality */
+
+                self.doc_download = function(id){
+                                    var deferred = $q.defer();
+                                    var data = {};
+                                    data.key = id;
+                                    $http({
+                                        url:"http://www.ahel-legal.in/api/doc",
+                                        method: "POST",
+                                        data : data,
+                                        headers: {
+                                        
+                                        authorization : $rootScope.user.token
+                                        },
+                                    responseType: "arraybuffer"
+                                    }).then(
+                                    function (data, status, headers) {
+                                        //console.log(data.config.data.key);
+                                    
+                                        var blob = new Blob([data.data]);
+                                        var currDate = new Date();
+                                        var fileName = data.config.data.key;
+                                        FileSaver.saveAs(blob,fileName);
+                                        deferred.resolve(fileName);  
+
+                                    }, function (data, status) {
+
+                                        //console.log(data.data);
+                                        var decodedString = String.fromCharCode.apply(null, new Uint8Array(data.data));
+                                        var obj = JSON.parse(decodedString);
+                                        //console.log(decodedString);    
+                                        toaster.pop({
+                                                type: 'error',
+                                                title: 'Error',
+                                                body: obj.msg,
+                                                timeout: 2000
+                                    });
+                                        deferred.reject(data.msg);
+                                    });
+                                return deferred.promise; 
+                };
 
                 
                  function findTicket(id){

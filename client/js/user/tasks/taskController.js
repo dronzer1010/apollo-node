@@ -47,6 +47,8 @@ $(function(){
                 self.sendNotes=function(n_id , s_mail ,type){
                     if($rootScope.user){
                         s_mail = $rootScope.user.email;
+                    }else{
+                        s_mail = "User";
                     }
 
                     var temp={};
@@ -76,7 +78,7 @@ $(function(){
               
                         //console.log("I am called");
                         file.upload = Upload.upload({
-                            url: 'https://apollo-node.herokuapp.com/api/upload/task/'+$stateParams.id,
+                            url: 'http://www.ahel-legal.in/api/upload/task/'+$stateParams.id,
                             data: {document: file}
                         });
 

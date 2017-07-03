@@ -3,7 +3,7 @@ $(function(){
     'use strict';
  	var appService = angular.module('apolloApp');
 	appService.factory('messageService', ['$http', '$q','$rootScope', function($http, $q , $rootScope){
-        var url= 'https://apollo-node.herokuapp.com';
+        var url= 'http://www.ahel-legal.in';
 
         return {
         

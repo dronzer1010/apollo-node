@@ -1246,11 +1246,18 @@ $(function(){
          $scope.exportToExcel=function(tableId){ // ex: '#my-table'
 			 var exportHref=Excel.tableToExcel('#report1','Report');
             console.log(exportHref);
-            var blob = new Blob([exportHref.data], { type: 'application/vnd.openxmlformats' });
-            var currDate = new Date();
+            fetch(exportHref.href).then(function(res){
+                return res.blob();
+            }).then(function(blob){
+                var currDate = new Date();
             var fileName = "Report_"+currDate+'.xlsx';
-            //FileSaver.saveAs(blob, fileName);
-			$timeout(function(){location.href=exportHref.href;},10000); // trigger download
+                //console.log(res);
+                FileSaver.saveAs(blob, fileName);
+            });
+            var blob = new Blob([exportHref.data], { type: 'application/vnd.openxmlformats' });
+            
+            
+			//$timeout(function(){location.href=exportHref.href;},10000); // trigger download
 		}
         self.fetchData($scope.dateFrom , $scope.dateToo);
 

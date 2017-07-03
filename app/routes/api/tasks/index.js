@@ -61,7 +61,7 @@ router.post('/' , function(req, res){
                         var tempEvent = new Event({
                             type:'task',
                             start : req.body.completionDate,
-                            title : req.body.name,
+                            title : 'Task : '+req.body.name,
                             taskRef : task._id,
                             eventOwner : req.body.master,
                             additionalData: task._id,
@@ -84,7 +84,7 @@ router.post('/' , function(req, res){
                                             ses_mail = ses_mail + "Content-Type: multipart/mixed; boundary=\"NextPart\"\n\n";
                                             ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/html; charset=us-ascii\n\n";
-                                            ses_mail = ses_mail + 'Hello '+req.body.handlerName+' , You have been assigned a task named "'+req.body.name+'" . You can access task through this link : http://apollo-node.herokuapp.com/#/task-detail/'+task._id+"\n\n";
+                                            ses_mail = ses_mail + 'Hello '+req.body.handlerName+' , You have been assigned a task named "'+req.body.name+'" . You can access task through this link : http://www.ahel-legal.in/#/task-detail/'+task._id+"\n\n";
                                             ses_mail = ses_mail + "--NextPart\n";
                                             ses_mail = ses_mail + "Content-Type: text/plain;\n";
 
@@ -180,11 +180,13 @@ router.put('/close/:id' , function(req,res){
         
 
         Task.update({_id : req.params.id},{$set:{status:'closed'}},function(err,data){
-                    if(!err){
+                    Event.update({taskRef:req.params.id},{$set:{status:'close'}},function(err,data){
+                        if(!err){
                         res.status(200).send({success : true ,msg : "Task Closed"});
                     }else{
                         res.status(400).send({success : false , msg : err});
                     }
+                    });
                 });
 
     }else{

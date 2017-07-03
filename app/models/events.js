@@ -15,11 +15,12 @@ var Events = new Schema({
     title : {
         type: String
     },
-    eventOwner : {
+    eventOwner : [{
         type: Schema.Types.ObjectId, 
         ref: 'Users',
         default : null
-    },
+    }
+    ],
     additionalData : {
         type: String
     },

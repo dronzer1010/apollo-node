@@ -129,7 +129,7 @@
                                                 <td><span>{{document.documentName}}</span></td>
                                                 <td><button class="btn btn-sm btn-default" ng-click="ctrl.updateDocumentName('body' ,document._id , document.documentName)">Edit</button></td>
                                                 <td><button class="btn btn-sm btn-primary" ng-click="ctrl.open('body' , document._id)" ng-disabled="document.approved || ticketStatus=='closed'">{{document.approved ? 'Approved' : 'Approve'}}</button></td>
-                                                <td><button class="btn btn-sm btn-success" ng-click="ctrl.doc_download(document.documentKey)" ng-disabled="ticketStatus=='closed'">Download</button></td>
+                                                <td><button class="btn btn-sm btn-success" ng-click="ctrl.doc_download(document.documentKey)" ng-disabled="document.approved">Download</button></td>
                                             </tr>
                                             <tr ng-if="attachedDocuments.length==0">
                                                 <td colspan="3" style="text-align:center">No Documents Attached</td>

@@ -110,6 +110,7 @@ console.log(req.body.firstName+' '+req.body.email+' '+req.body.password+' '+req.
 		});
 	}
 });
+
 router.post('/activate' , function(req,res){
 	if(!req.body.id ){
 		res.status(400).json({success : false , msg : "Invalid parameters"});
@@ -157,7 +158,7 @@ router.post('/login' , function(req,res){
 			success : false ,
 			msg : "Invalid parameters"
 		});
-	}else{	
+	}else{		
 		User.findOne({email : req.body.email},function(err , user){
 			if (err) throw err;
          

@@ -113,7 +113,7 @@ router.post('/' , function(req,res){
                 var tempEvent = new Event({
                     type:'ticket',
                     start : req.body.replyByDate,
-                    title : "Ticket : "+data._id,
+                    title : "Ticket : "+data.firstName+' '+data.lastName+' , '+data.ticketType,
                     ticketRef : data._id,
                     additionalData: data._id,
                     status : "open"
@@ -471,11 +471,17 @@ router.post('/close/:id' , function(req,res){
             }
         });
         Ticket.update({_id : req.params.id},{$set:{ticketStatus:'closed' ,ticketClosingDate : new Date(), ticketClosingNote : req.body.closingNote}},function(err,data){
-                    if(!err){
+                    Event.update({ticketRef:req.params.id},{$set:{status:'close'}},function(err,data){
+                        if(!err){
+                                
                         res.status(200).send({success : true ,msg : "Ticked Closed"});
-                    }else{
-                        res.status(400).send({success : false , msg : err});
-                    }
+                   
+                        
+                   
+                        }else{
+                            res.status(400).send({success : false , msg : err});
+                        }
+                    });
                 });
         }else{
 

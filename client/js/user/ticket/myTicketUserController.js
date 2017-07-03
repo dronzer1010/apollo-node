@@ -65,7 +65,7 @@ $(function(){
 
 var deferred = $q.defer();
                                     $http({
-                                        url:"https://apollo-node.herokuapp.com/api/tickets/mytickets/export",
+                                        url:"http://www.ahel-legal.in/api/tickets/mytickets/export",
                                         method: "GET",
                                         headers: {
                                         
@@ -99,7 +99,7 @@ var deferred = $q.defer();
                                     var data = {};
                                     data.key = id;
                                     $http({
-                                        url:"https://apollo-node.herokuapp.com/api/doc",
+                                        url:"http://www.ahel-legal.in/api/doc",
                                         method: "POST",
                                         data : data,
                                         headers: {
